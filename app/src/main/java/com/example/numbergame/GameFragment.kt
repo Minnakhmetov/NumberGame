@@ -44,7 +44,7 @@ class GameFragment : Fragment() {
     }
 
     private fun startGame() {
-        binding.textViewGame.visibility = View.VISIBLE
+        binding.gameInterface.visibility = View.VISIBLE
     }
 
     // TODO Pause timer when activity isn't in focus
