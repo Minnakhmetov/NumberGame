@@ -6,4 +6,5 @@
     <string name="about">about</string>
     <string name="about_fragment">About fragment</string>
     <string name="game_fragment">Game fragment</string>
+    <string name="timer_format">%d:%d</string>
 </resources>
