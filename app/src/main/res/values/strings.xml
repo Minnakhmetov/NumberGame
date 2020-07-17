@@ -6,5 +6,11 @@
     <string name="about">about</string>
     <string name="about_fragment">About fragment</string>
     <string name="game_fragment">Game fragment</string>
-    <string name="timer_format">%d:%d</string>
+    <string name="score">score: %d</string>
+    <string name="game_over">game over</string>
+    <string name="final_score">Final score: %d</string>
+    <string name="main_menu_button">main menu</string>
+    <string name="authors_name">Bulat Minnakhmetov</string>
+    <string name="authors_telegram">"@BulatMinnakhmetov"</string>
+    <string name="author_label">Author:</string>
 </resources>

@@ -12,19 +12,51 @@
         tools:layout="@layout/fragment_main_menu" >
         <action
             android:id="@+id/action_mainMenuFragment_to_gameFragment"
-            app:destination="@id/gameFragment" />
+            app:destination="@id/gameFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/silde_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_mainMenuFragment_to_aboutFragment"
-            app:destination="@id/aboutFragmen2" />
+            app:destination="@id/aboutFragmen2"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/silde_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/gameFragment"
         android:name="com.example.numbergame.GameFragment"
         android:label="fragment_game"
-        tools:layout="@layout/fragment_game" />
+        tools:layout="@layout/fragment_game" >
+        <action
+            android:id="@+id/action_gameFragment_to_resultsFragment"
+            app:destination="@id/resultsFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/silde_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/mainMenuFragment" />
+    </fragment>
     <fragment
         android:id="@+id/aboutFragmen2"
         android:name="com.example.numbergame.AboutFragment"
         android:label="fragment_about"
         tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/resultsFragment"
+        android:name="com.example.numbergame.ResultsFragment"
+        android:label="fragment_results"
+        tools:layout="@layout/fragment_results" >
+        <argument
+            android:name="score"
+            app:argType="integer" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_mainMenuFragment"
+        app:destination="@id/mainMenuFragment"
+        app:enterAnim="@anim/silde_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popUpTo="@id/mainMenuFragment" />
 </navigation>

@@ -1,52 +1,61 @@
 package com.example.numbergame
 
+import android.app.Application
 import android.os.CountDownTimer
 import android.text.SpannableStringBuilder
 import androidx.lifecycle.*
 import timber.log.Timber
 
-class GameViewModel : ViewModel() {
+class GameViewModel(application: Application) : AndroidViewModel(application) {
+    private val COUNTDOWN: Long = 3000
+    private val GAME_LENGTH: Long = 30000
+
     private var countDownTimer: CountDownTimer? = null
     private var gameTimer: CountDownTimer? = null
 
-    private val _gameStartEvent = MutableLiveData<Boolean>()
-
     val BACKSPACE = 10
 
+    private val _gameStartEvent = MutableLiveData<Boolean>()
     val gameStartEvent: LiveData<Boolean>
         get() = _gameStartEvent
 
-    private val _gameFinishEvent = MutableLiveData<Boolean>()
-
-    val gameFinishEvent: LiveData<Boolean>
+    private val _gameFinishEvent = MutableLiveData<Int>()
+    val gameFinishEvent: LiveData<Int>
         get() = _gameFinishEvent
 
     private val _secondsBeforeStart = MutableLiveData<Long>()
+    val countdownString: LiveData<String> =
+        Transformations.map(_secondsBeforeStart) { (it + 1).toString() }
 
     private val _currentInput = MutableLiveData<String>()
-
     val currentInput: LiveData<String>
         get() = _currentInput
 
     private val _currentNumber = MutableLiveData<String>()
 
-    val words = MediatorLiveData<SpannableStringBuilder>()
-
-    val countdownString: LiveData<String> =
-        Transformations.map(_secondsBeforeStart) { (it + 1).toString() }
+    val words = MediatorLiveData<Pair<Boolean, SpannableStringBuilder>>()
 
     private val _secondsLeft = MutableLiveData<Long>()
-
     val timerString: LiveData<String> =
-        Transformations.map(_secondsLeft) { it.toString() }
+        Transformations.map(_secondsLeft) { (it + 1).toString() }
+
+    private val _score = MutableLiveData<Int>()
+    val formattedScore = Transformations.map(_score) { score ->
+        application.getString(R.string.score, score)
+    }
+
+    private val _mistake = MutableLiveData<Boolean>()
+    val mistake: LiveData<Boolean>
+        get() = _mistake
 
     init {
+        _score.value = 0
         _currentInput.value = ""
         words.addSource(_currentNumber) { number ->
-            words.value = getStyledWords(number, currentInput.value ?: "")
+            words.value = Pair(true, getStyledWords(number, currentInput.value ?: ""))
         }
         words.addSource(_currentInput) { input ->
-            words.value = getStyledWords(_currentNumber.value ?: "", input)
+            words.value = Pair(false, getStyledWords(_currentNumber.value ?: "", input))
         }
     }
 
@@ -54,7 +63,7 @@ class GameViewModel : ViewModel() {
         stopCountdown()
 
         countDownTimer = object : CountDownTimer(
-            _secondsBeforeStart.value?.times(1000) ?: 3000,
+            _secondsBeforeStart.value?.times(1000) ?: COUNTDOWN,
             1000
         ) {
             override fun onTick(millisUntilFinished: Long) {
@@ -63,6 +72,7 @@ class GameViewModel : ViewModel() {
 
             override fun onFinish() {
                 _gameStartEvent.value = true
+                countDownTimer = null
             }
         }
 
@@ -75,8 +85,9 @@ class GameViewModel : ViewModel() {
     }
 
     fun resumeGameTimer() {
-        if (gameTimer != null)
+        if (gameTimer != null) {
             startGameTimer()
+        }
     }
 
     fun onGameStarted() {
@@ -89,13 +100,12 @@ class GameViewModel : ViewModel() {
 
     fun startNewRound() {
         _currentNumber.value = getRandomNumber()
-        Timber.i(_currentNumber.value)
         _currentInput.value = ""
     }
 
     fun startGameTimer() {
         gameTimer = object : CountDownTimer(
-            _secondsLeft.value?.times(1000) ?: 60000,
+            _secondsLeft.value?.times(1000) ?: GAME_LENGTH,
             1000
         ) {
             override fun onTick(millisUntilFinished: Long) {
@@ -103,10 +113,9 @@ class GameViewModel : ViewModel() {
             }
 
             override fun onFinish() {
-                _gameFinishEvent.value = true
+                _gameFinishEvent.value = _score.value
             }
-        }
-        gameTimer?.start()
+        }.start()
     }
 
     fun stopGameTimer() {
@@ -114,7 +123,7 @@ class GameViewModel : ViewModel() {
     }
 
     fun onGameFinished() {
-        _gameFinishEvent.value = false
+        _gameFinishEvent.value = -1
     }
 
     fun handleButtonClick(id: Int) {
@@ -132,6 +141,13 @@ class GameViewModel : ViewModel() {
         }
         if (_currentInput.value == _currentNumber.value) {
             startNewRound()
+            _score.value = (_score.value ?: 0) + 1
+        }
+
+        _currentInput.value?.let { prefix ->
+            _currentNumber.value?.let { number ->
+                _mistake.value = !number.startsWith(prefix)
+            }
         }
     }
 }

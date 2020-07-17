@@ -95,7 +95,6 @@ fun getPartName(positionFromEnd: Int): String {
 }
 
 fun transparentPrefixAndUnderlineWord(position: Int, part: SpannableString) {
-    Log.i("Utils", "$part $position")
     var start = 0
     repeat(position) {
         start = part.indexOfAny(charArrayOf(' ', '-'), start)
@@ -103,8 +102,6 @@ fun transparentPrefixAndUnderlineWord(position: Int, part: SpannableString) {
             return@repeat
         start++
     }
-
-    Log.i("Utils", "$start")
 
     if (start == -1)
         return
@@ -125,8 +122,6 @@ fun transparentPrefixAndUnderlineWord(position: Int, part: SpannableString) {
 
 fun stylePart(number: String, prefix: String?, part: SpannableString) {
 
-    Timber.i("$number $prefix")
-
     if (number == prefix) {
         part.setSpan(
             // TODO move to color.xml
@@ -143,19 +138,21 @@ fun stylePart(number: String, prefix: String?, part: SpannableString) {
             1 -> {
                 if (number[0] == '0') {
                     transparentPrefixAndUnderlineWord(0, part)
-                }
-                else if (number[1] == '0' && number[2] == '0') {
+                } else if (number[1] == '0' && number[2] == '0') {
                     transparentPrefixAndUnderlineWord(1, part)
-                }
-                else if (number[1] != '0' || number[2] != '0'){
+                } else if (number[1] != '0' || number[2] != '0') {
                     transparentPrefixAndUnderlineWord(2, part)
                 }
             }
             2 -> {
                 var underlinedWordPos = 0
 
-                if (number[0] != '0')
-                    underlinedWordPos += 2
+                if (number[0] != '0') {
+                    if (number[1] == '0' && number[2] == '0')
+                        underlinedWordPos++
+                    else
+                        underlinedWordPos += 2
+                }
 
                 underlinedWordPos += when (number[1]) {
                     '0', '1' -> 0
@@ -182,7 +179,6 @@ fun getStyledWords(rawNumber: String, rawPrefix: String): SpannableStringBuilder
 
     val number = if (remainder == 0) rawNumber else "0".repeat(3 - remainder) + rawNumber
     val prefix = if (remainder == 0) rawPrefix else "0".repeat(3 - remainder) + rawPrefix
-
 
 
     val chunkedPrefix = prefix.chunked(3)
@@ -218,6 +214,14 @@ fun getStyledWords(rawNumber: String, rawPrefix: String): SpannableStringBuilder
     return builder
 }
 
-fun getRandomNumber(): String {
-    return Random.nextInt(1, 1000000000).toString()
+fun getPowerOfTen(power: Int): Int {
+    var res = 1
+    repeat(power) { res *= 10 }
+    return res
 }
+
+fun getRandomNumberOfLength(length: Int): String {
+    return Random.nextInt(getPowerOfTen(length - 1), getPowerOfTen(length)).toString()
+}
+
+fun getRandomNumber(): String = getRandomNumberOfLength(Random.nextInt(1, 9))
