@@ -28,7 +28,7 @@
             tools:context=".GameFragment">
 
             <TextSwitcher
-                android:id="@+id/start_countdown"
+                android:id="@+id/countdown"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@{viewModel.countdownString}"
@@ -117,13 +117,13 @@
                     android:layout_height="0dp"
                     android:onClick="@{() -> viewModel.handleButtonClick(7)}"
                     android:text="7"
-                    app:layout_constraintBottom_toTopOf="@+id/imageView2"
+                    app:layout_constraintBottom_toTopOf="@+id/empty_space"
                     app:layout_constraintEnd_toEndOf="@+id/textView16"
                     app:layout_constraintStart_toStartOf="@+id/textView16"
                     app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/empty_space"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -182,13 +182,13 @@
                     android:layout_height="0dp"
                     android:onClick="@{() -> viewModel.handleButtonClick(0)}"
                     android:text="0"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+                    app:layout_constraintBottom_toBottomOf="@+id/empty_space"
                     app:layout_constraintEnd_toEndOf="@+id/textView20"
                     app:layout_constraintStart_toStartOf="@+id/textView20"
-                    app:layout_constraintTop_toTopOf="@+id/imageView2" />
+                    app:layout_constraintTop_toTopOf="@+id/empty_space" />
 
                 <ImageView
-                    android:id="@+id/imageView4"
+                    android:id="@+id/backspace"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:onClick="@{() -> viewModel.handleButtonClick(viewModel.BACKSPACE)}"
@@ -207,7 +207,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                app:constraint_referenced_ids="gameKeyboard, timer, words, score"
+                app:constraint_referenced_ids="gameKeyboard, timer, words, score, back_button"
                 tools:visibility="visible" />
 
             <TextView
@@ -233,20 +233,20 @@
                 android:textSize="40sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/start_countdown"
+                app:layout_constraintTop_toTopOf="@+id/countdown"
                 tools:text="00:23" />
 
             <ImageView
                 android:id="@+id/back_button"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="@dimen/back_button_side"
                 android:padding="@dimen/spacing_small"
                 app:layout_constraintBottom_toBottomOf="@+id/timer"
-                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintDimensionRatio="1"
                 app:layout_constraintEnd_toStartOf="@+id/timer"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/start_countdown"
+                app:layout_constraintTop_toTopOf="@+id/countdown"
                 app:srcCompat="@drawable/abc_vector_test" />
 
 
@@ -287,7 +287,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/timer"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/timer"
-                app:layout_constraintTop_toTopOf="@+id/start_countdown"
+                app:layout_constraintTop_toTopOf="@+id/countdown"
                 tools:text="SCORE: 7" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
