@@ -5,23 +5,22 @@ import android.os.CountDownTimer
 import android.text.SpannableStringBuilder
 import androidx.lifecycle.*
 import timber.log.Timber
+import java.util.*
 
 class GameViewModel(application: Application) : AndroidViewModel(application) {
     private val COUNTDOWN: Long = 3000
     private val GAME_LENGTH: Long = 30000
 
+    private var gameStarted = false
+
     private var countDownTimer: CountDownTimer? = null
-    private var gameTimer: CountDownTimer? = null
+    private var gameTimer = GameTimer()
 
     val BACKSPACE = 10
 
     private val _gameStartEvent = MutableLiveData<Boolean>()
     val gameStartEvent: LiveData<Boolean>
         get() = _gameStartEvent
-
-    private val _gameFinishEvent = MutableLiveData<Int>()
-    val gameFinishEvent: LiveData<Int>
-        get() = _gameFinishEvent
 
     private val _secondsBeforeStart = MutableLiveData<Long>()
     val countdownString: LiveData<String> =
@@ -35,18 +34,22 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
 
     val words = MediatorLiveData<Pair<Boolean, SpannableStringBuilder>>()
 
-    private val _secondsLeft = MutableLiveData<Long>()
     val timerString: LiveData<String> =
-        Transformations.map(_secondsLeft) { (it + 1).toString() }
+        Transformations.map(gameTimer.secondsLeft) { (it + 1).toString() }
 
     private val _score = MutableLiveData<Int>()
     val formattedScore = Transformations.map(_score) { score ->
         application.getString(R.string.score, score)
     }
 
+    val gameFinishEvent = gameTimer.finished
+
     private val _mistake = MutableLiveData<Boolean>()
     val mistake: LiveData<Boolean>
         get() = _mistake
+
+    val finalScore
+        get() = _score.value ?: 0
 
     init {
         _score.value = 0
@@ -73,6 +76,7 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
             override fun onFinish() {
                 _gameStartEvent.value = true
                 countDownTimer = null
+                gameStarted = true
             }
         }
 
@@ -85,9 +89,8 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun resumeGameTimer() {
-        if (gameTimer != null) {
-            startGameTimer()
-        }
+        if (gameStarted)
+            gameTimer.resume()
     }
 
     fun onGameStarted() {
@@ -104,26 +107,15 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun startGameTimer() {
-        gameTimer = object : CountDownTimer(
-            _secondsLeft.value?.times(1000) ?: GAME_LENGTH,
-            1000
-        ) {
-            override fun onTick(millisUntilFinished: Long) {
-                _secondsLeft.value = millisUntilFinished / 1000
-            }
-
-            override fun onFinish() {
-                _gameFinishEvent.value = _score.value
-            }
-        }.start()
+        gameTimer.start(GAME_LENGTH)
     }
 
     fun stopGameTimer() {
-        gameTimer?.cancel()
+        gameTimer.pause()
     }
 
     fun onGameFinished() {
-        _gameFinishEvent.value = -1
+        gameTimer.onFinishHandled()
     }
 
     fun handleButtonClick(id: Int) {
@@ -149,5 +141,10 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
                 _mistake.value = !number.startsWith(prefix)
             }
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        gameTimer.pause()
     }
 }

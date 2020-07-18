@@ -59,9 +59,9 @@ class GameFragment : Fragment() {
             }
         })
 
-        viewModel.gameFinishEvent.observe(viewLifecycleOwner, Observer { finalScore ->
-            if (finalScore != -1) {
-                findNavController().navigate(GameFragmentDirections.actionGameFragmentToResultsFragment(finalScore))
+        viewModel.gameFinishEvent.observe(viewLifecycleOwner, Observer { isFinished ->
+            if (isFinished) {
+                findNavController().navigate(GameFragmentDirections.actionGameFragmentToResultsFragment(viewModel.finalScore))
                 viewModel.onGameFinished()
             }
         })
