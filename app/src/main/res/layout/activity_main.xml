@@ -6,12 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.fragment.app.FragmentContainerView
+    <ImageView
+        android:id="@+id/back_button"
+        android:layout_width="@dimen/back_button_side"
+        android:layout_height="@dimen/back_button_side"
+        android:layout_margin="@dimen/margin_from_screen_edge"
+        android:padding="@dimen/spacing_small"
+        android:tint="@android:color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_arrow_back" />
+
+    <fragment
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:defaultNavHost="true"
         android:id="@+id/nav_host_fragment"
-        app:navGraph="@navigation/navigation" />
+        app:navGraph="@navigation/navigation"
+        tools:layout="@layout/fragment_game"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

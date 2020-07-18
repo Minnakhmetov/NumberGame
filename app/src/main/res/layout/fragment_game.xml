@@ -24,7 +24,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/spacing_small"
+            android:layout_margin="@dimen/margin_from_screen_edge"
             tools:context=".GameFragment">
 
             <TextSwitcher
@@ -235,19 +235,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/start_countdown"
                 tools:text="00:23" />
-
-            <ImageView
-                android:id="@+id/back_button"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/back_button_side"
-                android:padding="@dimen/spacing_small"
-                app:layout_constraintBottom_toBottomOf="@+id/timer"
-                app:layout_constraintDimensionRatio="1"
-                app:layout_constraintEnd_toStartOf="@+id/timer"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/start_countdown"
-                app:srcCompat="@drawable/abc_vector_test" />
 
 
             <TextSwitcher

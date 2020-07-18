@@ -66,10 +66,6 @@ class GameFragment : Fragment() {
             }
         })
 
-        binding.backButton.setOnClickListener {
-            findNavController().navigateUp()
-        }
-
         viewModel.mistake.observe(viewLifecycleOwner, Observer {
             if (it)
                 checkIfMistakeAndShowFrame()

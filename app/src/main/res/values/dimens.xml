@@ -4,4 +4,5 @@
     <dimen name="spacing_small">8dp</dimen>
     <dimen name="spacing_normal">16dp</dimen>
     <dimen name="back_button_side">70dp</dimen>
+    <dimen name="margin_from_screen_edge">@dimen/spacing_small</dimen>
 </resources>
