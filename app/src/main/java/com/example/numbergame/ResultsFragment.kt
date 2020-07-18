@@ -33,7 +33,7 @@ class ResultsFragment : Fragment() {
         )
 
         binding.mainMenuButton.setOnClickListener {
-            findNavController().navigate(ResultsFragmentDirections.actionGlobalMainMenuFragment())
+            findNavController().navigateUp()
         }
     }
 

@@ -67,7 +67,7 @@ class GameFragment : Fragment() {
         })
 
         binding.backButton.setOnClickListener {
-            findNavController().navigate(GameFragmentDirections.actionGlobalMainMenuFragment())
+            findNavController().navigateUp()
         }
 
         viewModel.mistake.observe(viewLifecycleOwner, Observer {

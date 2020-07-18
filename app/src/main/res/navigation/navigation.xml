@@ -53,10 +53,4 @@
             android:name="score"
             app:argType="integer" />
     </fragment>
-    <action
-        android:id="@+id/action_global_mainMenuFragment"
-        app:destination="@id/mainMenuFragment"
-        app:enterAnim="@anim/silde_in_left"
-        app:exitAnim="@anim/slide_out_right"
-        app:popUpTo="@id/mainMenuFragment" />
 </navigation>
