@@ -7,15 +7,17 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import timber.log.Timber
 
-class ChapterRecyclerViewAdapter :
+class ChapterRecyclerViewAdapter(private val onClick: (Int) -> Unit) :
     ListAdapter<Chapter, ChapterViewHolder>(ChapterDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChapterViewHolder {
+        Timber.i("onCreateViewHolder called")
         return ChapterViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: ChapterViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), onClick)
     }
 }
 
@@ -23,9 +25,11 @@ class ChapterViewHolder private constructor(root: View) : RecyclerView.ViewHolde
     private val name = root.findViewById<TextView>(R.id.name)
     private val description = root.findViewById<TextView>(R.id.description)
 
-    fun bind(chapter: Chapter) {
+    fun bind(chapter: Chapter, onClick: (Int) -> Unit) {
+        Timber.i("bind called")
         name.text = chapter.name
         description.text = chapter.description
+        itemView.setOnClickListener { onClick(chapter.id) }
     }
 
     companion object {

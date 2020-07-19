@@ -29,7 +29,7 @@ class MainMenuFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.startButton.setOnClickListener {
-            findNavController().navigate(R.id.action_mainMenuFragment_to_gameFragment)
+            findNavController().navigate(R.id.action_mainMenuFragment_to_chapterChoiceFragment)
         }
 
         binding.aboutButton.setOnClickListener {

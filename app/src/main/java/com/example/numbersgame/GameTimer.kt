@@ -31,7 +31,7 @@ class GameTimer {
         synchronized(this) {
             countDownTimer = object : CountDownTimer(stopTime - SystemClock.elapsedRealtime(), 1000) {
                 override fun onFinish() {
-                    _finished.value = Event(true)
+                    finish()
                 }
 
                 override fun onTick(millisUntilFinished: Long) {
@@ -47,5 +47,10 @@ class GameTimer {
             countDownTimer?.cancel()
             countDownTimer = null
         }
+    }
+
+    fun finish() {
+        pause()
+        _finished.value = Event(true)
     }
 }

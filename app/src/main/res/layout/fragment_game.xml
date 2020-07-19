@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.numbersgame.GameViewModel" />
+            type="com.example.numbersgame.ChapterViewModel" />
     </data>
 
     <FrameLayout

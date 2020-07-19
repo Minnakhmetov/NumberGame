@@ -9,17 +9,17 @@
         android:id="@+id/mainMenuFragment"
         android:name="com.example.numbersgame.MainMenuFragment"
         android:label="fragment_main_menu"
-        tools:layout="@layout/fragment_main_menu" >
+        tools:layout="@layout/fragment_main_menu">
         <action
-            android:id="@+id/action_mainMenuFragment_to_gameFragment"
-            app:destination="@id/gameFragment"
+            android:id="@+id/action_mainMenuFragment_to_chapterChoiceFragment"
+            app:destination="@id/chapterChoiceFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/silde_in_left"
             app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_mainMenuFragment_to_aboutFragment"
-            app:destination="@id/aboutFragmen2"
+            app:destination="@id/aboutFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/silde_in_left"
@@ -29,7 +29,7 @@
         android:id="@+id/gameFragment"
         android:name="com.example.numbersgame.GameFragment"
         android:label="fragment_game"
-        tools:layout="@layout/fragment_game" >
+        tools:layout="@layout/fragment_game">
         <action
             android:id="@+id/action_gameFragment_to_resultsFragment"
             app:destination="@id/resultsFragment"
@@ -38,9 +38,12 @@
             app:popEnterAnim="@anim/silde_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@id/mainMenuFragment" />
+        <argument
+            android:name="id"
+            app:argType="integer" />
     </fragment>
     <fragment
-        android:id="@+id/aboutFragmen2"
+        android:id="@+id/aboutFragment"
         android:name="com.example.numbersgame.AboutFragment"
         android:label="fragment_about"
         tools:layout="@layout/fragment_about" />
@@ -48,9 +51,18 @@
         android:id="@+id/resultsFragment"
         android:name="com.example.numbersgame.ResultsFragment"
         android:label="fragment_results"
-        tools:layout="@layout/fragment_results" >
+        tools:layout="@layout/fragment_results">
         <argument
             android:name="score"
             app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/chapterChoiceFragment"
+        android:name="com.example.numbersgame.ChapterChoiceFragment"
+        android:label="ChapterChoiceFragment"
+        tools:layout="@layout/fragment_chapter_choice" >
+        <action
+            android:id="@+id/action_chapterChoiceFragment_to_gameFragment"
+            app:destination="@id/gameFragment" />
     </fragment>
 </navigation>

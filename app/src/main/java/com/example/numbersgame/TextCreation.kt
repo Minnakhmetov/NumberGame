@@ -163,7 +163,7 @@ fun stylePart(number: String, prefix: String?, part: SpannableString) {
     }
 }
 
-fun getStyledWords(rawNumber: String, rawPrefix: String): SpannableStringBuilder {
+fun getWords(rawNumber: String, rawPrefix: String, styled: Boolean): SpannableStringBuilder {
     if (!rawNumber.isDigitsOnly()) {
         throw IllegalArgumentException("number is not a string representation of integer")
     }
@@ -184,8 +184,6 @@ fun getStyledWords(rawNumber: String, rawPrefix: String): SpannableStringBuilder
 
     val builder = SpannableStringBuilder()
 
-
-
     for (i in chunkedNumber.indices) {
         val part = SpannableString(
             convertThreeDigitNumberToWords(chunkedNumber[i]).let {
@@ -196,7 +194,7 @@ fun getStyledWords(rawNumber: String, rawPrefix: String): SpannableStringBuilder
             }
         )
 
-        if (firstMistake) {
+        if (styled && firstMistake) {
             stylePart(chunkedNumber[i], chunkedPrefix.getOrNull(i), part)
             if (chunkedNumber[i] != chunkedPrefix.getOrNull(i))
                 firstMistake = false

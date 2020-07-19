@@ -15,7 +15,7 @@ import com.example.numbersgame.databinding.FragmentGameBinding
 class GameFragment : Fragment() {
 
     private lateinit var binding: FragmentGameBinding
-    private lateinit var viewModel: GameViewModel
+    private lateinit var viewModel: ChapterViewModel
 
     private lateinit var mistakeFrameAnimation: Animation
 
@@ -24,7 +24,14 @@ class GameFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
+
+        viewModel = ViewModelProvider(this).get(
+            when (GameFragmentArgs.fromBundle(requireArguments()).id) {
+                1 -> ChapterOneViewModel::class.java
+                else -> ChapterTwoViewModel::class.java
+            }
+        )
+
         binding = FragmentGameBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
@@ -38,8 +45,7 @@ class GameFragment : Fragment() {
         viewModel.gameStartEvent.observe(viewLifecycleOwner, Observer {
             if (it?.getContentIfNotHandled() == true) {
                 showInterface()
-                viewModel.startGameTimer()
-                viewModel.startNewRound()
+                viewModel.startGame()
             }
         })
 

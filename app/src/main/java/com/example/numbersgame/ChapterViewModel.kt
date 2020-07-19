@@ -5,12 +5,12 @@ import android.os.CountDownTimer
 import android.text.SpannableStringBuilder
 import androidx.lifecycle.*
 
-class GameViewModel(application: Application) : AndroidViewModel(application) {
+abstract class ChapterViewModel(application: Application) : AndroidViewModel(application) {
     private val COUNTDOWN: Long = 3000
     private val GAME_LENGTH: Long = 30000
 
     private var countDownTimer: CountDownTimer? = null
-    private var gameTimer = GameTimer()
+    protected var gameTimer = GameTimer()
 
     val BACKSPACE = 10
 
@@ -22,41 +22,32 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
     val countdownString: LiveData<String> =
         Transformations.map(secondsBeforeStart) { (it + 1).toString() }
 
-    private val _userInput = MutableLiveData<String>()
+    protected val _userInput = MutableLiveData<String>("")
     val userInput: LiveData<String>
         get() = _userInput
 
-    private val _currentNumber = MutableLiveData<String>()
+    protected val _currentNumber = MutableLiveData<String>()
 
     val words = MediatorLiveData<Pair<Boolean, SpannableStringBuilder>>()
 
     val timerString: LiveData<String> =
         Transformations.map(gameTimer.secondsLeft) { (it + 1).toString() }
 
-    private val _score = MutableLiveData<Int>()
+    protected val _score = MutableLiveData(0)
     val formattedScore = Transformations.map(_score) { score ->
         application.getString(R.string.score, score)
     }
 
     val gameFinishEvent = gameTimer.finished
 
-    private val _mistake = MutableLiveData<Boolean>()
+    protected val _mistake = MutableLiveData<Boolean>()
     val mistake: LiveData<Boolean>
         get() = _mistake
 
     val finalScore
         get() = _score.value ?: 0
 
-    init {
-        _score.value = 0
-        _userInput.value = ""
-        words.addSource(_currentNumber) { number ->
-            words.value = Pair(true, getStyledWords(number, userInput.value ?: ""))
-        }
-        words.addSource(_userInput) { input ->
-            words.value = Pair(false, getStyledWords(_currentNumber.value ?: "", input))
-        }
-    }
+    abstract fun initializeWords(words: MediatorLiveData<Pair<Boolean, SpannableStringBuilder>>)
 
     fun startCountdown() {
         stopCountdown()
@@ -91,7 +82,13 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
         countDownTimer?.cancel()
     }
 
-    fun startNewRound() {
+    fun startGame() {
+        initializeWords(words)
+        startGameTimer()
+        startNewRound()
+    }
+
+    protected open fun startNewRound() {
         _currentNumber.value = getRandomNumber()
         _userInput.value = ""
     }
@@ -104,30 +101,7 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
         gameTimer.pause()
     }
 
-    fun handleButtonClick(id: Int) {
-        when (id) {
-            BACKSPACE -> {
-                _userInput.value?.let {
-                    if (it.isNotEmpty()) {
-                        _userInput.value = it.substring(0, it.length - 1)
-                    }
-                }
-            }
-            else -> {
-                _userInput.value = (_userInput.value ?: "") + id.toString()
-            }
-        }
-        if (_userInput.value == _currentNumber.value) {
-            startNewRound()
-            _score.value = (_score.value ?: 0) + 1
-        }
-
-        _userInput.value?.let { prefix ->
-            _currentNumber.value?.let { number ->
-                _mistake.value = !number.startsWith(prefix)
-            }
-        }
-    }
+    abstract fun handleButtonClick(id: Int)
 
     override fun onCleared() {
         super.onCleared()
