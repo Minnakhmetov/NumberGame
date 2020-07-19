@@ -24,6 +24,6 @@
         app:defaultNavHost="true"
         android:id="@+id/nav_host_fragment"
         app:navGraph="@navigation/navigation"
-        tools:layout="@layout/fragment_game"/>
+        tools:layout="@layout/fragment_chapter_choice"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
