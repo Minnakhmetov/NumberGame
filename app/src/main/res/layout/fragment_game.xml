@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.numbergame.GameViewModel" />
+            type="com.example.numbersgame.GameViewModel" />
     </data>
 
     <FrameLayout
@@ -207,7 +207,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                app:constraint_referenced_ids="gameKeyboard, timer, words, score, back_button"
+                app:constraint_referenced_ids="gameKeyboard, timer, words, score"
                 tools:visibility="visible" />
 
             <TextView
@@ -216,7 +216,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:singleLine="true"
-                android:text="@{viewModel.currentInput}"
+                android:text="@{viewModel.userInput}"
                 android:textSize="45sp"
                 app:layout_constraintBottom_toTopOf="@+id/gameKeyboard"
                 app:layout_constraintEnd_toEndOf="parent"

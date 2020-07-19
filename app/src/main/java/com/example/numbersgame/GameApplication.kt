@@ -1,4 +1,4 @@
-package com.example.numbergame
+package com.example.numbersgame
 
 import android.app.Application
 import timber.log.Timber

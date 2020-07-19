@@ -2,7 +2,7 @@ package com.example.numbersgame
 
 import org.junit.Test
 
-class WordsCreationKtTest {
+class TextCreationKtTest {
 
     @Test
     fun testConvertThreeDigitNumberToWords() {

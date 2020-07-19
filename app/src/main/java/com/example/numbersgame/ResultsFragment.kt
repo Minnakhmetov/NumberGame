@@ -1,4 +1,4 @@
-package com.example.numbergame
+package com.example.numbersgame
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.example.numbergame.databinding.FragmentResultsBinding
+import com.example.numbersgame.databinding.FragmentResultsBinding
 
 class ResultsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {

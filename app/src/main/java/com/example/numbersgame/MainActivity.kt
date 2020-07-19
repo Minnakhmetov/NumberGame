@@ -1,4 +1,4 @@
-package com.example.numbergame
+package com.example.numbersgame
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

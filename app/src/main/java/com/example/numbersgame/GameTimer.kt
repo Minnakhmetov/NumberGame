@@ -1,4 +1,4 @@
-package com.example.numbergame
+package com.example.numbersgame
 
 import android.os.CountDownTimer
 import android.os.SystemClock
@@ -8,15 +8,16 @@ import timber.log.Timber
 import kotlin.properties.Delegates
 
 class GameTimer {
-    private var stopTime by Delegates.notNull<Long>()
+    // Time when timer stops or -1 if timer has not started
+    private var stopTime: Long = -1
     private var countDownTimer: CountDownTimer? = null
 
     private val _secondsLeft = MutableLiveData<Long>()
     val secondsLeft: LiveData<Long>
         get() = _secondsLeft
 
-    private val _finished = MutableLiveData<Boolean>()
-    val finished: LiveData<Boolean>
+    private val _finished = MutableLiveData<Event<Boolean>>()
+    val finished: LiveData<Event<Boolean>>
         get() = _finished
 
     fun start(millis: Long) {
@@ -25,12 +26,12 @@ class GameTimer {
     }
 
     fun resume() {
-        if (countDownTimer != null)
+        if (stopTime == -1L)
             return
         synchronized(this) {
             countDownTimer = object : CountDownTimer(stopTime - SystemClock.elapsedRealtime(), 1000) {
                 override fun onFinish() {
-                    _finished.value = true
+                    _finished.value = Event(true)
                 }
 
                 override fun onTick(millisUntilFinished: Long) {
@@ -47,10 +48,4 @@ class GameTimer {
             countDownTimer = null
         }
     }
-
-    fun onFinishHandled() {
-        _finished.value = false
-    }
-
-
 }
