@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.numbersgame.R
 import com.example.numbersgame.databinding.FragmentChapterChoiceBinding
 
@@ -22,6 +23,8 @@ class ChapterChoiceFragment : Fragment() {
                 ChapterChoiceFragmentDirections.actionChapterChoiceFragmentToGameFragment(chapterId)
             )
         }
+
+        binding.chaptersList.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         binding.chaptersList.adapter = adapter
 
         adapter.submitList(listOf(

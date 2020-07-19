@@ -6,7 +6,6 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
-    android:background="?selectableItemBackground"
     android:padding="@dimen/spacing_normal">
 
     <TextView
