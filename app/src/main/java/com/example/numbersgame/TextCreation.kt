@@ -1,4 +1,4 @@
-package com.example.numbergame
+package com.example.numbersgame
 
 import android.graphics.Color
 import android.text.Spannable
@@ -6,11 +6,7 @@ import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.text.style.UnderlineSpan
-import android.util.Log
 import androidx.core.text.isDigitsOnly
-import androidx.core.text.set
-import androidx.core.text.underline
-import timber.log.Timber
 import kotlin.random.Random
 
 fun convertOneDigitNumberToWords(number: String): String {

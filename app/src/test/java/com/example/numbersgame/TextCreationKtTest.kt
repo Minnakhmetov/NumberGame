@@ -1,10 +1,8 @@
-package com.example.numbergame
+package com.example.numbersgame
 
 import org.junit.Test
 
-import org.junit.Assert.*
-
-class UtilsKtTest {
+class WordsCreationKtTest {
 
     @Test
     fun testConvertThreeDigitNumberToWords() {
