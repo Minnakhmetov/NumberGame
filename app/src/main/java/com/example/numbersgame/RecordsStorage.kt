@@ -2,6 +2,7 @@ package com.example.numbersgame
 
 import android.app.Application
 import android.content.Context
+import kotlin.math.max
 
 class RecordsStorage(private val context: Context) {
     private val sharedPreferences by lazy {
@@ -9,8 +10,9 @@ class RecordsStorage(private val context: Context) {
     }
 
     fun saveRecord(chapterId: Int, record: Int) {
+        val currentRecord = sharedPreferences.getInt(context.getString(R.string.chapter_key, chapterId), 0)
         sharedPreferences.edit()
-            .putInt(context.getString(R.string.chapter_key, chapterId), record)
+            .putInt(context.getString(R.string.chapter_key, chapterId), max(currentRecord, record))
             .apply()
     }
 

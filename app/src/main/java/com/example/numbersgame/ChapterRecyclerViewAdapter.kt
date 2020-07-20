@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +12,18 @@ import timber.log.Timber
 
 class ChapterRecyclerViewAdapter(private val onClick: (Int) -> Unit) :
     ListAdapter<Chapter, ChapterViewHolder>(ChapterDiffCallback()) {
+
+    override fun submitList(list: List<Chapter>?) {
+        list?.let {
+            for (chapter in list) {
+                chapter.unlocked = true
+                if (chapter.userScore < chapter.requiredScore)
+                    break
+            }
+        }
+        super.submitList(list)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChapterViewHolder {
         Timber.i("onCreateViewHolder called")
         return ChapterViewHolder.from(parent)
@@ -27,9 +40,21 @@ class ChapterViewHolder private constructor(root: View) : RecyclerView.ViewHolde
     private val progress = root.findViewById<TextView>(R.id.progress)
 
     fun bind(chapter: Chapter, onClick: (Int) -> Unit) {
-        Timber.i("bind called")
+        if (chapter.unlocked) {
+            description.text = chapter.description
+            name.setTextColor(ContextCompat.getColor(name.context, R.color.colorOnPrimary))
+            description.visibility = View.VISIBLE
+            progress.visibility = View.VISIBLE
+            itemView.isEnabled = true
+        }
+        else {
+            description.visibility = View.GONE
+            progress.visibility = View.GONE
+            name.setTextColor(ContextCompat.getColor(name.context, R.color.transparentWhite))
+            itemView.isEnabled = false
+        }
+
         name.text = chapter.name
-        description.text = chapter.description
         itemView.setOnClickListener { onClick(chapter.id) }
         progress.text = itemView.context.getString(
             R.string.chapter_record,
@@ -56,4 +81,14 @@ class ChapterDiffCallback : DiffUtil.ItemCallback<Chapter>() {
     override fun areContentsTheSame(oldItem: Chapter, newItem: Chapter): Boolean {
         return oldItem == newItem
     }
+}
+
+data class Chapter(
+    val id: Int,
+    val name: String,
+    val description: String,
+    val requiredScore: Int,
+    val userScore: Int
+) {
+    var unlocked = false
 }
