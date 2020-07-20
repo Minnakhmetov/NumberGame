@@ -8,6 +8,7 @@ import androidx.lifecycle.*
 abstract class ChapterViewModel(application: Application) : AndroidViewModel(application) {
     private val COUNTDOWN: Long = 3000
     private val GAME_LENGTH: Long = 30000
+    abstract val CHAPTER_ID: Int
 
     private var countDownTimer: CountDownTimer? = null
     protected var gameTimer = GameTimer()
@@ -38,7 +39,11 @@ abstract class ChapterViewModel(application: Application) : AndroidViewModel(app
         application.getString(R.string.score, score)
     }
 
-    val gameFinishEvent = gameTimer.finished
+    val gameFinishEvent = Transformations.map(gameTimer.finished) { event ->
+        if (event.peekContent())
+            onGameFinish()
+        event
+    }
 
     protected val _mistake = MutableLiveData<Boolean>()
     val mistake: LiveData<Boolean>
@@ -67,6 +72,10 @@ abstract class ChapterViewModel(application: Application) : AndroidViewModel(app
         }
 
         countDownTimer?.start()
+    }
+
+    open fun onGameFinish() {
+        RecordsStorage(getApplication()).saveRecord(CHAPTER_ID, _score.value ?: 0)
     }
 
     fun resumeCountdown() {

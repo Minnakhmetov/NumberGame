@@ -5,6 +5,8 @@ import android.text.SpannableStringBuilder
 import androidx.lifecycle.*
 
 class ChapterTwoViewModel(application: Application) : ChapterViewModel(application) {
+    override val CHAPTER_ID = 2
+
     override fun initializeWords(words: MediatorLiveData<Pair<Boolean, SpannableStringBuilder>>) {
         words.addSource(_currentNumber) { number ->
             words.value = Pair(true, getWords(number, "", false))

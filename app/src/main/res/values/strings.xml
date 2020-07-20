@@ -1,3 +1,5 @@
+<!DOCTYPE resources [<!ENTITY applicaton_id "com.example.numbersgame">]>
+
 <resources>
     <string name="app_name">Numbers Game</string>
     <!-- TODO: Remove or change this placeholder text -->
@@ -13,4 +15,7 @@
     <string name="authors_name">Bulat Minnakhmetov</string>
     <string name="authors_telegram">"@BulatMinnakhmetov"</string>
     <string name="author_label">Author:</string>
+    <string name="records_file_key">&applicaton_id;.records_file_key</string>
+    <string name="chapter_key">chapter%d_key</string>
+    <string name="chapter_record">%d/%d</string>
 </resources>

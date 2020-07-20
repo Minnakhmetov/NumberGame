@@ -24,12 +24,18 @@ class ChapterRecyclerViewAdapter(private val onClick: (Int) -> Unit) :
 class ChapterViewHolder private constructor(root: View) : RecyclerView.ViewHolder(root) {
     private val name = root.findViewById<TextView>(R.id.name)
     private val description = root.findViewById<TextView>(R.id.description)
+    private val progress = root.findViewById<TextView>(R.id.progress)
 
     fun bind(chapter: Chapter, onClick: (Int) -> Unit) {
         Timber.i("bind called")
         name.text = chapter.name
         description.text = chapter.description
         itemView.setOnClickListener { onClick(chapter.id) }
+        progress.text = itemView.context.getString(
+            R.string.chapter_record,
+            chapter.userScore,
+            chapter.requiredScore
+        )
     }
 
     companion object {

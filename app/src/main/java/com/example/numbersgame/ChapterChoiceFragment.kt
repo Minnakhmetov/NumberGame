@@ -1,5 +1,6 @@
 package com.example.numbersgame
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -27,16 +28,22 @@ class ChapterChoiceFragment : Fragment() {
         binding.chaptersList.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         binding.chaptersList.adapter = adapter
 
+        val recordsStorage = RecordsStorage(requireContext())
+
         adapter.submitList(listOf(
             Chapter(
                 1,
                 "Chapter 1",
-                "Simplest one. Just do it."
+                "Simplest one. Just do it.",
+                12,
+                recordsStorage.getRecord(1)
             ),
             Chapter(
                 2,
                 "Chapter 2",
-                "A single mistake can cost a lot, right? No hints this time."
+                "A single mistake can cost a lot, right? No hints this time.",
+                12,
+                recordsStorage.getRecord(2)
             )
         ))
 
