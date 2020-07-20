@@ -9,7 +9,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/spacing_small"
+        android:padding="@dimen/spacing_normal"
         tools:context="com.example.numbersgame.ChapterChoiceFragment">
 
         <androidx.recyclerview.widget.RecyclerView
