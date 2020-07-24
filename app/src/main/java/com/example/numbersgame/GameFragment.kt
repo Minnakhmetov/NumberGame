@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.numbersgame.databinding.FragmentGameBinding
+import kotlin.properties.Delegates
 
 class GameFragment : Fragment() {
 
@@ -19,14 +20,17 @@ class GameFragment : Fragment() {
 
     private lateinit var mistakeFrameAnimation: Animation
 
+    private var chapterId by Delegates.notNull<Int>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
+        chapterId = GameFragmentArgs.fromBundle(requireArguments()).id
 
         viewModel = ViewModelProvider(this).get(
-            when (GameFragmentArgs.fromBundle(requireArguments()).id) {
+            when (chapterId) {
                 1 -> ChapterOneViewModel::class.java
                 else -> ChapterTwoViewModel::class.java
             }
@@ -51,7 +55,7 @@ class GameFragment : Fragment() {
 
         viewModel.gameFinishEvent.observe(viewLifecycleOwner, Observer { isFinished ->
             if (isFinished?.getContentIfNotHandled() == true) {
-                findNavController().navigate(GameFragmentDirections.actionGameFragmentToResultsFragment(viewModel.finalScore))
+                findNavController().navigate(GameFragmentDirections.actionGameFragmentToResultsFragment(viewModel.finalScore, chapterId))
             }
         })
 

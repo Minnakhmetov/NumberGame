@@ -27,13 +27,18 @@ class ResultsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val args = ResultsFragmentArgs.fromBundle(requireArguments())
+
         binding.finalScore.text = getString(
             R.string.final_score,
-            ResultsFragmentArgs.fromBundle(requireArguments()).score
+            args.score
         )
 
         binding.mainMenuButton.setOnClickListener {
             findNavController().navigateUp()
+        }
+        binding.playAgainButton.setOnClickListener {
+            findNavController().navigate(ResultsFragmentDirections.actionResultsFragmentToGameFragment(args.chapterId))
         }
     }
 

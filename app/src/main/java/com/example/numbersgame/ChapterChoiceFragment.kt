@@ -35,14 +35,14 @@ class ChapterChoiceFragment : Fragment() {
                 1,
                 "Chapter 1",
                 "Simplest one. Just do it.",
-                12,
+                10,
                 recordsStorage.getRecord(1)
             ),
             Chapter(
                 2,
                 "Chapter 2",
                 "A single mistake can cost a lot, right? No hints this time.",
-                12,
+                10,
                 recordsStorage.getRecord(2)
             )
         ))

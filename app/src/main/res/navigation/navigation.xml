@@ -55,6 +55,18 @@
         <argument
             android:name="score"
             app:argType="integer" />
+        <argument
+            android:name="chapterId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_resultsFragment_to_gameFragment"
+            app:destination="@id/gameFragment"
+            app:enterAnim="@anim/silde_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:popUpTo="@id/resultsFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/chapterChoiceFragment"

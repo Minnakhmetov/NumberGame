@@ -18,4 +18,5 @@
     <string name="records_file_key">&applicaton_id;.records_file_key</string>
     <string name="chapter_key">chapter%d_key</string>
     <string name="chapter_record">%d/%d</string>
+    <string name="play_again_button">play again</string>
 </resources>

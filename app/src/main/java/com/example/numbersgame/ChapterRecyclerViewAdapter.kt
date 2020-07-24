@@ -25,7 +25,6 @@ class ChapterRecyclerViewAdapter(private val onClick: (Int) -> Unit) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChapterViewHolder {
-        Timber.i("onCreateViewHolder called")
         return ChapterViewHolder.from(parent)
     }
 
