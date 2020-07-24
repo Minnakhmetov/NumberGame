@@ -11,12 +11,16 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.numbersgame.databinding.FragmentGameBinding
+import com.example.numbersgame.gamemodes.GameModeViewModel
+import com.example.numbersgame.gamemodes.OneMistakeModeViewModel
+import com.example.numbersgame.gamemodes.TextModeViewModel
+import com.example.numbersgame.gamemodes.VoiceModeViewModel
 import kotlin.properties.Delegates
 
 class GameFragment : Fragment() {
 
     private lateinit var binding: FragmentGameBinding
-    private lateinit var viewModel: ChapterViewModel
+    private lateinit var viewModel: GameModeViewModel
 
     private lateinit var mistakeFrameAnimation: Animation
 
@@ -31,8 +35,9 @@ class GameFragment : Fragment() {
 
         viewModel = ViewModelProvider(this).get(
             when (chapterId) {
-                1 -> ChapterOneViewModel::class.java
-                else -> ChapterTwoViewModel::class.java
+                1 -> TextModeViewModel::class.java
+                2 -> OneMistakeModeViewModel::class.java
+                else -> VoiceModeViewModel::class.java
             }
         )
 

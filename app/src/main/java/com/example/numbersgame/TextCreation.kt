@@ -218,4 +218,4 @@ fun getRandomNumberOfLength(length: Int): String {
     return Random.nextInt(getPowerOfTen(length - 1), getPowerOfTen(length)).toString()
 }
 
-fun getRandomNumber(): String = getRandomNumberOfLength(Random.nextInt(1, 9))
+fun getRandomNumber(minLength: Int = 1, maxLength: Int = 9): String = getRandomNumberOfLength(Random.nextInt(minLength, maxLength))

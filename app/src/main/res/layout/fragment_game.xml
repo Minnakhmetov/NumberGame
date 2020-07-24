@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.numbersgame.ChapterViewModel" />
+            type="com.example.numbersgame.gamemodes.GameModeViewModel" />
     </data>
 
     <FrameLayout
@@ -242,6 +242,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:padding="@dimen/spacing_normal"
+                android:onClick="@{() -> viewModel.onWordsClick()}"
                 app:layout_constraintBottom_toTopOf="@+id/textView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

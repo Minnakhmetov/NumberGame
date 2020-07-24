@@ -14,11 +14,10 @@ class ChapterRecyclerViewAdapter(private val onClick: (Int) -> Unit) :
     ListAdapter<Chapter, ChapterViewHolder>(ChapterDiffCallback()) {
 
     override fun submitList(list: List<Chapter>?) {
+        // all chapters are unlocked
         list?.let {
             for (chapter in list) {
                 chapter.unlocked = true
-                if (chapter.userScore < chapter.requiredScore)
-                    break
             }
         }
         super.submitList(list)

@@ -19,4 +19,5 @@
     <string name="chapter_key">chapter%d_key</string>
     <string name="chapter_record">%d/%d</string>
     <string name="play_again_button">play again</string>
+    <string name="tap_to_listen">TAP TO LISTEN</string>
 </resources>
