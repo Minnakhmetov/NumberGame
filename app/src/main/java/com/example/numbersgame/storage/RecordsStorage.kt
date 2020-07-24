@@ -1,7 +1,7 @@
-package com.example.numbersgame
+package com.example.numbersgame.storage
 
-import android.app.Application
 import android.content.Context
+import com.example.numbersgame.R
 import kotlin.math.max
 
 class RecordsStorage(private val context: Context) {

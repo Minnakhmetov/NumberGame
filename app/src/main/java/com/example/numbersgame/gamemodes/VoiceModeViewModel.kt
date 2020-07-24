@@ -3,7 +3,7 @@ package com.example.numbersgame.gamemodes
 import android.app.Application
 import android.text.SpannableStringBuilder
 import com.example.numbersgame.GameApplication
-import com.example.numbersgame.NumberReader
+import com.example.numbersgame.utils.NumberReader
 import com.example.numbersgame.R
 
 class VoiceModeViewModel(application: Application) : GameModeViewModel(application) {

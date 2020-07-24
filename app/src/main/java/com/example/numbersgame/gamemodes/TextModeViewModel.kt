@@ -1,7 +1,7 @@
 package com.example.numbersgame.gamemodes
 
 import android.app.Application
-import com.example.numbersgame.getWords
+import com.example.numbersgame.utils.getWords
 
 class TextModeViewModel(application: Application) : GameModeViewModel(application) {
     override val CHAPTER_ID = 1
@@ -13,7 +13,8 @@ class TextModeViewModel(application: Application) : GameModeViewModel(applicatio
             _currentNumber.value ?: "",
             _userInput.value ?: "",
             true
-        ))
+        )
+        )
     }
 
     override fun onCurrentNumberChanged() {

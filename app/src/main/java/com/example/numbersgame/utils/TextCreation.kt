@@ -1,4 +1,4 @@
-package com.example.numbersgame
+package com.example.numbersgame.utils
 
 import android.graphics.Color
 import android.text.Spannable
@@ -33,7 +33,11 @@ fun convertTwoDigitNumberToWords(number: String): String {
     }
 
     return when (number.indexOfFirst { it != '0' }) {
-        1 -> convertOneDigitNumberToWords(number.substring(1))
+        1 -> convertOneDigitNumberToWords(
+            number.substring(
+                1
+            )
+        )
         0 -> when (number) {
             "10" -> "ten"
             "11" -> "eleven"
@@ -57,7 +61,9 @@ fun convertTwoDigitNumberToWords(number: String): String {
                     else -> "ninety"
                 }
                 if (number[1] != '0')
-                    result = result + "-" + convertOneDigitNumberToWords(number[1].toString())
+                    result = result + "-" + convertOneDigitNumberToWords(
+                        number[1].toString()
+                    )
                 result
             }
         }
@@ -71,11 +77,23 @@ fun convertThreeDigitNumberToWords(number: String): String {
     }
 
     return when (number.indexOfFirst { it != '0' }) {
-        2 -> convertOneDigitNumberToWords(number.substring(2))
-        1 -> convertTwoDigitNumberToWords(number.substring(1))
+        2 -> convertOneDigitNumberToWords(
+            number.substring(
+                2
+            )
+        )
+        1 -> convertTwoDigitNumberToWords(
+            number.substring(
+                1
+            )
+        )
         0 -> {
-            return ("${convertOneDigitNumberToWords(number.substring(0, 1))} hundred " +
-                    convertTwoDigitNumberToWords(number.substring(1, 3))).trim()
+            return ("${convertOneDigitNumberToWords(
+                number.substring(0, 1)
+            )} hundred " +
+                    convertTwoDigitNumberToWords(
+                        number.substring(1, 3)
+                    )).trim()
         }
         else -> ""
     }
@@ -129,15 +147,27 @@ fun stylePart(number: String, prefix: String?, part: SpannableString) {
     } else {
         when (prefix?.commonPrefixWith(number)?.length ?: 0) {
             0 -> {
-                transparentPrefixAndUnderlineWord(0, part)
+                transparentPrefixAndUnderlineWord(
+                    0,
+                    part
+                )
             }
             1 -> {
                 if (number[0] == '0') {
-                    transparentPrefixAndUnderlineWord(0, part)
+                    transparentPrefixAndUnderlineWord(
+                        0,
+                        part
+                    )
                 } else if (number[1] == '0' && number[2] == '0') {
-                    transparentPrefixAndUnderlineWord(1, part)
+                    transparentPrefixAndUnderlineWord(
+                        1,
+                        part
+                    )
                 } else if (number[1] != '0' || number[2] != '0') {
-                    transparentPrefixAndUnderlineWord(2, part)
+                    transparentPrefixAndUnderlineWord(
+                        2,
+                        part
+                    )
                 }
             }
             2 -> {
@@ -157,7 +187,10 @@ fun stylePart(number: String, prefix: String?, part: SpannableString) {
                     }
                 }
 
-                transparentPrefixAndUnderlineWord(underlinedWordPos, part)
+                transparentPrefixAndUnderlineWord(
+                    underlinedWordPos,
+                    part
+                )
             }
         }
     }
@@ -186,16 +219,24 @@ fun getWords(rawNumber: String, rawPrefix: String, styled: Boolean): SpannableSt
 
     for (i in chunkedNumber.indices) {
         val part = SpannableString(
-            convertThreeDigitNumberToWords(chunkedNumber[i]).let {
+            convertThreeDigitNumberToWords(
+                chunkedNumber[i]
+            ).let {
                 if (it.isNotEmpty())
-                    "$it ${getPartName(chunkedNumber.size - i - 1)}"
+                    "$it ${getPartName(
+                        chunkedNumber.size - i - 1
+                    )}"
                 else
                     it
             }
         )
 
         if (styled && firstMistake) {
-            stylePart(chunkedNumber[i], chunkedPrefix.getOrNull(i), part)
+            stylePart(
+                chunkedNumber[i],
+                chunkedPrefix.getOrNull(i),
+                part
+            )
             if (chunkedNumber[i] != chunkedPrefix.getOrNull(i))
                 firstMistake = false
         }
@@ -215,7 +256,16 @@ fun getPowerOfTen(power: Int): Int {
 }
 
 fun getRandomNumberOfLength(length: Int): String {
-    return Random.nextInt(getPowerOfTen(length - 1), getPowerOfTen(length)).toString()
+    return Random.nextInt(
+        getPowerOfTen(length - 1),
+        getPowerOfTen(length)
+    ).toString()
 }
 
-fun getRandomNumber(minLength: Int = 1, maxLength: Int = 9): String = getRandomNumberOfLength(Random.nextInt(minLength, maxLength))
+fun getRandomNumber(minLength: Int = 1, maxLength: Int = 9): String =
+    getRandomNumberOfLength(
+        Random.nextInt(
+            minLength,
+            maxLength
+        )
+    )

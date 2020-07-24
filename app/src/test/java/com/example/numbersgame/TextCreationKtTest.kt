@@ -1,5 +1,6 @@
 package com.example.numbersgame
 
+import com.example.numbersgame.utils.convertThreeDigitNumberToWords
 import org.junit.Test
 
 class TextCreationKtTest {
@@ -14,7 +15,8 @@ class TextCreationKtTest {
         )
 
         for (test in testCases) {
-            val returnedString = convertThreeDigitNumberToWords(test.first)
+            val returnedString =
+                convertThreeDigitNumberToWords(test.first)
             assert(returnedString == test.second) {
                 "$returnedString was returned when ${test.second} was expected"
             }

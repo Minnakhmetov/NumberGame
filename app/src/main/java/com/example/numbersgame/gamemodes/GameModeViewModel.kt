@@ -6,6 +6,8 @@ import android.text.SpannableStringBuilder
 import androidx.lifecycle.*
 import com.example.numbersgame.*
 import com.example.numbersgame.R
+import com.example.numbersgame.storage.RecordsStorage
+import com.example.numbersgame.utils.getRandomNumber
 
 abstract class GameModeViewModel(application: Application) : AndroidViewModel(application) {
     private val COUNTDOWN: Long = 3000

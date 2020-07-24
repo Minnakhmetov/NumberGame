@@ -1,11 +1,11 @@
-package com.example.numbersgame
+package com.example.numbersgame.gamemodes
 
 import android.os.CountDownTimer
 import android.os.SystemClock
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.numbersgame.Event
 import timber.log.Timber
-import kotlin.properties.Delegates
 
 class GameTimer {
     // Time when timer stops or -1 if timer has not started

@@ -1,7 +1,7 @@
 package com.example.numbersgame.gamemodes
 
 import android.app.Application
-import com.example.numbersgame.getWords
+import com.example.numbersgame.utils.getWords
 
 class OneMistakeModeViewModel(application: Application) : GameModeViewModel(application) {
     override val CHAPTER_ID = 2
@@ -10,7 +10,11 @@ class OneMistakeModeViewModel(application: Application) : GameModeViewModel(appl
         super.onCurrentNumberChanged()
         setWords(
             true,
-            getWords(_currentNumber.value ?: "", "", false)
+            getWords(
+                _currentNumber.value ?: "",
+                "",
+                false
+            )
         )
     }
 

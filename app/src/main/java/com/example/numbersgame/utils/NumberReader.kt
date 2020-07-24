@@ -1,8 +1,9 @@
-package com.example.numbersgame
+package com.example.numbersgame.utils
 
 import android.content.Context
 import android.media.MediaPlayer
 import android.os.Handler
+import com.example.numbersgame.R
 
 class NumberReader {
     private val handler = Handler()

@@ -1,6 +1,5 @@
 package com.example.numbersgame
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.example.numbersgame.R
 import com.example.numbersgame.databinding.FragmentChapterChoiceBinding
+import com.example.numbersgame.storage.RecordsStorage
 
 class ChapterChoiceFragment : Fragment() {
 
@@ -28,7 +27,8 @@ class ChapterChoiceFragment : Fragment() {
         binding.chaptersList.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         binding.chaptersList.adapter = adapter
 
-        val recordsStorage = RecordsStorage(requireContext())
+        val recordsStorage =
+            RecordsStorage(requireContext())
 
         adapter.submitList(listOf(
             Chapter(
