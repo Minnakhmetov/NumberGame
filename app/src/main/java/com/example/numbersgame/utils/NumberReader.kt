@@ -51,16 +51,16 @@ class NumberReader {
     fun start() {
         stop()
 
-        var lastItemStart = 0L
+        var nextItemStart = 0L
         for (item in mediaPlayerList) {
             item.seekTo(0)
 
             handler.postDelayed({
                 currentTrack = item
                 item.start()
-            }, lastItemStart)
+            }, nextItemStart)
 
-            lastItemStart += item.duration
+            nextItemStart += item.duration + 100
         }
     }
 }

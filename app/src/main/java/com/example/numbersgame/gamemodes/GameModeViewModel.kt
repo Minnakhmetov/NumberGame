@@ -17,7 +17,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
     private var countDownTimer: CountDownTimer? = null
     protected var gameTimer = GameTimer()
 
-    open val minNumberLength: Int = 9
+    open val minNumberLength: Int = 1
     open val maxNumberLength: Int = 9
 
     val BACKSPACE = 10
@@ -104,7 +104,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
     }
 
     private fun startNewRound() {
-        _currentNumber.value = getRandomNumber()
+        _currentNumber.value = getRandomNumber(minNumberLength, maxNumberLength)
         onCurrentNumberChanged()
         _userInput.value = ""
         onUserInputChanged()
