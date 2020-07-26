@@ -262,10 +262,10 @@ fun getRandomNumberOfLength(length: Int): String {
     ).toString()
 }
 
-fun getRandomNumber(minLength: Int = 1, maxLength: Int = 9): String =
+fun getRandomNumber(minLength: Int, maxLength: Int): String =
     getRandomNumberOfLength(
         Random.nextInt(
             minLength,
-            maxLength
+            maxLength + 1
         )
     )

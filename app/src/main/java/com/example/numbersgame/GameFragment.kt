@@ -51,12 +51,6 @@ class GameFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.startCountdown()
-        viewModel.gameStartEvent.observe(viewLifecycleOwner, Observer {
-            if (it?.getContentIfNotHandled() == true) {
-                showInterface()
-                viewModel.startGame()
-            }
-        })
 
         viewModel.gameFinishEvent.observe(viewLifecycleOwner, Observer { isFinished ->
             if (isFinished?.getContentIfNotHandled() == true) {
@@ -107,10 +101,5 @@ class GameFragment : Fragment() {
         viewModel.resumeGameTimer()
         viewModel.resumeCountdown()
         checkIfMistakeAndShowFrame()
-    }
-
-    private fun showInterface() {
-        binding.gameInterface.visibility = View.VISIBLE
-        binding.startCountdown.visibility = View.INVISIBLE
     }
 }

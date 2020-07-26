@@ -9,9 +9,6 @@ import com.example.numbersgame.R
 class VoiceModeViewModel(application: Application) : GameModeViewModel(application) {
     override val CHAPTER_ID: Int = 3
 
-    override val minNumberLength: Int = 1
-    override val maxNumberLength: Int = 6
-
     private val numberReader = NumberReader()
 
     override fun onCurrentNumberChanged() {
@@ -39,5 +36,10 @@ class VoiceModeViewModel(application: Application) : GameModeViewModel(applicati
     override fun onWordsClick() {
         super.onWordsClick()
         numberReader.start()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        numberReader.stop()
     }
 }

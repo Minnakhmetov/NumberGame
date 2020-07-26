@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.example.numbersgame.gamemodes.GameModeViewModel" />
@@ -31,9 +33,10 @@
                 android:id="@+id/start_countdown"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@{viewModel.countdownString}"
                 android:inAnimation="@anim/fragment_open_enter"
-                tools:visibility="invisible" >
+                android:text="@{viewModel.countdownString}"
+                android:visibility="@{viewModel.gameStarted ? View.GONE : View.VISIBLE }"
+                tools:visibility="invisible">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -206,7 +209,7 @@
                 android:id="@+id/gameInterface"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
+                android:visibility="@{viewModel.gameStarted ? View.VISIBLE : View.GONE}"
                 app:constraint_referenced_ids="gameKeyboard, timer, words, score"
                 tools:visibility="visible" />
 
@@ -241,26 +244,26 @@
                 android:id="@+id/words"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:padding="@dimen/spacing_normal"
+                android:inAnimation="@anim/fragment_open_enter"
                 android:onClick="@{() -> viewModel.onWordsClick()}"
+                android:padding="@dimen/spacing_normal"
                 app:layout_constraintBottom_toTopOf="@+id/textView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/timer"
-                android:inAnimation="@anim/fragment_open_enter">
+                app:layout_constraintTop_toBottomOf="@+id/timer">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textSize="30sp"
                     android:gravity="center"
+                    android:textSize="30sp"
                     tools:text="one hundred twenty-three million one hundred twenty-four thousand two hundred thirteen" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textSize="30sp"
                     android:gravity="center"
+                    android:textSize="30sp"
                     tools:text="one hundred twenty-three million one hundred twenty-four thousand two hundred thirteen" />
 
             </TextSwitcher>
@@ -269,8 +272,8 @@
                 android:id="@+id/score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAllCaps="true"
                 android:text="@{viewModel.formattedScore}"
+                android:textAllCaps="true"
                 android:textSize="25sp"
                 app:layout_constraintBottom_toBottomOf="@+id/timer"
                 app:layout_constraintEnd_toEndOf="parent"

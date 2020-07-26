@@ -8,6 +8,8 @@ import com.example.numbersgame.*
 import com.example.numbersgame.R
 import com.example.numbersgame.storage.RecordsStorage
 import com.example.numbersgame.utils.getRandomNumber
+import timber.log.Timber
+import kotlin.math.min
 
 abstract class GameModeViewModel(application: Application) : AndroidViewModel(application) {
     private val COUNTDOWN: Long = 3000
@@ -17,14 +19,14 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
     private var countDownTimer: CountDownTimer? = null
     protected var gameTimer = GameTimer()
 
-    open val minNumberLength: Int = 1
-    open val maxNumberLength: Int = 9
+    private val _gameStarted = MutableLiveData<Boolean>(false)
+    val gameStarted: LiveData<Boolean>
+        get() = _gameStarted
+
+    private var minNumberLength: Int = 1
+    private var maxNumberLength: Int = 1
 
     val BACKSPACE = 10
-
-    private val _gameStartEvent = MutableLiveData<Event<Boolean>>()
-    val gameStartEvent: LiveData<Event<Boolean>>
-        get() = _gameStartEvent
 
     private val secondsBeforeStart = MutableLiveData<Long>()
     val countdownString: LiveData<String> =
@@ -71,8 +73,8 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
             }
 
             override fun onFinish() {
-                _gameStartEvent.value = Event(true)
                 countDownTimer = null
+                startGame()
             }
         }
 
@@ -101,6 +103,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
         startGameTimer()
         startNewRound()
         onGameStarted()
+        _gameStarted.value = true
     }
 
     private fun startNewRound() {
@@ -128,8 +131,10 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
 
     open fun onUserInputChanged() {
         if (_userInput.value == _currentNumber.value) {
-            startNewRound()
             _score.value = (_score.value ?: 0) + 1
+            minNumberLength = min(9, (_score.value ?: 0) + 1)
+            maxNumberLength = minNumberLength
+            startNewRound()
         }
     }
 

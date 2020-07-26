@@ -8,7 +8,13 @@ import com.example.numbersgame.R
 class NumberReader {
     private val handler = Handler()
     private var mediaPlayerList = listOf<MediaPlayer>()
+    private val delayList = mutableListOf<Int>()
     private var currentTrack: MediaPlayer? = null
+
+    companion object {
+        private const val SHORT_DELAY = 50
+        private const val LONG_DELAY = 250
+    }
 
     fun stop() {
         handler.removeCallbacksAndMessages(null)
@@ -22,6 +28,7 @@ class NumberReader {
             return
 
         val rawList = mutableListOf<Int>()
+        delayList.clear()
 
         if (number == "0") {
             rawList.add(R.raw.a0)
@@ -37,10 +44,13 @@ class NumberReader {
 
                 if (ch[0] == '0' || ch.count { it != '0' } == 1) {
                     rawList.add(context.getRawId("a${ch.removeLeadingZeroes()}" + "000".repeat(2 - i)))
+                    delayList.add(LONG_DELAY)
                 }
                 else {
                     rawList.add(context.getRawId("a${ch[0]}00and"))
+                    delayList.add(SHORT_DELAY)
                     rawList.add(context.getRawId("a${ch.substring(1).removeLeadingZeroes()}" + "000".repeat(2 - i)))
+                    delayList.add(LONG_DELAY)
                 }
             }
         }
@@ -51,16 +61,16 @@ class NumberReader {
     fun start() {
         stop()
 
-        var nextItemStart = 0L
-        for (item in mediaPlayerList) {
-            item.seekTo(0)
+        var lastItemEnd = 0L
+        for (i in mediaPlayerList.indices) {
+            val item = mediaPlayerList[i]
 
             handler.postDelayed({
                 currentTrack = item
                 item.start()
-            }, nextItemStart)
+            }, lastItemEnd)
 
-            nextItemStart += item.duration + 100
+            lastItemEnd += item.duration + delayList[i]
         }
     }
 }

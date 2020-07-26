@@ -33,23 +33,23 @@ class ChapterChoiceFragment : Fragment() {
         adapter.submitList(listOf(
             Chapter(
                 1,
-                "Text Mode",
+                "Chapter 1",
                 "Simplest one. Just do it.",
-                10,
+                7,
                 recordsStorage.getRecord(1)
             ),
             Chapter(
                 2,
-                "One Mistake Mode",
+                "Chapter 2",
                 "A single mistake can cost a lot, right? No hints this time.",
-                10,
+                7,
                 recordsStorage.getRecord(2)
             ),
             Chapter(
                 3,
-                "Voice Mode",
+                "Chapter 3",
                 "Be careful, takes a lot of attention.",
-                10,
+                7,
                 recordsStorage.getRecord(3)
             )
         ))

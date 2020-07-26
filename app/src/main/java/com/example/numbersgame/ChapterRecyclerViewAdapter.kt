@@ -18,6 +18,8 @@ class ChapterRecyclerViewAdapter(private val onClick: (Int) -> Unit) :
         list?.let {
             for (chapter in list) {
                 chapter.unlocked = true
+//                if (chapter.requiredScore > chapter.userScore)
+//                    break
             }
         }
         super.submitList(list)
