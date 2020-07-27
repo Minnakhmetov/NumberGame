@@ -91,15 +91,13 @@ class GameFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        viewModel.stopGameTimer()
-        viewModel.stopCountdown()
+        viewModel.onGamePaused()
         stopMistakeAnimation()
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.resumeGameTimer()
-        viewModel.resumeCountdown()
+        viewModel.onGameResumed()
         checkIfMistakeAndShowFrame()
     }
 }

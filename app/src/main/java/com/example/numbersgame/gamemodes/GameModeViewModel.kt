@@ -121,6 +121,16 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
         gameTimer.pause()
     }
 
+    open fun onGamePaused() {
+        stopCountdown()
+        stopGameTimer()
+    }
+
+    open fun onGameResumed() {
+        resumeCountdown()
+        resumeGameTimer()
+    }
+
     open fun onGameStarted() {
 
     }

@@ -42,4 +42,9 @@ class VoiceModeViewModel(application: Application) : GameModeViewModel(applicati
         super.onCleared()
         numberReader.stop()
     }
+
+    override fun onGamePaused() {
+        super.onGamePaused()
+        numberReader.stop()
+    }
 }

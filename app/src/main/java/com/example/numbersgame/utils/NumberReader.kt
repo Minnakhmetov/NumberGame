@@ -12,7 +12,7 @@ class NumberReader {
     private var currentTrack: MediaPlayer? = null
 
     companion object {
-        private const val SHORT_DELAY = 50
+        private const val SHORT_DELAY = 0
         private const val LONG_DELAY = 250
     }
 
