@@ -15,7 +15,7 @@ import kotlin.math.min
 
 abstract class GameModeViewModel(application: Application) : AndroidViewModel(application) {
     private val COUNTDOWN: Long = 3000
-    private val GAME_LENGTH: Long = 30000
+    private val GAME_LENGTH: Long = 40000
 
     abstract val CHAPTER_ID: Int
 
@@ -112,6 +112,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
 
     private fun startNewRound() {
         _currentNumber.value = getRandomNumber(minNumberLength, maxNumberLength)
+        Timber.i(_currentNumber.value)
         onCurrentNumberChanged()
         _userInput.value = ""
         onUserInputChanged()

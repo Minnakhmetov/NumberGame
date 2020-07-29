@@ -35,7 +35,6 @@ class GameTimer {
                 }
 
                 override fun onTick(millisUntilFinished: Long) {
-                    Timber.i("tick")
                     _secondsLeft.value = millisUntilFinished / 1000
                 }
             }.start()
