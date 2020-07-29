@@ -16,6 +16,7 @@ import kotlin.math.min
 abstract class GameModeViewModel(application: Application) : AndroidViewModel(application) {
     private val COUNTDOWN: Long = 3000
     private val GAME_LENGTH: Long = 30000
+
     abstract val CHAPTER_ID: Int
 
     private var countDownTimer: CountDownTimer? = null
@@ -157,7 +158,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
     }
 
     open fun onMistakeStatusChanged(isMistaken: Boolean) {
-
+        _mistakeFrame.value = isMistaken
     }
 
     fun setWords(animate: Boolean, newWords: SpannableStringBuilder) {

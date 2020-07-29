@@ -6,8 +6,8 @@ import com.example.numbersgame.GameApplication
 import com.example.numbersgame.utils.NumberReader
 import com.example.numbersgame.R
 
-class VoiceModeViewModel(application: Application) : GameModeViewModel(application) {
-    override val CHAPTER_ID: Int = 3
+open class VoiceModeViewModel(application: Application) : GameModeViewModel(application) {
+    override val CHAPTER_ID: Int = 2
 
     private val numberReader = NumberReader()
 

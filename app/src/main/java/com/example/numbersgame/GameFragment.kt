@@ -11,10 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.numbersgame.databinding.FragmentGameBinding
-import com.example.numbersgame.gamemodes.GameModeViewModel
-import com.example.numbersgame.gamemodes.OneMistakeModeViewModel
-import com.example.numbersgame.gamemodes.TextModeViewModel
-import com.example.numbersgame.gamemodes.VoiceModeViewModel
+import com.example.numbersgame.gamemodes.*
 import kotlin.properties.Delegates
 
 class GameFragment : Fragment() {
@@ -36,8 +33,9 @@ class GameFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(
             when (chapterId) {
                 1 -> TextModeViewModel::class.java
-                2 -> OneMistakeModeViewModel::class.java
-                else -> VoiceModeViewModel::class.java
+                2 -> VoiceModeViewModel::class.java
+                3 -> OneMistakeTextModeViewModel::class.java
+                else -> OneMistakeVoiceModeViewModel::class.java
             }
         )
 
