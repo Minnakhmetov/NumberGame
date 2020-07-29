@@ -54,4 +54,25 @@
         app:layout_constraintBottom_toTopOf="@+id/author_name"
         app:layout_constraintStart_toStartOf="@+id/author_name" />
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:maxEms="10"
+        android:text="@string/credits_to_sound_creator"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="@+id/author_name"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:text="@string/credits_label"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="@+id/author_headline"
+        app:layout_constraintTop_toBottomOf="@+id/telegram" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

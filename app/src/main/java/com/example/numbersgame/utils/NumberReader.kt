@@ -8,12 +8,13 @@ import com.example.numbersgame.R
 class NumberReader {
     private val handler = Handler()
     private var mediaPlayerList = listOf<MediaPlayer>()
-    private val delayList = mutableListOf<Int>()
+    private val delayList = mutableListOf<Long>()
     private var currentTrack: MediaPlayer? = null
 
     companion object {
-        private const val SHORT_DELAY = 0
-        private const val LONG_DELAY = 250
+        private const val SHORT_DELAY = 0L
+        private const val LONG_DELAY = 250L
+        private const val AFTER_SUCCESS_DELAY = 800L
     }
 
     fun stop() {
@@ -58,19 +59,20 @@ class NumberReader {
         mediaPlayerList = rawList.map { MediaPlayer.create(context, it) }
     }
 
-    fun start() {
+    fun start(afterSuccess: Boolean = false) {
         stop()
 
-        var lastItemEnd = 0L
+        var nextItemStart: Long = if (afterSuccess) AFTER_SUCCESS_DELAY else 0
+
         for (i in mediaPlayerList.indices) {
             val item = mediaPlayerList[i]
 
             handler.postDelayed({
                 currentTrack = item
                 item.start()
-            }, lastItemEnd)
+            }, nextItemStart)
 
-            lastItemEnd += item.duration + delayList[i]
+            nextItemStart += item.duration + delayList[i]
         }
     }
 }

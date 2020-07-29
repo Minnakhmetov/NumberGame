@@ -11,10 +11,13 @@ class VoiceModeViewModel(application: Application) : GameModeViewModel(applicati
 
     private val numberReader = NumberReader()
 
+    private var isFirstRound = true
+
     override fun onCurrentNumberChanged() {
         super.onCurrentNumberChanged()
         numberReader.load(getApplication(), _currentNumber.value ?: "")
-        numberReader.start()
+        numberReader.start(!isFirstRound)
+        isFirstRound = false
         setWords(
             true,
             SpannableStringBuilder(getApplication<GameApplication>().getString(R.string.tap_to_listen))

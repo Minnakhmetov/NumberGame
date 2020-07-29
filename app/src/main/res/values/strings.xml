@@ -20,4 +20,6 @@
     <string name="chapter_record">%d/%d</string>
     <string name="play_again_button">play again</string>
     <string name="tap_to_listen">TAP TO LISTEN</string>
+    <string name="credits_label">Credits:</string>
+    <string name="credits_to_sound_creator">NoiseForFun.com for incredible sounds</string>
 </resources>

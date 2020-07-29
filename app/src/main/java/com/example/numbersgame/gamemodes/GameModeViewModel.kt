@@ -1,7 +1,9 @@
 package com.example.numbersgame.gamemodes
 
 import android.app.Application
+import android.media.MediaPlayer
 import android.os.CountDownTimer
+import android.provider.MediaStore
 import android.text.SpannableStringBuilder
 import androidx.lifecycle.*
 import com.example.numbersgame.*
@@ -84,6 +86,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
     open fun onGameFinish() {
         RecordsStorage(getApplication())
             .saveRecord(CHAPTER_ID, _score.value ?: 0)
+        MediaPlayer.create(getApplication(), R.raw.failure).start()
     }
 
     fun resumeCountdown() {
@@ -142,6 +145,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
     open fun onUserInputChanged() {
         if (_userInput.value == _currentNumber.value) {
             _score.value = (_score.value ?: 0) + 1
+            MediaPlayer.create(getApplication(), R.raw.success).start()
             minNumberLength = min(9, (_score.value ?: 0) + 1)
             maxNumberLength = minNumberLength
             startNewRound()
