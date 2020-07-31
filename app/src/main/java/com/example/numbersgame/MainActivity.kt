@@ -7,6 +7,9 @@ import android.widget.ImageView
 import androidx.navigation.findNavController
 
 class MainActivity : AppCompatActivity() {
+
+    var hideBackButtonInGameFragment = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -18,6 +21,12 @@ class MainActivity : AppCompatActivity() {
             backButton.visibility = when (destination.id) {
                 R.id.mainMenuFragment -> View.INVISIBLE
                 R.id.resultsFragment -> View.INVISIBLE
+                R.id.gameFragment -> {
+                    if (hideBackButtonInGameFragment)
+                        View.INVISIBLE
+                    else
+                        View.VISIBLE
+                }
                 else -> View.VISIBLE
             }
         }

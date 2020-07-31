@@ -33,11 +33,10 @@
         <action
             android:id="@+id/action_gameFragment_to_resultsFragment"
             app:destination="@id/resultsFragment"
-            app:enterAnim="@anim/fragment_open_enter"
-            app:exitAnim="@anim/fragment_open_exit"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/silde_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/mainMenuFragment" />
+            app:popExitAnim="@anim/slide_out_right" />
         <argument
             android:name="id"
             app:argType="integer" />
@@ -65,7 +64,7 @@
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@android:anim/slide_out_right"
-            app:popUpTo="@id/resultsFragment"
+            app:popUpTo="@id/gameFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
@@ -75,6 +74,16 @@
         tools:layout="@layout/fragment_chapter_choice" >
         <action
             android:id="@+id/action_chapterChoiceFragment_to_gameFragment"
-            app:destination="@id/gameFragment" />
+            app:destination="@id/gameFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/silde_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+    <action
+        android:id="@+id/action_global_mainMenuFragment"
+        app:destination="@id/mainMenuFragment"
+        app:enterAnim="@anim/silde_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popUpTo="@id/mainMenuFragment" />
 </navigation>

@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.numbersgame.databinding.FragmentGameBinding
 import com.example.numbersgame.gamemodes.*
+import timber.log.Timber
 import kotlin.properties.Delegates
 
 class GameFragment : Fragment() {
@@ -27,7 +28,6 @@ class GameFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         chapterId = GameFragmentArgs.fromBundle(requireArguments()).id
 
         viewModel = ViewModelProvider(this).get(
@@ -42,6 +42,7 @@ class GameFragment : Fragment() {
         binding = FragmentGameBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+
         return binding.root
     }
 
@@ -50,9 +51,10 @@ class GameFragment : Fragment() {
 
         viewModel.startCountdown()
 
-        viewModel.gameFinishEvent.observe(viewLifecycleOwner, Observer { isFinished ->
+        viewModel.showResults.observe(viewLifecycleOwner, Observer { isFinished ->
             if (isFinished?.getContentIfNotHandled() == true) {
-                findNavController().navigate(GameFragmentDirections.actionGameFragmentToResultsFragment(viewModel.finalScore, chapterId))
+                showResults()
+                (requireActivity() as MainActivity).hideBackButtonInGameFragment = true
             }
         })
 
@@ -73,7 +75,17 @@ class GameFragment : Fragment() {
         })
     }
 
-    fun checkIfMistakeAndShowFrame() {
+
+    private fun showResults() {
+        findNavController().navigate(
+            GameFragmentDirections.actionGameFragmentToResultsFragment(
+                viewModel.finalScore,
+                chapterId
+            )
+        )
+    }
+
+    private fun checkIfMistakeAndShowFrame() {
         if (viewModel.mistake.value == true) {
             binding.mistakeFrame.visibility = View.VISIBLE
             mistakeFrameAnimation.reset()
@@ -81,7 +93,7 @@ class GameFragment : Fragment() {
         }
     }
 
-    fun stopMistakeAnimation() {
+    private fun stopMistakeAnimation() {
         binding.mistakeFrame.visibility = View.INVISIBLE
         mistakeFrameAnimation.cancel()
         binding.mistakeFrame.clearAnimation()
@@ -97,5 +109,10 @@ class GameFragment : Fragment() {
         super.onResume()
         viewModel.onGameResumed()
         checkIfMistakeAndShowFrame()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        (requireActivity() as MainActivity).hideBackButtonInGameFragment = false
     }
 }

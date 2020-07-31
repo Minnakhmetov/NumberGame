@@ -15,7 +15,7 @@ open class VoiceModeViewModel(application: Application) : GameModeViewModel(appl
 
     override fun onCurrentNumberChanged() {
         super.onCurrentNumberChanged()
-        numberReader.load(getApplication(), _currentNumber.value ?: "")
+        numberReader.load(getApplication(), currentNumber.value ?: "")
         numberReader.start(!isFirstRound)
         isFirstRound = false
         setWords(

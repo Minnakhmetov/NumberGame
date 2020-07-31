@@ -22,4 +22,6 @@
     <string name="tap_to_listen">TAP TO LISTEN</string>
     <string name="credits_label">Credits:</string>
     <string name="credits_to_sound_creator">NoiseForFun.com for incredible sounds</string>
+    <string name="see_mistake">see last</string>
+    <string name="answer">answer: %s</string>
 </resources>

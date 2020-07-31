@@ -2,8 +2,6 @@ package com.example.numbersgame.gamemodes
 
 import android.app.Application
 import android.media.MediaPlayer
-import android.os.CountDownTimer
-import android.provider.MediaStore
 import android.text.SpannableStringBuilder
 import androidx.lifecycle.*
 import com.example.numbersgame.*
@@ -33,38 +31,55 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
 
     private val secondsBeforeStart = MutableLiveData<Long>()
     val countdownString: LiveData<String> =
-        Transformations.map(secondsBeforeStart) { (it + 1).toString() }
+        Transformations.map(secondsBeforeStart) { it.toString() }
 
     protected val _userInput = MutableLiveData<String>("")
     val userInput: LiveData<String>
         get() = _userInput
 
-    protected val _currentNumber = MutableLiveData<String>()
+    protected val currentNumber = MutableLiveData<String>()
 
-    val words = MediatorLiveData<Pair<Boolean, SpannableStringBuilder>>()
+    private val _words = MutableLiveData<Pair<Boolean, SpannableStringBuilder>>()
+    val words: LiveData<Pair<Boolean, SpannableStringBuilder>> = _words
 
     val timerString: LiveData<String> =
-        Transformations.map(gameTimer.secondsLeft) { (it + 1).toString() }
+        Transformations.map(gameTimer.secondsLeft) { it.toString() }
 
-    protected val _score = MutableLiveData(0)
-    val formattedScore = Transformations.map(_score) { score ->
+    private val _score = MutableLiveData(0)
+    val formattedScore: LiveData<String> = Transformations.map(_score) { score ->
         application.getString(R.string.score, score)
     }
 
-    val gameFinishEvent = Transformations.map(gameTimer.finished) { event ->
-        if (event.peekContent())
-            onGameFinish()
-        event
+    private val _gameInterfaceVisibility = MutableLiveData<Boolean>(false)
+    val gameInterfaceVisibility: LiveData<Boolean> = _gameInterfaceVisibility
+
+    private val _answer = MutableLiveData<String>("")
+    val answer: LiveData<String> = _answer
+
+    private var gameFinished = false
+
+    private val _showResults = MediatorLiveData<Event<Boolean>>().apply {
+        addSource(gameTimer.finished) { event ->
+            if (event.peekContent())
+                finishGame()
+            value = event
+        }
     }
+
+    val showResults: LiveData<Event<Boolean>> = _showResults
 
     protected val _mistakeFrame = MutableLiveData<Boolean>()
     val mistake: LiveData<Boolean>
         get() = _mistakeFrame
 
+
     val finalScore
         get() = _score.value ?: 0
 
     fun startCountdown() {
+        if (gameFinished)
+            return
+
         stopCountdown()
 
         countDownTimer = object : CountDownTimer(
@@ -84,22 +99,20 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
         countDownTimer?.start()
     }
 
-    open fun onGameFinish() {
-        RecordsStorage(getApplication())
-            .saveRecord(CHAPTER_ID, _score.value ?: 0)
-        MediaPlayer.create(getApplication(), R.raw.failure).start()
+    open fun onGameFinished() {
+
     }
 
-    fun resumeCountdown() {
+    private fun resumeCountdown() {
         if (countDownTimer != null)
             startCountdown()
     }
 
-    fun resumeGameTimer() {
+    private fun resumeGameTimer() {
         gameTimer.resume()
     }
 
-    fun stopCountdown() {
+    private fun stopCountdown() {
         countDownTimer?.cancel()
     }
 
@@ -108,21 +121,32 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
         startNewRound()
         onGameStarted()
         _gameStarted.value = true
+        _gameInterfaceVisibility.value = true
+    }
+
+    private fun finishGame() {
+        RecordsStorage(getApplication())
+            .saveRecord(CHAPTER_ID, _score.value ?: 0)
+        MediaPlayer.create(getApplication(), R.raw.failure).start()
+        _gameInterfaceVisibility.value = false
+        _answer.value =
+            getApplication<GameApplication>().getString(R.string.answer, currentNumber.value)
+        gameFinished = true
     }
 
     private fun startNewRound() {
-        _currentNumber.value = getRandomNumber(minNumberLength, maxNumberLength)
-        Timber.i(_currentNumber.value)
+        currentNumber.value = getRandomNumber(minNumberLength, maxNumberLength)
+        Timber.i(currentNumber.value)
         onCurrentNumberChanged()
         _userInput.value = ""
         onUserInputChanged()
     }
 
-    fun startGameTimer() {
+    private fun startGameTimer() {
         gameTimer.start(GAME_LENGTH)
     }
 
-    fun stopGameTimer() {
+    private fun stopGameTimer() {
         gameTimer.pause()
     }
 
@@ -132,6 +156,8 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
     }
 
     open fun onGameResumed() {
+        if (gameFinished)
+            return
         resumeCountdown()
         resumeGameTimer()
     }
@@ -145,7 +171,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
     }
 
     open fun onUserInputChanged() {
-        if (_userInput.value == _currentNumber.value) {
+        if (_userInput.value == currentNumber.value) {
             _score.value = (_score.value ?: 0) + 1
             MediaPlayer.create(getApplication(), R.raw.success).start()
             minNumberLength = min(9, (_score.value ?: 0) + 1)
@@ -163,7 +189,12 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
     }
 
     fun setWords(animate: Boolean, newWords: SpannableStringBuilder) {
-        words.value = Pair(animate, newWords)
+        _words.value = Pair(animate, newWords)
+    }
+
+    fun handleScreenClick() {
+        if (gameFinished)
+            _showResults.value = Event(true)
     }
 
     open fun handleButtonClick(id: Int) {
@@ -183,7 +214,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
         onUserInputChanged()
 
         _userInput.value?.let { prefix ->
-            _currentNumber.value?.let { number ->
+            currentNumber.value?.let { number ->
                 onMistakeStatusChanged(!number.startsWith(prefix))
             }
         }

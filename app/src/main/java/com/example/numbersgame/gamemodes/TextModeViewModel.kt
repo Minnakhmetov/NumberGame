@@ -10,7 +10,7 @@ open class TextModeViewModel(application: Application) : GameModeViewModel(appli
         super.onUserInputChanged()
 
         setWords(false, getWords(
-            _currentNumber.value ?: "",
+            currentNumber.value ?: "",
             _userInput.value ?: "",
             true
         )
@@ -22,7 +22,7 @@ open class TextModeViewModel(application: Application) : GameModeViewModel(appli
 
         setWords(true,
             getWords(
-                _currentNumber.value ?: "",
+                currentNumber.value ?: "",
                 userInput.value ?: "",
                 true
             )

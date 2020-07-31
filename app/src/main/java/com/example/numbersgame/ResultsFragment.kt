@@ -35,10 +35,15 @@ class ResultsFragment : Fragment() {
         )
 
         binding.mainMenuButton.setOnClickListener {
-            findNavController().navigateUp()
+            findNavController().navigate(ResultsFragmentDirections.actionGlobalMainMenuFragment())
         }
+
         binding.playAgainButton.setOnClickListener {
             findNavController().navigate(ResultsFragmentDirections.actionResultsFragmentToGameFragment(args.chapterId))
+        }
+
+        binding.seeLastButton.setOnClickListener {
+            findNavController().navigateUp()
         }
     }
 

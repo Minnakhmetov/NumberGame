@@ -11,7 +11,7 @@ class OneMistakeTextModeViewModel(application: Application) : TextModeViewModel(
         setWords(
             true,
             getWords(
-                _currentNumber.value ?: "",
+                currentNumber.value ?: "",
                 "",
                 false
             )
