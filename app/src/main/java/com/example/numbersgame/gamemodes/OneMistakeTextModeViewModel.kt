@@ -20,6 +20,6 @@ class OneMistakeTextModeViewModel(application: Application) : TextModeViewModel(
 
     override fun onMistakeStatusChanged(isMistaken: Boolean) {
         if (isMistaken)
-            gameTimer.finish()
+            gameTimer.cancel()
     }
 }

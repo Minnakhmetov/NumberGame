@@ -30,14 +30,38 @@
             tools:context=".GameFragment">
 
             <TextView
+                android:id="@+id/time_is_up_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TIME IS UP"
+                android:textSize="50sp"
+                app:layout_constraintBottom_toTopOf="@+id/answer"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/userInput"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <ImageView
+                android:id="@+id/play_again_button"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:padding="@dimen/spacing_normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/ic_replay" />
+
+            <TextView
                 android:id="@+id/answer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="40sp"
                 android:text="@{viewModel.answer}"
+                android:textSize="40sp"
+                app:layout_constraintBottom_toTopOf="@+id/play_again_button"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/gameKeyboard"
+                app:layout_constraintTop_toBottomOf="@+id/time_is_up_text"
                 tools:text="answer: 123123123" />
 
             <TextSwitcher
@@ -46,7 +70,7 @@
                 android:layout_height="match_parent"
                 android:inAnimation="@anim/fragment_open_enter"
                 android:text="@{viewModel.countdownString}"
-                android:visibility="@{viewModel.gameStarted ? View.GONE : View.VISIBLE }"
+                android:visibility="@{viewModel.gameState == viewModel.NOT_STARTED ? View.VISIBLE : View.GONE }"
                 tools:visibility="invisible">
 
                 <TextView
@@ -140,6 +164,7 @@
                     android:id="@+id/empty_space"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:padding="@dimen/spacing_small"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/textView17"
                     app:layout_constraintStart_toStartOf="@+id/textView17"
@@ -217,11 +242,20 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.Group
+                android:id="@+id/afterGameInterface"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="@{viewModel.gameState == viewModel.FINISHED ? View.VISIBLE : View.INVISIBLE }"
+                app:constraint_referenced_ids="play_again_button, answer, time_is_up_text"
+                tools:visibility="visible" />
+
+
+            <androidx.constraintlayout.widget.Group
                 android:id="@+id/gameInterface"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="@{viewModel.gameInterfaceVisibility ? View.VISIBLE : View.INVISIBLE }"
-                app:constraint_referenced_ids="gameKeyboard, timer, score"
+                android:visibility="@{viewModel.gameState == viewModel.STARTED ? View.VISIBLE : View.INVISIBLE }"
+                app:constraint_referenced_ids="gameKeyboard, timer"
                 tools:visibility="invisible" />
 
             <TextView
@@ -243,7 +277,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/spacing_normal"
                 android:paddingBottom="@dimen/spacing_normal"
-                android:text="@{viewModel.timerString}"
+                android:text="@{viewModel.secondsLeft}"
                 android:textSize="40sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -286,6 +320,7 @@
                 android:text="@{viewModel.formattedScore}"
                 android:textAllCaps="true"
                 android:textSize="25sp"
+                android:visibility="@{viewModel.gameState == viewModel.NOT_STARTED ? View.INVISIBLE : View.VISIBLE}"
                 app:layout_constraintBottom_toBottomOf="@+id/timer"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/timer"

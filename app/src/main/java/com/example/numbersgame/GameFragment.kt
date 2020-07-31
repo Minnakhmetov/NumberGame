@@ -49,14 +49,11 @@ class GameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.startCountdown()
+        binding.playAgainButton.setOnClickListener {
+            findNavController().navigate(GameFragmentDirections.actionGameFragmentSelf(chapterId))
+        }
 
-        viewModel.showResults.observe(viewLifecycleOwner, Observer { isFinished ->
-            if (isFinished?.getContentIfNotHandled() == true) {
-                showResults()
-                (requireActivity() as MainActivity).hideBackButtonInGameFragment = true
-            }
-        })
+        viewModel.startCountdown()
 
         viewModel.mistake.observe(viewLifecycleOwner, Observer {
             if (it)
@@ -73,16 +70,6 @@ class GameFragment : Fragment() {
             else
                 binding.words.setCurrentText(number)
         })
-    }
-
-
-    private fun showResults() {
-        findNavController().navigate(
-            GameFragmentDirections.actionGameFragmentToResultsFragment(
-                viewModel.finalScore,
-                chapterId
-            )
-        )
     }
 
     private fun checkIfMistakeAndShowFrame() {
@@ -109,10 +96,5 @@ class GameFragment : Fragment() {
         super.onResume()
         viewModel.onGameResumed()
         checkIfMistakeAndShowFrame()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        (requireActivity() as MainActivity).hideBackButtonInGameFragment = false
     }
 }

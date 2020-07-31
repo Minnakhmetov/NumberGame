@@ -12,17 +12,27 @@ import timber.log.Timber
 import kotlin.math.min
 
 abstract class GameModeViewModel(application: Application) : AndroidViewModel(application) {
+
+    companion object {
+        const val NOT_STARTED = 0
+        const val STARTED = 1
+        const val FINISHED = 2
+    }
+
     private val COUNTDOWN: Long = 3000
-    private val GAME_LENGTH: Long = 40000
+    private val GAME_LENGTH: Long = 3000
 
     abstract val CHAPTER_ID: Int
 
-    private var countDownTimer: CountDownTimer? = null
-    protected var gameTimer = GameTimer()
+    private var countDownTimer: CountDownTimer = object : CountDownTimer(COUNTDOWN, 1000) {
+        override fun onTick(millisUntilFinished: Long) {
+            secondsBeforeStart.value = millisUntilFinished / 1000
+        }
 
-    private val _gameStarted = MutableLiveData<Boolean>(false)
-    val gameStarted: LiveData<Boolean>
-        get() = _gameStarted
+        override fun onFinish() {
+            startGame()
+        }
+    }
 
     private var minNumberLength: Int = 1
     private var maxNumberLength: Int = 1
@@ -42,31 +52,21 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
     private val _words = MutableLiveData<Pair<Boolean, SpannableStringBuilder>>()
     val words: LiveData<Pair<Boolean, SpannableStringBuilder>> = _words
 
-    val timerString: LiveData<String> =
-        Transformations.map(gameTimer.secondsLeft) { it.toString() }
-
     private val _score = MutableLiveData(0)
     val formattedScore: LiveData<String> = Transformations.map(_score) { score ->
         application.getString(R.string.score, score)
     }
 
-    private val _gameInterfaceVisibility = MutableLiveData<Boolean>(false)
-    val gameInterfaceVisibility: LiveData<Boolean> = _gameInterfaceVisibility
+    private val _gameState = MutableLiveData<Int>(NOT_STARTED)
+    val gameState: LiveData<Int> = _gameState
+
+    private val _secondsLeft = MutableLiveData<String>()
+    val secondsLeft: LiveData<String> = _secondsLeft
+
+    protected lateinit var gameTimer: CountDownTimer
 
     private val _answer = MutableLiveData<String>("")
     val answer: LiveData<String> = _answer
-
-    private var gameFinished = false
-
-    private val _showResults = MediatorLiveData<Event<Boolean>>().apply {
-        addSource(gameTimer.finished) { event ->
-            if (event.peekContent())
-                finishGame()
-            value = event
-        }
-    }
-
-    val showResults: LiveData<Event<Boolean>> = _showResults
 
     protected val _mistakeFrame = MutableLiveData<Boolean>()
     val mistake: LiveData<Boolean>
@@ -77,26 +77,9 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
         get() = _score.value ?: 0
 
     fun startCountdown() {
-        if (gameFinished)
+        if (gameState.value != NOT_STARTED)
             return
-
-        stopCountdown()
-
-        countDownTimer = object : CountDownTimer(
-            secondsBeforeStart.value?.times(1000) ?: COUNTDOWN,
-            1000
-        ) {
-            override fun onTick(millisUntilFinished: Long) {
-                secondsBeforeStart.value = millisUntilFinished / 1000
-            }
-
-            override fun onFinish() {
-                countDownTimer = null
-                startGame()
-            }
-        }
-
-        countDownTimer?.start()
+        countDownTimer.start()
     }
 
     open fun onGameFinished() {
@@ -104,34 +87,38 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
     }
 
     private fun resumeCountdown() {
-        if (countDownTimer != null)
-            startCountdown()
-    }
-
-    private fun resumeGameTimer() {
-        gameTimer.resume()
+        startCountdown()
     }
 
     private fun stopCountdown() {
-        countDownTimer?.cancel()
+        countDownTimer.cancel()
     }
 
     fun startGame() {
-        startGameTimer()
+        _gameState.value = STARTED
         startNewRound()
         onGameStarted()
-        _gameStarted.value = true
-        _gameInterfaceVisibility.value = true
+
+        gameTimer = object : CountDownTimer(GAME_LENGTH, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                _secondsLeft.value = (millisUntilFinished / 1000).toString()
+            }
+
+            override fun onFinish() {
+                _gameState.value = FINISHED
+                finishGame()
+            }
+        }
+
+        startGameTimer()
     }
 
     private fun finishGame() {
         RecordsStorage(getApplication())
             .saveRecord(CHAPTER_ID, _score.value ?: 0)
         MediaPlayer.create(getApplication(), R.raw.failure).start()
-        _gameInterfaceVisibility.value = false
-        _answer.value =
-            getApplication<GameApplication>().getString(R.string.answer, currentNumber.value)
-        gameFinished = true
+        _answer.value = getApplication<GameApplication>().getString(R.string.answer, currentNumber.value)
+        _gameState.value = FINISHED
     }
 
     private fun startNewRound() {
@@ -143,11 +130,14 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
     }
 
     private fun startGameTimer() {
-        gameTimer.start(GAME_LENGTH)
+        if (gameState.value == STARTED) {
+            gameTimer.start()
+        }
     }
 
     private fun stopGameTimer() {
-        gameTimer.pause()
+        if (this::gameTimer.isInitialized)
+            gameTimer.cancel()
     }
 
     open fun onGamePaused() {
@@ -156,10 +146,10 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
     }
 
     open fun onGameResumed() {
-        if (gameFinished)
+        if (gameState.value == FINISHED)
             return
-        resumeCountdown()
-        resumeGameTimer()
+        startCountdown()
+        startGameTimer()
     }
 
     open fun onGameStarted() {
@@ -192,11 +182,6 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
         _words.value = Pair(animate, newWords)
     }
 
-    fun handleScreenClick() {
-        if (gameFinished)
-            _showResults.value = Event(true)
-    }
-
     open fun handleButtonClick(id: Int) {
         when (id) {
             BACKSPACE -> {
@@ -222,6 +207,6 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
 
     override fun onCleared() {
         super.onCleared()
-        gameTimer.pause()
+        stopGameTimer()
     }
 }

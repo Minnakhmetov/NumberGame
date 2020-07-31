@@ -30,43 +30,23 @@
         android:name="com.example.numbersgame.GameFragment"
         android:label="fragment_game"
         tools:layout="@layout/fragment_game">
-        <action
-            android:id="@+id/action_gameFragment_to_resultsFragment"
-            app:destination="@id/resultsFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/silde_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
         <argument
             android:name="id"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_gameFragment_self"
+            app:destination="@id/gameFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:popEnterAnim="@anim/silde_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/gameFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"
         android:name="com.example.numbersgame.AboutFragment"
         android:label="fragment_about"
         tools:layout="@layout/fragment_about" />
-    <fragment
-        android:id="@+id/resultsFragment"
-        android:name="com.example.numbersgame.ResultsFragment"
-        android:label="fragment_results"
-        tools:layout="@layout/fragment_results">
-        <argument
-            android:name="score"
-            app:argType="integer" />
-        <argument
-            android:name="chapterId"
-            app:argType="integer" />
-        <action
-            android:id="@+id/action_resultsFragment_to_gameFragment"
-            app:destination="@id/gameFragment"
-            app:enterAnim="@anim/silde_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right"
-            app:popUpTo="@id/gameFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
     <fragment
         android:id="@+id/chapterChoiceFragment"
         android:name="com.example.numbersgame.ChapterChoiceFragment"

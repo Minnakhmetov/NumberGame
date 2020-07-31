@@ -11,6 +11,6 @@ class OneMistakeVoiceModeViewModel(application: Application) : VoiceModeViewMode
 
     override fun onMistakeStatusChanged(isMistaken: Boolean) {
         if (isMistaken)
-            gameTimer.finish()
+            gameTimer.cancel()
     }
 }
