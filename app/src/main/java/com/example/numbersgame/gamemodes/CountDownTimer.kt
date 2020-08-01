@@ -60,7 +60,7 @@ abstract class CountDownTimer(private val length: Long, private val interval: Lo
         return this
     }
 
-    fun cancel() {
+    fun pause() {
         if (started) {
             handler.removeCallbacksAndMessages(null)
             started = false

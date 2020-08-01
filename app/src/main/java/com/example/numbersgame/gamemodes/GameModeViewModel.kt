@@ -17,10 +17,15 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
         const val NOT_STARTED = 0
         const val STARTED = 1
         const val FINISHED = 2
-    }
 
-    private val COUNTDOWN: Long = 3000
-    private val GAME_LENGTH: Long = 3000
+        const val BLUNDER = 0
+        const val TIME_IS_UP = 1
+
+        const val BACKSPACE = 10
+
+        private const val COUNTDOWN: Long = 3000
+        private const val GAME_LENGTH: Long = 10000
+    }
 
     abstract val CHAPTER_ID: Int
 
@@ -37,13 +42,13 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
     private var minNumberLength: Int = 1
     private var maxNumberLength: Int = 1
 
-    val BACKSPACE = 10
+
 
     private val secondsBeforeStart = MutableLiveData<Long>()
     val countdownString: LiveData<String> =
         Transformations.map(secondsBeforeStart) { it.toString() }
 
-    protected val _userInput = MutableLiveData<String>("")
+    private val _userInput = MutableLiveData<String>("")
     val userInput: LiveData<String>
         get() = _userInput
 
@@ -72,6 +77,9 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
     val mistake: LiveData<Boolean>
         get() = _mistakeFrame
 
+    private val _gameEndMessage = MutableLiveData<String>()
+    val gameEndMessage: LiveData<String> = _gameEndMessage
+
 
     val finalScore
         get() = _score.value ?: 0
@@ -82,7 +90,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
         countDownTimer.start()
     }
 
-    open fun onGameFinished() {
+    protected open fun onGameFinished() {
 
     }
 
@@ -91,7 +99,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
     }
 
     private fun stopCountdown() {
-        countDownTimer.cancel()
+        countDownTimer.pause()
     }
 
     fun startGame() {
@@ -106,19 +114,26 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
 
             override fun onFinish() {
                 _gameState.value = FINISHED
-                finishGame()
+                finishGame(TIME_IS_UP)
             }
         }
 
         startGameTimer()
     }
 
-    private fun finishGame() {
+    protected fun finishGame(msg: Int) {
         RecordsStorage(getApplication())
             .saveRecord(CHAPTER_ID, _score.value ?: 0)
         MediaPlayer.create(getApplication(), R.raw.failure).start()
         _answer.value = getApplication<GameApplication>().getString(R.string.answer, currentNumber.value)
         _gameState.value = FINISHED
+        _gameEndMessage.value = getApplication<GameApplication>().getString(
+            when (msg) {
+                BLUNDER -> R.string.blunder
+                else -> R.string.time_is_up
+            }
+        )
+        onGameFinished()
     }
 
     private fun startNewRound() {
@@ -137,7 +152,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
 
     private fun stopGameTimer() {
         if (this::gameTimer.isInitialized)
-            gameTimer.cancel()
+            gameTimer.pause()
     }
 
     open fun onGamePaused() {
@@ -152,7 +167,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
         startGameTimer()
     }
 
-    open fun onGameStarted() {
+    protected open fun onGameStarted() {
 
     }
 
@@ -160,7 +175,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
 
     }
 
-    open fun onUserInputChanged() {
+    protected open fun onUserInputChanged() {
         if (_userInput.value == currentNumber.value) {
             _score.value = (_score.value ?: 0) + 1
             MediaPlayer.create(getApplication(), R.raw.success).start()
@@ -170,15 +185,15 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
         }
     }
 
-    open fun onCurrentNumberChanged() {
+    protected open fun onCurrentNumberChanged() {
 
     }
 
-    open fun onMistakeStatusChanged(isMistaken: Boolean) {
+    protected open fun onMistakeStatusChanged(isMistaken: Boolean) {
         _mistakeFrame.value = isMistaken
     }
 
-    fun setWords(animate: Boolean, newWords: SpannableStringBuilder) {
+    protected fun setWords(animate: Boolean, newWords: SpannableStringBuilder) {
         _words.value = Pair(animate, newWords)
     }
 

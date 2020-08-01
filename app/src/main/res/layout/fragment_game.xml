@@ -30,17 +30,19 @@
             tools:context=".GameFragment">
 
             <TextView
-                android:id="@+id/time_is_up_text"
+                android:id="@+id/game_end_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TIME IS UP"
                 android:textSize="50sp"
+                android:text="@{viewModel.gameEndMessage}"
                 app:layout_constraintBottom_toTopOf="@+id/answer"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/userInput"
-                app:layout_constraintVertical_chainStyle="packed" />
+                app:layout_constraintVertical_chainStyle="packed"
+                android:textAllCaps="true"
+                tools:text="@string/time_is_up"/>
 
             <ImageView
                 android:id="@+id/play_again_button"
@@ -61,7 +63,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/time_is_up_text"
+                app:layout_constraintTop_toBottomOf="@+id/game_end_message"
                 tools:text="answer: 123123123" />
 
             <TextSwitcher
@@ -246,7 +248,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="@{viewModel.gameState == viewModel.FINISHED ? View.VISIBLE : View.INVISIBLE }"
-                app:constraint_referenced_ids="play_again_button, answer, time_is_up_text"
+                app:constraint_referenced_ids="play_again_button, answer, @+id/game_end_message"
                 tools:visibility="visible" />
 
 

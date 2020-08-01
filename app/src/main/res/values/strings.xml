@@ -24,4 +24,6 @@
     <string name="credits_to_sound_creator">NoiseForFun.com for incredible sounds</string>
     <string name="see_mistake">see last</string>
     <string name="answer">answer: %s</string>
+    <string name="time_is_up">time is up</string>
+    <string name="blunder">blunder</string>
 </resources>

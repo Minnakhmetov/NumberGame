@@ -41,6 +41,11 @@ open class VoiceModeViewModel(application: Application) : GameModeViewModel(appl
         numberReader.start()
     }
 
+    override fun onGameFinished() {
+        super.onGameFinished()
+        numberReader.stop()
+    }
+
     override fun onCleared() {
         super.onCleared()
         numberReader.stop()
