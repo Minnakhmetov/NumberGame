@@ -2,14 +2,15 @@ package com.example.numbersgame.utils
 
 import android.content.Context
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Handler
-import com.example.numbersgame.R
+import timber.log.Timber
 
-class NumberReader {
+class NumberReader(private val context: Context) {
     private val handler = Handler()
-    private var mediaPlayerList = listOf<MediaPlayer>()
+    private val pathList = mutableListOf<Uri>()
     private val delayList = mutableListOf<Long>()
-    private var currentTrack: MediaPlayer? = null
+    private var mediaPlayer: MediaPlayer? = null
 
     companion object {
         private const val SHORT_DELAY = 0L
@@ -19,20 +20,25 @@ class NumberReader {
 
     fun stop() {
         handler.removeCallbacksAndMessages(null)
-        currentTrack?.pause()
+        mediaPlayer?.stop()
+        mediaPlayer?.reset()
     }
 
-    fun load(context: Context, number: String) {
-        stop()
+    fun release() {
+        mediaPlayer?.release()
+        mediaPlayer = null
+    }
+
+    fun load(number: String) {
 
         if (number.length !in 1..9)
             return
 
-        val rawList = mutableListOf<Int>()
+        pathList.clear()
         delayList.clear()
 
         if (number == "0") {
-            rawList.add(R.raw.a0)
+            pathList.add(context.getUri("a0"))
         } else {
             val fullNumber = "0".repeat(9 - number.length) + number
             val chunks = fullNumber.chunked(3)
@@ -44,46 +50,44 @@ class NumberReader {
                     continue
 
                 if (ch[0] == '0' || ch.count { it != '0' } == 1) {
-                    rawList.add(context.getRawId("a${ch.removeLeadingZeroes()}" + "000".repeat(2 - i)))
+                    pathList.add(context.getUri("a${ch.removeLeadingZeroes()}" + "000".repeat(2 - i)))
                     delayList.add(LONG_DELAY)
                 }
                 else {
-                    rawList.add(context.getRawId("a${ch[0]}00and"))
+                    pathList.add(context.getUri("a${ch[0]}00and"))
                     delayList.add(SHORT_DELAY)
-                    rawList.add(context.getRawId("a${ch.substring(1).removeLeadingZeroes()}" + "000".repeat(2 - i)))
+                    pathList.add(context.getUri("a${ch.substring(1).removeLeadingZeroes()}" + "000".repeat(2 - i)))
                     delayList.add(LONG_DELAY)
                 }
             }
         }
+    }
 
-        mediaPlayerList = rawList.map { MediaPlayer.create(context, it) }
+    private fun postTrack(index: Int, delay: Long) {
+        handler.postDelayed({
+            mediaPlayer?.run {
+                reset()
+                setDataSource(context, pathList[index])
+                setOnPreparedListener {
+                    start()
+                    if (index + 1 < pathList.size) {
+                        postTrack(index + 1, duration + delayList[index])
+                    }
+                }
+                prepareAsync()
+            }
+        }, delay)
     }
 
     fun start(afterSuccess: Boolean = false) {
         stop()
-
-        var nextItemStart: Long = if (afterSuccess) AFTER_SUCCESS_DELAY else 0
-
-        for (i in mediaPlayerList.indices) {
-            val item = mediaPlayerList[i]
-
-            handler.postDelayed({
-                currentTrack = item
-                item.start()
-            }, nextItemStart)
-
-            nextItemStart += item.duration + delayList[i]
-        }
+        if (mediaPlayer == null)
+            mediaPlayer = MediaPlayer()
+        postTrack(0, if (afterSuccess) AFTER_SUCCESS_DELAY else 0)
     }
 }
 
-private fun Context.getRawId(name: String): Int {
-    return resources.getIdentifier(
-        name,
-        "raw",
-        packageName
-    )
-}
+private fun Context.getUri(name: String) = Uri.parse("android.resource://${packageName}/raw/$name")
 
 private fun String.removeLeadingZeroes(): String {
     return substring(indexOfFirst { it != '0' })

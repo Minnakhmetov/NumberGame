@@ -1,7 +1,11 @@
 package com.example.numbersgame.gamemodes
 
 import android.app.Application
+import android.media.AudioAttributes
+import android.media.AudioManager
 import android.media.MediaPlayer
+import android.media.SoundPool
+import android.os.Build
 import android.text.SpannableStringBuilder
 import androidx.lifecycle.*
 import com.example.numbersgame.*
@@ -10,6 +14,7 @@ import com.example.numbersgame.storage.RecordsStorage
 import com.example.numbersgame.utils.getRandomNumber
 import timber.log.Timber
 import kotlin.math.min
+import kotlin.properties.Delegates
 
 abstract class GameModeViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -79,9 +84,21 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
     private val _gameEndMessage = MutableLiveData<String>()
     val gameEndMessage: LiveData<String> = _gameEndMessage
 
+    private var successId = -1
+    private var failureId = -1
 
     val finalScore
         get() = _score.value ?: 0
+
+    private val soundPool = if (Build.VERSION.SDK_INT >= 21) {
+        SoundPool.Builder()
+            .setAudioAttributes(AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_GAME).build())
+            .setMaxStreams(4)
+            .build()
+    }
+    else {
+        SoundPool(4, AudioManager.STREAM_MUSIC, 100)
+    }
 
     fun startCountdown() {
         if (gameState.value != NOT_STARTED)
@@ -104,9 +121,13 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
     }
 
     fun startGame() {
+
         _gameState.value = STARTED
         startNewRound()
         onGameStarted()
+
+        failureId = soundPool.load(getApplication(), R.raw.failure, 0)
+        successId = soundPool.load(getApplication(), R.raw.success, 0)
 
         gameTimer = object : CountDownTimer(INITIAL_GAME_LENGTH, 1000) {
             override fun onTick(millisUntilFinished: Long) {
@@ -125,7 +146,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
     protected fun finishGame(msg: Int) {
         RecordsStorage(getApplication())
             .saveRecord(CHAPTER_ID, _score.value ?: 0)
-        MediaPlayer.create(getApplication(), R.raw.failure).start()
+        soundPool.play(failureId, 1F, 1F, 0, 0, 1F)
         _answer.value =
             getApplication<GameApplication>().getString(R.string.answer, currentNumber.value)
         _gameState.value = FINISHED
@@ -140,7 +161,6 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
 
     private fun startNewRound() {
         currentNumber.value = getRandomNumber(minNumberLength, maxNumberLength)
-        Timber.i(currentNumber.value)
         onCurrentNumberChanged()
         _userInput.value = ""
         onUserInputChanged()
@@ -183,7 +203,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
                 gameTimer.addTime(getExtraTime(it.length))
             }
             _score.value = (_score.value ?: 0) + 1
-            MediaPlayer.create(getApplication(), R.raw.success).start()
+            soundPool.play(successId, 1F, 1F, 0, 0, 1F)
             minNumberLength = min(9, (_score.value ?: 0) + 1)
             maxNumberLength = minNumberLength
             startNewRound()
@@ -228,5 +248,6 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
     override fun onCleared() {
         super.onCleared()
         stopGameTimer()
+        soundPool.release()
     }
 }

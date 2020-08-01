@@ -5,19 +5,20 @@ import android.text.SpannableStringBuilder
 import com.example.numbersgame.GameApplication
 import com.example.numbersgame.utils.NumberReader
 import com.example.numbersgame.R
+import timber.log.Timber
 
 open class VoiceModeViewModel(application: Application) : GameModeViewModel(application) {
     override val CHAPTER_ID: Int = 2
 
     override fun getExtraTime(length: Int) = length / 3 + 3
 
-    private val numberReader = NumberReader()
+    private val numberReader = NumberReader(application)
 
     private var isFirstRound = true
 
     override fun onCurrentNumberChanged() {
         super.onCurrentNumberChanged()
-        numberReader.load(getApplication(), currentNumber.value ?: "")
+        numberReader.load(currentNumber.value ?: "")
         numberReader.start(!isFirstRound)
         isFirstRound = false
         setWords(
@@ -45,16 +46,16 @@ open class VoiceModeViewModel(application: Application) : GameModeViewModel(appl
 
     override fun onGameFinished() {
         super.onGameFinished()
-        numberReader.stop()
+        numberReader.release()
     }
 
     override fun onCleared() {
         super.onCleared()
-        numberReader.stop()
+        numberReader.release()
     }
 
     override fun onGamePaused() {
         super.onGamePaused()
-        numberReader.stop()
+        numberReader.release()
     }
 }
