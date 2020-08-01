@@ -244,19 +244,9 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.Group
-                android:id="@+id/afterGameInterface"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="@{viewModel.gameState == viewModel.FINISHED ? View.VISIBLE : View.INVISIBLE }"
-                app:constraint_referenced_ids="play_again_button, answer, @+id/game_end_message"
-                tools:visibility="visible" />
-
-
-            <androidx.constraintlayout.widget.Group
                 android:id="@+id/gameInterface"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="@{viewModel.gameState == viewModel.STARTED ? View.VISIBLE : View.INVISIBLE }"
                 app:constraint_referenced_ids="gameKeyboard, timer"
                 tools:visibility="invisible" />
 

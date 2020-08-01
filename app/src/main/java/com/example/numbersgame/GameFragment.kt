@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.numbersgame.databinding.FragmentGameBinding
 import com.example.numbersgame.gamemodes.*
-import timber.log.Timber
 import kotlin.properties.Delegates
 
 class GameFragment : Fragment() {
@@ -23,6 +22,10 @@ class GameFragment : Fragment() {
     private lateinit var mistakeFrameAnimation: Animation
 
     private var chapterId by Delegates.notNull<Int>()
+
+    private val gameEndElements by lazy {
+        listOf(binding.playAgainButton, binding.gameEndMessage, binding.answer)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -70,6 +73,35 @@ class GameFragment : Fragment() {
             else
                 binding.words.setCurrentText(number)
         })
+
+        viewModel.gameState.observe(viewLifecycleOwner, Observer { state ->
+            if (state == GameModeViewModel.STARTED) {
+                binding.gameInterface.visibility = View.VISIBLE
+            }
+            else {
+                binding.gameInterface.visibility = View.INVISIBLE
+            }
+
+            if (state == GameModeViewModel.FINISHED) {
+                revealGameEndElements()
+            }
+            else {
+                hideGameEndElements()
+            }
+        })
+    }
+
+    private fun hideGameEndElements() {
+        for (el in gameEndElements) {
+            el.visibility = View.GONE
+        }
+    }
+
+    private fun revealGameEndElements() {
+        for (el in gameEndElements) {
+            el.visibility = View.VISIBLE
+            el.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fragment_open_enter))
+        }
     }
 
     private fun checkIfMistakeAndShowFrame() {
