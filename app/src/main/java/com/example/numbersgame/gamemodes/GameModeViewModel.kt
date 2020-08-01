@@ -24,7 +24,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
         const val BACKSPACE = 10
 
         private const val COUNTDOWN: Long = 3000
-        private const val GAME_LENGTH: Long = 30000
+        private const val INITIAL_GAME_LENGTH: Long = 7000
     }
 
     abstract val CHAPTER_ID: Int
@@ -41,7 +41,6 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
 
     private var minNumberLength: Int = 1
     private var maxNumberLength: Int = 1
-
 
 
     private val secondsBeforeStart = MutableLiveData<Long>()
@@ -90,6 +89,8 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
         countDownTimer.start()
     }
 
+    abstract fun getExtraTime(length: Int): Int
+
     protected open fun onGameFinished() {
 
     }
@@ -107,7 +108,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
         startNewRound()
         onGameStarted()
 
-        gameTimer = object : CountDownTimer(GAME_LENGTH, 1000) {
+        gameTimer = object : CountDownTimer(INITIAL_GAME_LENGTH, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 _secondsLeft.value = (millisUntilFinished / 1000).toString()
             }
@@ -125,7 +126,8 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
         RecordsStorage(getApplication())
             .saveRecord(CHAPTER_ID, _score.value ?: 0)
         MediaPlayer.create(getApplication(), R.raw.failure).start()
-        _answer.value = getApplication<GameApplication>().getString(R.string.answer, currentNumber.value)
+        _answer.value =
+            getApplication<GameApplication>().getString(R.string.answer, currentNumber.value)
         _gameState.value = FINISHED
         _gameEndMessage.value = getApplication<GameApplication>().getString(
             when (msg) {
@@ -177,6 +179,9 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
 
     protected open fun onUserInputChanged() {
         if (_userInput.value == currentNumber.value) {
+            currentNumber.value?.let {
+                gameTimer.addTime(getExtraTime(it.length))
+            }
             _score.value = (_score.value ?: 0) + 1
             MediaPlayer.create(getApplication(), R.raw.success).start()
             minNumberLength = min(9, (_score.value ?: 0) + 1)

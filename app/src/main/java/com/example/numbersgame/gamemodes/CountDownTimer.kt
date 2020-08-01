@@ -5,6 +5,7 @@ import android.os.Message
 import android.os.SystemClock
 import timber.log.Timber
 import java.lang.ref.WeakReference
+import kotlin.math.round
 import kotlin.properties.Delegates
 
 abstract class CountDownTimer(private val length: Long, private val interval: Long) {
@@ -47,7 +48,7 @@ abstract class CountDownTimer(private val length: Long, private val interval: Lo
             (length / interval).toInt()
         }
         else {
-            ((stopTime - SystemClock.elapsedRealtime()) / interval).toInt()
+            round((stopTime - SystemClock.elapsedRealtime()).toDouble() / interval).toInt()
         }
 
         if (numberOfIntervals <= 0) {
@@ -58,6 +59,12 @@ abstract class CountDownTimer(private val length: Long, private val interval: Lo
         }
 
         return this
+    }
+
+    fun addTime(extraIntervals: Int) {
+        pause()
+        stopTime += extraIntervals * interval
+        start()
     }
 
     fun pause() {

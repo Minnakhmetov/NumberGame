@@ -9,6 +9,8 @@ import com.example.numbersgame.R
 open class VoiceModeViewModel(application: Application) : GameModeViewModel(application) {
     override val CHAPTER_ID: Int = 2
 
+    override fun getExtraTime(length: Int) = length / 3 + 3
+
     private val numberReader = NumberReader()
 
     private var isFirstRound = true
