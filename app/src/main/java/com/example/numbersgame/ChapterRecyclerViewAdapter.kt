@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import timber.log.Timber
 
 class ChapterRecyclerViewAdapter(private val onClick: (Int) -> Unit) :
     ListAdapter<Chapter, ChapterViewHolder>(ChapterDiffCallback()) {
@@ -50,7 +49,7 @@ class ChapterViewHolder private constructor(root: View) : RecyclerView.ViewHolde
         else {
             description.visibility = View.GONE
             progress.visibility = View.GONE
-            name.setTextColor(ContextCompat.getColor(name.context, R.color.transparentWhite))
+            name.setTextColor(ContextCompat.getColor(name.context, R.color.transparent))
             itemView.isEnabled = false
         }
 

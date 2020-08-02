@@ -1,12 +1,15 @@
 package com.example.numbersgame.utils
 
+import android.content.Context
 import android.graphics.Color
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.text.style.UnderlineSpan
+import androidx.core.content.ContextCompat
 import androidx.core.text.isDigitsOnly
+import com.example.numbersgame.R
 import kotlin.random.Random
 
 fun convertOneDigitNumberToWords(number: String): String {
@@ -108,7 +111,7 @@ fun getPartName(positionFromEnd: Int): String {
     }
 }
 
-fun transparentPrefixAndUnderlineWord(position: Int, part: SpannableString) {
+fun transparentPrefixAndUnderlineWord(context: Context, position: Int, part: SpannableString) {
     var start = 0
     repeat(position) {
         start = part.indexOfAny(charArrayOf(' ', '-'), start)
@@ -125,21 +128,19 @@ fun transparentPrefixAndUnderlineWord(position: Int, part: SpannableString) {
     if (end == -1)
         end = part.length
     part.setSpan(UnderlineSpan(), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-    // TODO move to color.xml
     part.setSpan(
-        ForegroundColorSpan(Color.argb(99, 255, 255, 255)),
+        ForegroundColorSpan(ContextCompat.getColor(context, R.color.transparent)),
         0,
         start,
         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
     )
 }
 
-fun stylePart(number: String, prefix: String?, part: SpannableString) {
+fun stylePart(context: Context, number: String, prefix: String?, part: SpannableString) {
 
     if (number == prefix) {
         part.setSpan(
-            // TODO move to color.xml
-            ForegroundColorSpan(Color.argb(99, 255, 255, 255)),
+            ForegroundColorSpan(ContextCompat.getColor(context, R.color.transparent)),
             0,
             part.length,
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
@@ -148,6 +149,7 @@ fun stylePart(number: String, prefix: String?, part: SpannableString) {
         when (prefix?.commonPrefixWith(number)?.length ?: 0) {
             0 -> {
                 transparentPrefixAndUnderlineWord(
+                    context,
                     0,
                     part
                 )
@@ -155,16 +157,19 @@ fun stylePart(number: String, prefix: String?, part: SpannableString) {
             1 -> {
                 if (number[0] == '0') {
                     transparentPrefixAndUnderlineWord(
+                        context,
                         0,
                         part
                     )
                 } else if (number[1] == '0' && number[2] == '0') {
                     transparentPrefixAndUnderlineWord(
+                        context,
                         1,
                         part
                     )
                 } else if (number[1] != '0' || number[2] != '0') {
                     transparentPrefixAndUnderlineWord(
+                        context,
                         2,
                         part
                     )
@@ -188,6 +193,7 @@ fun stylePart(number: String, prefix: String?, part: SpannableString) {
                 }
 
                 transparentPrefixAndUnderlineWord(
+                    context,
                     underlinedWordPos,
                     part
                 )
@@ -196,7 +202,7 @@ fun stylePart(number: String, prefix: String?, part: SpannableString) {
     }
 }
 
-fun getWords(rawNumber: String, rawPrefix: String, styled: Boolean): SpannableStringBuilder {
+fun getWords(context: Context, rawNumber: String, rawPrefix: String, styled: Boolean): SpannableStringBuilder {
     if (!rawNumber.isDigitsOnly()) {
         throw IllegalArgumentException("number is not a string representation of integer")
     }
@@ -233,6 +239,7 @@ fun getWords(rawNumber: String, rawPrefix: String, styled: Boolean): SpannableSt
 
         if (styled && firstMistake) {
             stylePart(
+                context,
                 chunkedNumber[i],
                 chunkedPrefix.getOrNull(i),
                 part
