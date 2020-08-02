@@ -29,7 +29,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
         const val BACKSPACE = 10
 
         private const val COUNTDOWN: Long = 3000
-        private const val INITIAL_GAME_LENGTH: Long = 3000
+        private const val INITIAL_GAME_LENGTH: Long = 7000
     }
 
     abstract val CHAPTER_ID: Int
