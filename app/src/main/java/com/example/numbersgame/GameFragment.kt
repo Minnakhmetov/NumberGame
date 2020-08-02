@@ -23,10 +23,6 @@ class GameFragment : Fragment() {
 
     private var chapterId by Delegates.notNull<Int>()
 
-    private val gameEndElements by lazy {
-        listOf(binding.playAgainButton, binding.gameEndMessage, binding.answer)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -76,28 +72,31 @@ class GameFragment : Fragment() {
 
         viewModel.gameState.observe(viewLifecycleOwner, Observer { state ->
             if (state == GameModeViewModel.STARTED) {
-                binding.gameInterface.visibility = View.VISIBLE
-            }
-            else {
-                binding.gameInterface.visibility = View.INVISIBLE
+                binding.layout.visibility = View.VISIBLE
+                binding.layout.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fragment_open_enter))
             }
 
-            if (state == GameModeViewModel.FINISHED) {
-                revealGameEndElements()
+            when (state) {
+                GameModeViewModel.STARTED -> {
+                    binding.gameKeyboard.visibility = View.VISIBLE
+                    binding.timer.visibility = View.VISIBLE
+                }
+                else -> {
+                    binding.gameKeyboard.visibility = View.INVISIBLE
+                    binding.timer.visibility = View.INVISIBLE
+                }
             }
-            else {
-                hideGameEndElements()
+
+            when (state) {
+                GameModeViewModel.FINISHED -> {
+                    showGameEndElements()
+                }
             }
         })
     }
 
-    private fun hideGameEndElements() {
-        for (el in gameEndElements) {
-            el.visibility = View.GONE
-        }
-    }
-
-    private fun revealGameEndElements() {
+    private fun showGameEndElements() {
+        val gameEndElements = listOf(binding.playAgainButton, binding.gameEndMessage, binding.answer)
         for (el in gameEndElements) {
             el.visibility = View.VISIBLE
             el.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fragment_open_enter))
