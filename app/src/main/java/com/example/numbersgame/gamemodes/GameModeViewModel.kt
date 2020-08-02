@@ -29,7 +29,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
         const val BACKSPACE = 10
 
         private const val COUNTDOWN: Long = 3000
-        private const val INITIAL_GAME_LENGTH: Long = 7000
+        private const val INITIAL_GAME_LENGTH: Long = 3000
     }
 
     abstract val CHAPTER_ID: Int
@@ -160,10 +160,12 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
     }
 
     private fun startNewRound() {
-        currentNumber.value = getRandomNumber(minNumberLength, maxNumberLength)
-        onCurrentNumberChanged()
-        _userInput.value = ""
-        onUserInputChanged()
+        if (gameState.value != FINISHED) {
+            currentNumber.value = getRandomNumber(minNumberLength, maxNumberLength)
+            onCurrentNumberChanged()
+            _userInput.value = ""
+            onUserInputChanged()
+        }
     }
 
     private fun startGameTimer() {
