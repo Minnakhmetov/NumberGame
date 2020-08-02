@@ -10,7 +10,6 @@
         android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/josefin_sans"
         android:maxEms="13"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
