@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.numbersgame.databinding.FragmentChapterChoiceBinding
@@ -24,7 +25,14 @@ class ChapterChoiceFragment : Fragment() {
             )
         }
 
-        binding.chaptersList.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        binding.chaptersList.addItemDecoration(
+            DividerItemDecoration(context, DividerItemDecoration.VERTICAL).apply {
+                context?.let { context ->
+                    ContextCompat.getDrawable(context, R.drawable.divider)?.let { setDrawable(it) }
+                }
+            }
+        )
+
         binding.chaptersList.adapter = adapter
 
         val recordsStorage =

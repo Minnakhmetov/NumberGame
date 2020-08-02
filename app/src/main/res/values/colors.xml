@@ -6,4 +6,5 @@
     <color name="colorOnPrimary">@android:color/white</color>
     <color name="mistake">#ff7043</color>
     <color name="transparent">#99FFFFFF</color>
+    <color name="divider">@android:color/white</color>
 </resources>
