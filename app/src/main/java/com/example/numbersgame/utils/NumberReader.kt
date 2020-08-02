@@ -2,15 +2,19 @@ package com.example.numbersgame.utils
 
 import android.content.Context
 import android.media.MediaPlayer
+import android.media.SoundPool
 import android.net.Uri
 import android.os.Handler
 import timber.log.Timber
 
-class NumberReader(private val context: Context) {
+class NumberReader(private val context: Context, private val soundPool: SoundPool) {
     private val handler = Handler()
-    private val pathList = mutableListOf<Uri>()
-    private val delayList = mutableListOf<Long>()
-    private var mediaPlayer: MediaPlayer? = null
+    private var ids = listOf<Int>()
+    private val delays = mutableListOf<Long>()
+    private var durations = listOf<Int>()
+    private var streamId = -1
+    var onLoadCompleteListener: (() -> Unit)? = null
+    private var loaded = 0
 
     companion object {
         private const val SHORT_DELAY = 0L
@@ -20,25 +24,28 @@ class NumberReader(private val context: Context) {
 
     fun stop() {
         handler.removeCallbacksAndMessages(null)
-        mediaPlayer?.stop()
-        mediaPlayer?.reset()
+        if (streamId != -1)
+            soundPool.stop(streamId)
     }
 
-    fun release() {
-        mediaPlayer?.release()
-        mediaPlayer = null
+    fun unload() {
+        for (id in ids)
+            soundPool.unload(id)
     }
 
     fun load(number: String) {
-
+        unload()
         if (number.length !in 1..9)
             return
 
-        pathList.clear()
-        delayList.clear()
+        delays.clear()
+
+        val mediaPlayer = MediaPlayer()
+
+        val trackNames = mutableListOf<String>()
 
         if (number == "0") {
-            pathList.add(context.getUri("a0"))
+            trackNames.add("a0")
         } else {
             val fullNumber = "0".repeat(9 - number.length) + number
             val chunks = fullNumber.chunked(3)
@@ -50,44 +57,64 @@ class NumberReader(private val context: Context) {
                     continue
 
                 if (ch[0] == '0' || ch.count { it != '0' } == 1) {
-                    pathList.add(context.getUri("a${ch.removeLeadingZeroes()}" + "000".repeat(2 - i)))
-                    delayList.add(LONG_DELAY)
+                    trackNames.add("a${ch.removeLeadingZeroes()}" + "000".repeat(2 - i))
+                    delays.add(LONG_DELAY)
                 }
                 else {
-                    pathList.add(context.getUri("a${ch[0]}00and"))
-                    delayList.add(SHORT_DELAY)
-                    pathList.add(context.getUri("a${ch.substring(1).removeLeadingZeroes()}" + "000".repeat(2 - i)))
-                    delayList.add(LONG_DELAY)
+                    trackNames.add("a${ch[0]}00and")
+                    delays.add(SHORT_DELAY)
+                    trackNames.add("a${ch.substring(1).removeLeadingZeroes()}" + "000".repeat(2 - i))
+                    delays.add(LONG_DELAY)
                 }
             }
         }
+
+        durations = trackNames.map {
+            mediaPlayer.reset()
+            mediaPlayer.setDataSource(context, Uri.parse("android.resource://${context.packageName}/raw/$it"))
+            mediaPlayer.prepare()
+            mediaPlayer.duration
+        }
+
+        loaded = 0
+
+        soundPool.setOnLoadCompleteListener { _, _, _ ->
+            loaded++
+            if (loaded == ids.count())
+                onLoadCompleteListener?.invoke()
+        }
+
+        ids = trackNames.map {
+            soundPool.load(context, context.getRawId(it), 0)
+        }
+
+        mediaPlayer.reset()
+        mediaPlayer.release()
     }
 
     private fun postTrack(index: Int, delay: Long) {
+        Timber.i("postTrack called")
         handler.postDelayed({
-            mediaPlayer?.run {
-                reset()
-                setDataSource(context, pathList[index])
-                setOnPreparedListener {
-                    start()
-                    if (index + 1 < pathList.size) {
-                        postTrack(index + 1, duration + delayList[index])
-                    }
-                }
-                prepareAsync()
+            streamId = soundPool.play(ids[index], 1F, 1F, 0, 0, 1F)
+            if (index + 1 < ids.size) {
+                postTrack(index + 1, durations[index] + delays[index])
             }
         }, delay)
     }
 
     fun start(afterSuccess: Boolean = false) {
         stop()
-        if (mediaPlayer == null)
-            mediaPlayer = MediaPlayer()
         postTrack(0, if (afterSuccess) AFTER_SUCCESS_DELAY else 0)
     }
 }
 
-private fun Context.getUri(name: String) = Uri.parse("android.resource://${packageName}/raw/$name")
+private fun Context.getRawId(name: String): Int {
+    return resources.getIdentifier(
+        name,
+        "raw",
+        packageName
+    )
+}
 
 private fun String.removeLeadingZeroes(): String {
     return substring(indexOfFirst { it != '0' })

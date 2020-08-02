@@ -12,14 +12,16 @@ open class VoiceModeViewModel(application: Application) : GameModeViewModel(appl
 
     override fun getExtraTime(length: Int) = length / 3 + 3
 
-    private val numberReader = NumberReader(application)
+    private val numberReader = NumberReader(application, soundPool)
 
     private var isFirstRound = true
 
     override fun onCurrentNumberChanged() {
         super.onCurrentNumberChanged()
         numberReader.load(currentNumber.value ?: "")
-        numberReader.start(!isFirstRound)
+        numberReader.onLoadCompleteListener = {
+            numberReader.start(!isFirstRound)
+        }
         isFirstRound = false
         setWords(
             true,
@@ -46,16 +48,11 @@ open class VoiceModeViewModel(application: Application) : GameModeViewModel(appl
 
     override fun onGameFinished() {
         super.onGameFinished()
-        numberReader.release()
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        numberReader.release()
+        numberReader.stop()
     }
 
     override fun onGamePaused() {
         super.onGamePaused()
-        numberReader.release()
+        numberReader.stop()
     }
 }
