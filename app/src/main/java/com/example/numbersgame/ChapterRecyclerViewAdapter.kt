@@ -17,8 +17,8 @@ class ChapterRecyclerViewAdapter(private val onClick: (Int) -> Unit) :
         list?.let {
             for (chapter in list) {
                 chapter.unlocked = true
-//                if (chapter.requiredScore > chapter.userScore)
-//                    break
+                if (chapter.requiredScore > chapter.userScore)
+                    break
             }
         }
         super.submitList(list)
@@ -43,23 +43,22 @@ class ChapterViewHolder private constructor(root: View) : RecyclerView.ViewHolde
             description.text = chapter.description
             name.setTextColor(ContextCompat.getColor(name.context, R.color.colorOnPrimary))
             description.visibility = View.VISIBLE
-            progress.visibility = View.VISIBLE
+            progress.text = itemView.context.getString(
+                R.string.chapter_record,
+                chapter.userScore,
+                chapter.requiredScore
+            )
             itemView.isEnabled = true
         }
         else {
             description.visibility = View.GONE
-            progress.visibility = View.GONE
-            name.setTextColor(ContextCompat.getColor(name.context, R.color.transparent))
+            name.setTextColor(ContextCompat.getColor(name.context, R.color.colorOnPrimary))
             itemView.isEnabled = false
+            progress.text = "locked"
         }
 
         name.text = chapter.name
         itemView.setOnClickListener { onClick(chapter.id) }
-        progress.text = itemView.context.getString(
-            R.string.chapter_record,
-            chapter.userScore,
-            chapter.requiredScore
-        )
     }
 
     companion object {

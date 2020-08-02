@@ -10,10 +10,11 @@
         android:id="@+id/back_button"
         android:layout_width="@dimen/back_button_side"
         android:layout_height="@dimen/back_button_side"
+        android:padding="@dimen/spacing_small"
         android:layout_margin="@dimen/margin_from_screen_edge"
         android:clickable="true"
         android:focusable="true"
-        android:tint="@android:color/white"
+        android:tint="@color/colorSecondary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_arrow_back" />

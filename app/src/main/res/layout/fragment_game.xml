@@ -49,6 +49,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:padding="@dimen/spacing_normal"
+                android:tint="@color/colorSecondary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:srcCompat="@drawable/ic_replay" />
@@ -234,7 +235,7 @@
                     android:layout_height="0dp"
                     android:onClick="@{() -> viewModel.handleButtonClick(viewModel.BACKSPACE)}"
                     android:padding="@dimen/spacing_normal"
-                    android:tint="@android:color/white"
+                    android:tint="@color/colorSecondary"
                     app:layout_constraintBottom_toBottomOf="@+id/textView22"
                     app:layout_constraintEnd_toEndOf="@+id/textView21"
                     app:layout_constraintStart_toStartOf="@+id/textView21"
@@ -258,10 +259,11 @@
                 android:singleLine="true"
                 android:text="@{viewModel.userInput}"
                 android:textSize="45sp"
+                android:textColor="@color/colorOnPrimary"
                 app:layout_constraintBottom_toTopOf="@+id/gameKeyboard"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:text="13213" />
+                tools:text="13213_" />
 
             <TextView
                 android:id="@+id/timer"
@@ -274,7 +276,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/start_countdown"
-                tools:text="00:23" />
+                tools:text="23" />
 
 
             <TextSwitcher
@@ -306,18 +308,31 @@
             </TextSwitcher>
 
             <TextView
+                android:id="@+id/score_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:text="@string/score"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="25sp"
+                app:layout_constraintBottom_toBottomOf="@+id/timer"
+                android:visibility="@{viewModel.gameState == viewModel.NOT_STARTED ? View.INVISIBLE : View.VISIBLE}"
+                app:layout_constraintEnd_toStartOf="@id/score"
+                app:layout_constraintTop_toTopOf="@+id/start_countdown" />
+
+            <TextView
                 android:id="@+id/score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/spacing_normal"
                 android:text="@{viewModel.formattedScore}"
                 android:textAllCaps="true"
-                android:textSize="25sp"
+                android:textSize="28sp"
                 android:visibility="@{viewModel.gameState == viewModel.NOT_STARTED ? View.INVISIBLE : View.VISIBLE}"
-                app:layout_constraintBottom_toBottomOf="@+id/timer"
+                app:layout_constraintBottom_toBottomOf="@+id/score_label"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/start_countdown"
-                tools:text="SCORE: 7" />
+                tools:text="7" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>

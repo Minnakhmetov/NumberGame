@@ -6,13 +6,19 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.media.SoundPool
 import android.os.Build
+import android.text.Spannable
+import android.text.SpannableString
 import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
+import android.text.style.UnderlineSpan
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.*
 import com.example.numbersgame.*
 import com.example.numbersgame.R
 import com.example.numbersgame.storage.RecordsStorage
 import com.example.numbersgame.utils.getRandomNumber
 import timber.log.Timber
+import java.lang.StringBuilder
 import kotlin.math.min
 import kotlin.properties.Delegates
 
@@ -53,8 +59,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
         Transformations.map(secondsBeforeStart) { it.toString() }
 
     private val _userInput = MutableLiveData<String>("")
-    val userInput: LiveData<String>
-        get() = _userInput
+    val userInput: LiveData<String> = _userInput
 
     protected val currentNumber = MutableLiveData<String>()
 
@@ -63,7 +68,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
 
     private val _score = MutableLiveData(0)
     val formattedScore: LiveData<String> = Transformations.map(_score) { score ->
-        application.getString(R.string.score, score)
+        score.toString()
     }
 
     private val _gameState = MutableLiveData<Int>(NOT_STARTED)
@@ -78,8 +83,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
     val answer: LiveData<String> = _answer
 
     protected val _mistakeFrame = MutableLiveData<Boolean>()
-    val mistake: LiveData<Boolean>
-        get() = _mistakeFrame
+    val mistake: LiveData<Boolean> = _mistakeFrame
 
     private val _gameEndMessage = MutableLiveData<String>()
     val gameEndMessage: LiveData<String> = _gameEndMessage
@@ -92,11 +96,12 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
 
     protected val soundPool = if (Build.VERSION.SDK_INT >= 21) {
         SoundPool.Builder()
-            .setAudioAttributes(AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_GAME).build())
+            .setAudioAttributes(
+                AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_GAME).build()
+            )
             .setMaxStreams(4)
             .build()
-    }
-    else {
+    } else {
         SoundPool(4, AudioManager.STREAM_MUSIC, 100)
     }
 

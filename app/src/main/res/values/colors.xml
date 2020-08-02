@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#9CCC65</color>
-    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorPrimary">#9ccc65</color>
+    <color name="colorPrimaryDark">#6C8E45</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="colorSecondary">@color/colorPrimaryDark</color>
     <color name="colorOnPrimary">@android:color/white</color>
-    <color name="mistake">#ff7043</color>
-    <color name="transparent">#99FFFFFF</color>
-    <color name="divider">@android:color/white</color>
+    <color name="mistake">@color/colorPrimaryDark</color>
+    <color name="transparent">@color/colorPrimaryDark</color>
+    <color name="divider">@color/colorPrimaryDark</color>
 </resources>
