@@ -18,8 +18,9 @@
     <string name="records_file_key">&applicaton_id;.records_file_key</string>
     <string name="play_again_button">play again</string>
     <string name="tap_to_listen">LISTEN AGAIN</string>
-    <string name="credits_label">Credits:</string>
-    <string name="credits_to_sound_creator">NoiseForFun.com for incredible sounds</string>
+    <string name="credits_header">Credits</string>
+    <string name="feedback_header">Feedback</string>
+    <string name="credits_to_sound_creator">NoiseForFun.com for the great sounds of success and failure</string>
     <string name="see_mistake">see last</string>
     <string name="answer">answer: %s</string>
     <string name="time_is_up">time is up</string>
@@ -34,4 +35,7 @@
     <string name="voice_mode_name">Easy</string>
     <string name="spelling_category">Spelling</string>
     <string name="listening_category">Listening</string>
+    <string name="created_by">Created by Blueberry Bee Games</string>
+    <string name="write_me_button">Write me</string>
+    <string name="rate_button">Rate</string>
 </resources>
