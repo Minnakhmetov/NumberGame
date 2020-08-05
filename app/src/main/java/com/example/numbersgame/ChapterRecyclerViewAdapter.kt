@@ -4,61 +4,80 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.numbersgame.models.Chapter
+import timber.log.Timber
+import kotlin.IllegalArgumentException
 
-class ChapterRecyclerViewAdapter(private val onClick: (Int) -> Unit) :
-    ListAdapter<Chapter, ChapterViewHolder>(ChapterDiffCallback()) {
+private const val HEADER = 0
+private const val CHAPTER = 1
 
-    override fun submitList(list: List<Chapter>?) {
-        // all chapters are unlocked
-        list?.let {
-            for (chapter in list) {
-                chapter.unlocked = true
-                if (chapter.requiredScore > chapter.userScore)
-                    break
-            }
+class ChapterRecyclerViewAdapter(private val onClick: (String) -> Unit) :
+    ListAdapter<ListItem, RecyclerView.ViewHolder>(ChapterDiffCallback()) {
+
+    fun submitList(groupedChapters: Map<String, List<Chapter>>) {
+        val itemList = mutableListOf<ListItem>()
+
+        for (group in groupedChapters) {
+            itemList.add(ListItem.Header(group.key))
+            group.value.forEach { itemList.add(ListItem.ChapterItem(it)) }
         }
-        super.submitList(list)
+
+        submitList(itemList)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChapterViewHolder {
-        return ChapterViewHolder.from(parent)
+    override fun getItemViewType(position: Int): Int {
+        return when (getItem(position)) {
+            is ListItem.Header -> HEADER
+            is ListItem.ChapterItem -> CHAPTER
+        }
     }
 
-    override fun onBindViewHolder(holder: ChapterViewHolder, position: Int) {
-        holder.bind(getItem(position), onClick)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            HEADER -> HeaderViewHolder.from(parent)
+            CHAPTER -> ChapterViewHolder.from(parent)
+            else -> throw IllegalArgumentException("unknown viewType")
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder) {
+            is HeaderViewHolder -> holder.bind(getItem(position) as ListItem.Header)
+            is ChapterViewHolder -> holder.bind(getItem(position) as ListItem.ChapterItem, onClick)
+            else -> throw IllegalArgumentException("unknown ViewHolder")
+        }
+    }
+}
+
+class HeaderViewHolder private constructor(root: View) : RecyclerView.ViewHolder(root) {
+    private val name = root.findViewById<TextView>(R.id.title)
+
+    fun bind(header: ListItem.Header) {
+        name.text = header.name
+    }
+
+    companion object {
+        fun from(parent: ViewGroup): HeaderViewHolder {
+            return HeaderViewHolder(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.list_header, parent, false)
+            )
+        }
     }
 }
 
 class ChapterViewHolder private constructor(root: View) : RecyclerView.ViewHolder(root) {
     private val name = root.findViewById<TextView>(R.id.name)
-    private val description = root.findViewById<TextView>(R.id.description)
     private val progress = root.findViewById<TextView>(R.id.progress)
 
-    fun bind(chapter: Chapter, onClick: (Int) -> Unit) {
-        if (chapter.unlocked) {
-            description.text = chapter.description
-            name.setTextColor(ContextCompat.getColor(name.context, R.color.colorOnPrimary))
-            description.visibility = View.VISIBLE
-            progress.text = itemView.context.getString(
-                R.string.chapter_record,
-                chapter.userScore,
-                chapter.requiredScore
-            )
-            itemView.isEnabled = true
-        }
-        else {
-            description.visibility = View.GONE
-            name.setTextColor(ContextCompat.getColor(name.context, R.color.colorOnPrimary))
-            itemView.isEnabled = false
-            progress.text = "locked"
-        }
 
-        name.text = chapter.name
-        itemView.setOnClickListener { onClick(chapter.id) }
+    fun bind(item: ListItem.ChapterItem, onClick: (String) -> Unit) {
+        name.text = item.chapter.name
+        progress.text = item.chapter.userScore.toString()
+        itemView.setOnClickListener { onClick(item.chapter.chapterId) }
     }
 
     companion object {
@@ -71,22 +90,24 @@ class ChapterViewHolder private constructor(root: View) : RecyclerView.ViewHolde
     }
 }
 
-class ChapterDiffCallback : DiffUtil.ItemCallback<Chapter>() {
-    override fun areItemsTheSame(oldItem: Chapter, newItem: Chapter): Boolean {
-        return oldItem.id == newItem.id
+class ChapterDiffCallback : DiffUtil.ItemCallback<ListItem>() {
+    override fun areItemsTheSame(oldItem: ListItem, newItem: ListItem): Boolean {
+        return oldItem.itemId == newItem.itemId
     }
 
-    override fun areContentsTheSame(oldItem: Chapter, newItem: Chapter): Boolean {
+    override fun areContentsTheSame(oldItem: ListItem, newItem: ListItem): Boolean {
         return oldItem == newItem
     }
 }
 
-data class Chapter(
-    val id: Int,
-    val name: String,
-    val description: String,
-    val requiredScore: Int,
-    val userScore: Int
-) {
-    var unlocked = false
+sealed class ListItem(val itemId: String) {
+
+    data class Header(
+        val name: String
+    ) : ListItem(name)
+
+    data class ChapterItem(
+        val chapter: Chapter
+    ) : ListItem(chapter.chapterId)
 }
+

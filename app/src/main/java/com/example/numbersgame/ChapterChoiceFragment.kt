@@ -9,6 +9,8 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.numbersgame.databinding.FragmentChapterChoiceBinding
+import com.example.numbersgame.models.Chapter
+import com.example.numbersgame.models.ChapterRepository
 import com.example.numbersgame.storage.RecordsStorage
 
 class ChapterChoiceFragment : Fragment() {
@@ -25,49 +27,9 @@ class ChapterChoiceFragment : Fragment() {
             )
         }
 
-        binding.chaptersList.addItemDecoration(
-            DividerItemDecoration(context, DividerItemDecoration.VERTICAL).apply {
-                context?.let { context ->
-                    ContextCompat.getDrawable(context, R.drawable.divider)?.let { setDrawable(it) }
-                }
-            }
-        )
-
         binding.chaptersList.adapter = adapter
 
-        val recordsStorage =
-            RecordsStorage(requireContext())
-
-        adapter.submitList(listOf(
-            Chapter(
-                1,
-                "Chapter 1",
-                "Simplest one. Just do it.",
-                9,
-                recordsStorage.getRecord(1)
-            ),
-            Chapter(
-                2,
-                "Chapter 2",
-                "Be careful, takes a lot of attention.",
-                9,
-                recordsStorage.getRecord(2)
-            ),
-            Chapter(
-                3,
-                "Chapter 3",
-                "A single mistake can cost a lot, right? No hints this time.",
-                9,
-                recordsStorage.getRecord(3)
-            ),
-            Chapter(
-                4,
-                "Chapter 4",
-                "It is a boss.",
-                9,
-                recordsStorage.getRecord(4)
-            )
-        ))
+        adapter.submitList(ChapterRepository(requireContext()).getChaptersGroupedByCategory())
 
         return binding.root
     }

@@ -38,7 +38,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
         private const val INITIAL_GAME_LENGTH: Long = 10000
     }
 
-    abstract val CHAPTER_ID: Int
+    abstract val CHAPTER_ID: String
 
     private var countDownTimer: CountDownTimer = object : CountDownTimer(COUNTDOWN, 1000) {
         override fun onTick(millisUntilFinished: Long) {

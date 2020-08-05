@@ -1,10 +1,11 @@
 package com.example.numbersgame.gamemodes
 
 import android.app.Application
+import com.example.numbersgame.R
 import com.example.numbersgame.utils.getWords
 
 open class TextModeViewModel(application: Application) : GameModeViewModel(application) {
-    override val CHAPTER_ID = 1
+    override val CHAPTER_ID = application.getString(R.string.text_mode_id)
 
     override fun getExtraTime(length: Int) = length / 2
 

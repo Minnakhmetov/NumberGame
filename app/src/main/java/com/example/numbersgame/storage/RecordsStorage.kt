@@ -9,14 +9,14 @@ class RecordsStorage(private val context: Context) {
         context.getSharedPreferences(context.getString(R.string.records_file_key), Context.MODE_PRIVATE)
     }
 
-    fun saveRecord(chapterId: Int, record: Int) {
-        val currentRecord = sharedPreferences.getInt(context.getString(R.string.chapter_key, chapterId), 0)
+    fun saveRecord(chapterId: String, record: Int) {
+        val currentRecord = sharedPreferences.getInt(chapterId, 0)
         sharedPreferences.edit()
-            .putInt(context.getString(R.string.chapter_key, chapterId), max(currentRecord, record))
+            .putInt(chapterId, max(currentRecord, record))
             .apply()
     }
 
-    fun getRecord(chapterId: Int): Int {
-        return sharedPreferences.getInt(context.getString(R.string.chapter_key, chapterId), 0)
+    fun getRecord(chapterId: String): Int {
+        return sharedPreferences.getInt(chapterId, 0)
     }
 }

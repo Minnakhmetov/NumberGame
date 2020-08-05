@@ -16,14 +16,22 @@
     <string name="authors_telegram">"@BulatMinnakhmetov"</string>
     <string name="author_label">Author:</string>
     <string name="records_file_key">&applicaton_id;.records_file_key</string>
-    <string name="chapter_key">chapter%d_key</string>
-    <string name="chapter_record">%d/%d</string>
     <string name="play_again_button">play again</string>
-    <string name="tap_to_listen">TAP TO LISTEN</string>
+    <string name="tap_to_listen">LISTEN AGAIN</string>
     <string name="credits_label">Credits:</string>
     <string name="credits_to_sound_creator">NoiseForFun.com for incredible sounds</string>
     <string name="see_mistake">see last</string>
     <string name="answer">answer: %s</string>
     <string name="time_is_up">time is up</string>
     <string name="blunder">blunder</string>
+    <string name="one_mistake_text_mode_id">one_mistake_text_mode</string>
+    <string name="one_mistake_voice_mode_id">one_mistake_voice</string>
+    <string name="text_mode_id">text_mode</string>
+    <string name="voice_mode_id">voice_mode</string>
+    <string name="one_mistake_text_mode_name">Hard</string>
+    <string name="one_mistake_voice_mode_name">Hard</string>
+    <string name="text_mode_name">Easy</string>
+    <string name="voice_mode_name">Easy</string>
+    <string name="spelling_category">Spelling</string>
+    <string name="listening_category">Listening</string>
 </resources>

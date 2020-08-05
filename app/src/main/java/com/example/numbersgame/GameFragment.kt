@@ -21,7 +21,7 @@ class GameFragment : Fragment() {
 
     private lateinit var mistakeFrameAnimation: Animation
 
-    private var chapterId by Delegates.notNull<Int>()
+    private lateinit var chapterId: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,10 +31,11 @@ class GameFragment : Fragment() {
 
         viewModel = ViewModelProvider(this).get(
             when (chapterId) {
-                1 -> TextModeViewModel::class.java
-                2 -> VoiceModeViewModel::class.java
-                3 -> OneMistakeTextModeViewModel::class.java
-                else -> OneMistakeVoiceModeViewModel::class.java
+                getString(R.string.text_mode_id) -> TextModeViewModel::class.java
+                getString(R.string.voice_mode_id) -> VoiceModeViewModel::class.java
+                getString(R.string.one_mistake_text_mode_id) -> OneMistakeTextModeViewModel::class.java
+                getString(R.string.one_mistake_voice_mode_id) -> OneMistakeVoiceModeViewModel::class.java
+                else -> throw IllegalArgumentException("unknown chapterId")
             }
         )
 
