@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.widget.Button
 import android.widget.ImageView
 import androidx.navigation.findNavController
 
@@ -35,6 +36,10 @@ class MainActivity : AppCompatActivity() {
 
         backButton.setOnClickListener {
             navController.navigateUp()
+        }
+
+        findViewById<Button>(R.id.button).setOnClickListener {
+            recreate()
         }
     }
 

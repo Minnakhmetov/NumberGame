@@ -31,10 +31,10 @@ class GameFragment : Fragment() {
 
         viewModel = ViewModelProvider(this).get(
             when (chapterId) {
-                getString(R.string.text_mode_id) -> TextModeViewModel::class.java
-                getString(R.string.voice_mode_id) -> VoiceModeViewModel::class.java
-                getString(R.string.one_mistake_text_mode_id) -> OneMistakeTextModeViewModel::class.java
-                getString(R.string.one_mistake_voice_mode_id) -> OneMistakeVoiceModeViewModel::class.java
+                TextModeViewModel.CHAPTER_ID -> TextModeViewModel::class.java
+                OneMistakeTextModeViewModel.CHAPTER_ID -> VoiceModeViewModel::class.java
+                VoiceModeViewModel.CHAPTER_ID -> OneMistakeTextModeViewModel::class.java
+                OneMistakeVoiceModeViewModel.CHAPTER_ID -> OneMistakeVoiceModeViewModel::class.java
                 else -> throw IllegalArgumentException("unknown chapterId")
             }
         )

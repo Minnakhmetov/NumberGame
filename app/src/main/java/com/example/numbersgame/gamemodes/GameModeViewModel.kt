@@ -26,7 +26,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
         private const val COUNTDOWN: Long = 3000
     }
 
-    abstract val CHAPTER_ID: String
+    abstract val chapterId: String
 
     private var countDownTimer: CountDownTimer = object : CountDownTimer(1000) {
         override fun onTick(millisUntilFinished: Long) {
@@ -134,7 +134,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
 
     protected fun finishGame(msg: Int) {
         RecordsStorage(getApplication())
-            .saveRecord(CHAPTER_ID, _score.value ?: 0)
+            .saveRecord(chapterId, _score.value ?: 0)
         soundPool.play(failureId, 1F, 1F, 0, 0, 1F)
         _answer.value =
             getApplication<GameApplication>().getString(R.string.answer, currentNumber.value)

@@ -5,7 +5,12 @@ import com.example.numbersgame.R
 import com.example.numbersgame.utils.getWords
 
 open class TextModeViewModel(application: Application) : GameModeViewModel(application) {
-    override val CHAPTER_ID = application.getString(R.string.text_mode_id)
+
+    companion object {
+        const val CHAPTER_ID = "text_mode"
+    }
+
+    override val chapterId: String = CHAPTER_ID
 
     override fun getTimeForNumberInSec(length: Int) = (length.toLong() + 2) / 2 + 1
 

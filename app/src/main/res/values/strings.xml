@@ -1,5 +1,3 @@
-<!DOCTYPE resources [<!ENTITY applicaton_id "com.example.numbersgame">]>
-
 <resources>
     <string name="app_name">Numbers Game</string>
     <!-- TODO: Remove or change this placeholder text -->
@@ -12,10 +10,6 @@
     <string name="game_over">game over</string>
     <string name="final_score">Final score: %d</string>
     <string name="main_menu_button">main menu</string>
-    <string name="authors_name">Bulat Minnakhmetov</string>
-    <string name="authors_telegram">"@BulatMinnakhmetov"</string>
-    <string name="author_label">Author:</string>
-    <string name="records_file_key">&applicaton_id;.records_file_key</string>
     <string name="play_again_button">play again</string>
     <string name="tap_to_listen">LISTEN AGAIN</string>
     <string name="credits_header">Credits</string>
@@ -26,10 +20,6 @@
     <string name="answer">answer: %s</string>
     <string name="time_is_up">time is up</string>
     <string name="blunder">blunder</string>
-    <string name="one_mistake_text_mode_id">one_mistake_text_mode</string>
-    <string name="one_mistake_voice_mode_id">one_mistake_voice</string>
-    <string name="text_mode_id">text_mode</string>
-    <string name="voice_mode_id">voice_mode</string>
     <string name="one_mistake_text_mode_name">Hard</string>
     <string name="one_mistake_voice_mode_name">Hard</string>
     <string name="text_mode_name">Easy</string>

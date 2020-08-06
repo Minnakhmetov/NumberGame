@@ -4,9 +4,12 @@ import android.content.Context
 import com.example.numbersgame.R
 import kotlin.math.max
 
+private const val RECORDS_FILE_KEY = "com.example.numbersgame.records_file_key"
+
 class RecordsStorage(private val context: Context) {
+
     private val sharedPreferences by lazy {
-        context.getSharedPreferences(context.getString(R.string.records_file_key), Context.MODE_PRIVATE)
+        context.getSharedPreferences(RECORDS_FILE_KEY, Context.MODE_PRIVATE)
     }
 
     fun saveRecord(chapterId: String, record: Int) {

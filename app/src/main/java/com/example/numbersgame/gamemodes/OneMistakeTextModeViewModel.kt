@@ -5,7 +5,12 @@ import com.example.numbersgame.R
 import com.example.numbersgame.utils.getWords
 
 class OneMistakeTextModeViewModel(application: Application) : TextModeViewModel(application) {
-    override val CHAPTER_ID = application.getString(R.string.one_mistake_text_mode_id)
+
+    companion object {
+        const val CHAPTER_ID = "one_mistake_text_mode"
+    }
+
+    override val chapterId: String = CHAPTER_ID
 
     override fun onCurrentNumberChanged() {
         super.onCurrentNumberChanged()
