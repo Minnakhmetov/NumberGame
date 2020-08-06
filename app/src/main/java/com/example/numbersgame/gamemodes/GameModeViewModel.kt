@@ -94,16 +94,12 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
     val finalScore
         get() = _score.value ?: 0
 
-    protected val soundPool = if (Build.VERSION.SDK_INT >= 21) {
-        SoundPool.Builder()
-            .setAudioAttributes(
-                AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_GAME).build()
-            )
-            .setMaxStreams(4)
-            .build()
-    } else {
-        SoundPool(4, AudioManager.STREAM_MUSIC, 100)
-    }
+    protected val soundPool = SoundPool.Builder()
+        .setAudioAttributes(
+            AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_GAME).build()
+        )
+        .setMaxStreams(4)
+        .build()
 
     fun startCountdown() {
         if (gameState.value != NOT_STARTED)

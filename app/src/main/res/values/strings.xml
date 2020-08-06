@@ -20,6 +20,7 @@
     <string name="tap_to_listen">LISTEN AGAIN</string>
     <string name="credits_header">Credits</string>
     <string name="feedback_header">Feedback</string>
+    <string name="no_email_app">No email app found</string>
     <string name="credits_to_sound_creator">NoiseForFun.com for the great sounds of success and failure</string>
     <string name="see_mistake">see last</string>
     <string name="answer">answer: %s</string>
