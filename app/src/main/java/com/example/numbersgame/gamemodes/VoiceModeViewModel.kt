@@ -10,7 +10,7 @@ import timber.log.Timber
 open class VoiceModeViewModel(application: Application) : GameModeViewModel(application) {
     override val CHAPTER_ID = application.getString(R.string.voice_mode_id)
 
-    override fun getExtraTime(length: Int) = length / 2 + 3
+//    override fun getTimeForNumber(length: Int) = length.toLong() / 2 + 3
 
     private val numberReader = NumberReader(application, soundPool)
 

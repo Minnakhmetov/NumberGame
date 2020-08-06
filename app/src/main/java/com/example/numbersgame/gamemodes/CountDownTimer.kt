@@ -8,7 +8,7 @@ import java.lang.ref.WeakReference
 import kotlin.math.round
 import kotlin.properties.Delegates
 
-abstract class CountDownTimer(private val length: Long, private val interval: Long) {
+abstract class CountDownTimer(private val interval: Long) {
 
     abstract fun onTick(millisUntilFinished: Long)
     abstract fun onFinish()
@@ -34,22 +34,34 @@ abstract class CountDownTimer(private val length: Long, private val interval: Lo
     }
 
     private lateinit var handler: MyHandler
-    private var stopTime by Delegates.notNull<Long>()
+
+    private var stopTime: Long = -1
+
+    var length: Long = -1
+        set(value) {
+            stopTime = -1
+            field = value
+        }
+
+    // length = -1 when timer is resumed
 
     fun start(): CountDownTimer {
         if (started)
             return this
 
+        if (!::handler.isInitialized)
+            handler = MyHandler(this)
+
         started = true
 
-        val numberOfIntervals = if (!::handler.isInitialized) {
-            handler = MyHandler(this)
+        if (stopTime == -1L) {
+            if (length == -1L) {
+                throw IllegalStateException("set length before starting")
+            }
             stopTime = SystemClock.elapsedRealtime() + length
-            (length / interval).toInt()
         }
-        else {
-            round((stopTime - SystemClock.elapsedRealtime()).toDouble() / interval).toInt()
-        }
+
+        val numberOfIntervals = round((stopTime - SystemClock.elapsedRealtime()).toDouble() / interval).toInt()
 
         if (numberOfIntervals <= 0) {
             onFinish()
@@ -59,12 +71,6 @@ abstract class CountDownTimer(private val length: Long, private val interval: Lo
         }
 
         return this
-    }
-
-    fun addTime(extraIntervals: Int) {
-        pause()
-        stopTime += extraIntervals * interval
-        start()
     }
 
     fun pause() {

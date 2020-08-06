@@ -2,25 +2,14 @@ package com.example.numbersgame.gamemodes
 
 import android.app.Application
 import android.media.AudioAttributes
-import android.media.AudioManager
-import android.media.MediaPlayer
 import android.media.SoundPool
-import android.os.Build
-import android.text.Spannable
-import android.text.SpannableString
 import android.text.SpannableStringBuilder
-import android.text.style.ForegroundColorSpan
-import android.text.style.UnderlineSpan
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.*
 import com.example.numbersgame.*
 import com.example.numbersgame.R
 import com.example.numbersgame.storage.RecordsStorage
 import com.example.numbersgame.utils.getRandomNumber
-import timber.log.Timber
-import java.lang.StringBuilder
 import kotlin.math.min
-import kotlin.properties.Delegates
 
 abstract class GameModeViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -35,12 +24,11 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
         const val BACKSPACE = 10
 
         private const val COUNTDOWN: Long = 3000
-        private const val INITIAL_GAME_LENGTH: Long = 10000
     }
 
     abstract val CHAPTER_ID: String
 
-    private var countDownTimer: CountDownTimer = object : CountDownTimer(COUNTDOWN, 1000) {
+    private var countDownTimer: CountDownTimer = object : CountDownTimer(1000) {
         override fun onTick(millisUntilFinished: Long) {
             secondsBeforeStart.value = millisUntilFinished / 1000
         }
@@ -48,10 +36,12 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
         override fun onFinish() {
             startGame()
         }
+    }.apply {
+        length = COUNTDOWN
     }
 
     private var minNumberLength: Int = 1
-    private var maxNumberLength: Int = 1
+    private var maxNumberLength: Int = 9
 
 
     private val secondsBeforeStart = MutableLiveData<Long>()
@@ -107,7 +97,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
         countDownTimer.start()
     }
 
-    abstract fun getExtraTime(length: Int): Int
+    open fun getTimeForNumberInSec(length: Int): Long = length + 1L
 
     protected open fun onGameFinished() {
 
@@ -122,15 +112,13 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
     }
 
     fun startGame() {
-
         _gameState.value = STARTED
-        startNewRound()
         onGameStarted()
 
         failureId = soundPool.load(getApplication(), R.raw.failure, 0)
         successId = soundPool.load(getApplication(), R.raw.success, 0)
 
-        gameTimer = object : CountDownTimer(INITIAL_GAME_LENGTH, 1000) {
+        gameTimer = object : CountDownTimer(1000) {
             override fun onTick(millisUntilFinished: Long) {
                 _secondsLeft.value = (millisUntilFinished / 1000).toString()
             }
@@ -141,7 +129,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
             }
         }
 
-        startGameTimer()
+        startNewRound()
     }
 
     protected fun finishGame(msg: Int) {
@@ -162,7 +150,10 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
 
     private fun startNewRound() {
         if (gameState.value != FINISHED) {
-            currentNumber.value = getRandomNumber(minNumberLength, maxNumberLength)
+            val newNumber = getRandomNumber(minNumberLength, maxNumberLength)
+            currentNumber.value = newNumber
+            gameTimer.length = getTimeForNumberInSec(newNumber.length) * 1000
+            gameTimer.start()
             onCurrentNumberChanged()
             _userInput.value = ""
             onUserInputChanged()
@@ -202,13 +193,9 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
 
     protected open fun onUserInputChanged() {
         if (_userInput.value == currentNumber.value) {
-            currentNumber.value?.let {
-                gameTimer.addTime(getExtraTime(it.length))
-            }
+            gameTimer.pause()
             _score.value = (_score.value ?: 0) + 1
             soundPool.play(successId, 1F, 1F, 0, 0, 1F)
-            minNumberLength = min(9, (_score.value ?: 0) + 1)
-            maxNumberLength = minNumberLength
             startNewRound()
         }
     }
