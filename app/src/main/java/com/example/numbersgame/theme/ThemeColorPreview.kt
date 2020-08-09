@@ -13,7 +13,7 @@ import android.widget.GridLayout
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import com.example.numbersgame.storage.ThemeKeeper
+import com.example.numbersgame.theme.ThemeKeeper
 import com.example.numbersgame.utils.getAttr
 
 class ThemeColorPreview: AppCompatImageView {

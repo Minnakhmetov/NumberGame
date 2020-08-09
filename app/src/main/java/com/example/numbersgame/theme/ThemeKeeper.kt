@@ -1,4 +1,4 @@
-package com.example.numbersgame.storage
+package com.example.numbersgame.theme
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -34,7 +34,8 @@ class ThemeKeeper private constructor() {
 
         fun getInstance(context: Context): ThemeKeeper {
             synchronized(this) {
-                var instance = INSTANCE
+                var instance =
+                    INSTANCE
                 if (instance == null) {
                     instance = ThemeKeeper().apply {
                         settingsSharedPreferences = context.getSharedPreferences(
