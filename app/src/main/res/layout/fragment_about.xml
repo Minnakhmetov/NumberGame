@@ -14,12 +14,30 @@
         android:padding="@dimen/spacing_normal"
         tools:context=".AboutFragment">
 
+        <include
+            android:id="@+id/theme_header"
+            layout="@layout/list_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <GridLayout
+            android:layout_marginTop="@dimen/spacing_small"
+            android:id="@+id/theme_picker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/theme_header"
+            android:columnCount="5">
+
+        </GridLayout>
+
         <TextView
             android:id="@+id/sound_credits"
-            android:layout_marginTop="@dimen/spacing_normal"
             android:layout_width="wrap_content"
-            android:layout_marginStart="@dimen/spacing_small"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:layout_marginTop="@dimen/spacing_normal"
             android:lineSpacingMultiplier="1.1"
             android:text="@string/credits_to_sound_creator"
             android:textSize="20sp"
@@ -32,22 +50,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/theme_picker" />
 
         <include
-            android:layout_marginTop="@dimen/spacing_normal"
             android:id="@+id/feedback_header"
             layout="@layout/list_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_normal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sound_credits" />
 
         <LinearLayout
-            android:layout_marginTop="@dimen/spacing_small"
             android:id="@+id/email_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
             android:orientation="horizontal"
             android:padding="@dimen/spacing_small"
             app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +78,7 @@
                 android:id="@+id/imageView"
                 android:layout_width="30sp"
                 android:layout_height="30sp"
-                android:tint="@color/colorSecondary"
+                android:tint="?attr/colorSecondary"
                 app:srcCompat="@drawable/ic_email" />
 
             <TextView
@@ -74,6 +95,9 @@
             android:id="@+id/rate_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
             android:orientation="horizontal"
             android:padding="@dimen/spacing_small"
             app:layout_constraintStart_toStartOf="parent"
@@ -83,7 +107,7 @@
                 android:id="@+id/imageView2"
                 android:layout_width="30sp"
                 android:layout_height="30sp"
-                android:tint="@color/colorSecondary"
+                android:tint="?attr/colorSecondary"
                 app:srcCompat="@drawable/ic_rate" />
 
             <TextView
@@ -98,13 +122,13 @@
 
         <TextView
             android:id="@+id/created_by_text"
-            android:layout_marginTop="@dimen/spacing_normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="@string/created_by"
+            android:layout_marginTop="@dimen/spacing_normal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rate_button" />
+            app:layout_constraintTop_toBottomOf="@+id/rate_button"
+            tools:text="@string/created_by" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

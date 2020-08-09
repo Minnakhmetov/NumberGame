@@ -15,7 +15,7 @@
     <string name="credits_header">Credits</string>
     <string name="feedback_header">Feedback</string>
     <string name="no_email_app">No email app found</string>
-    <string name="credits_to_sound_creator">NoiseForFun.com for the great sounds of success and failure</string>
+    <string name="credits_to_sound_creator">NoiseForFun.com for the great sounds of a successful attempt and the end of a game</string>
     <string name="see_mistake">see last</string>
     <string name="answer">answer: %s</string>
     <string name="time_is_up">time is up</string>
@@ -29,4 +29,5 @@
     <string name="created_by">Created by Blueberry Bee Games</string>
     <string name="write_me_button">Write me</string>
     <string name="rate_button">Rate</string>
+    <string name="theme_header">Theme</string>
 </resources>

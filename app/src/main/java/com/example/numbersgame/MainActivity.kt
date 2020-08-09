@@ -1,5 +1,7 @@
 package com.example.numbersgame
 
+import android.content.SharedPreferences
+import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -7,8 +9,20 @@ import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.ImageView
 import androidx.navigation.findNavController
+import com.example.numbersgame.storage.ThemeKeeper
+import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
+
+    private val themeKeeper by lazy {
+        ThemeKeeper.getInstance(this)
+    }
+
+    override fun getTheme(): Resources.Theme {
+        return super.getTheme().apply {
+            applyStyle(themeKeeper.themeId, true)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,12 +48,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        backButton.setOnClickListener {
-            navController.navigateUp()
+        val themeKeeperListener = SharedPreferences.OnSharedPreferenceChangeListener { _, _ ->
+            recreate()
         }
 
-        findViewById<Button>(R.id.button).setOnClickListener {
-            recreate()
+        themeKeeper.subscribe(this)
+
+        backButton.setOnClickListener {
+            navController.navigateUp()
         }
     }
 

@@ -8,7 +8,9 @@ import androidx.lifecycle.*
 import com.example.numbersgame.*
 import com.example.numbersgame.R
 import com.example.numbersgame.storage.RecordsStorage
+import com.example.numbersgame.utils.DelayedSpannableStringBuilder
 import com.example.numbersgame.utils.getRandomNumber
+import timber.log.Timber
 import kotlin.math.min
 
 abstract class GameModeViewModel(application: Application) : AndroidViewModel(application) {
@@ -53,8 +55,8 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
 
     protected val currentNumber = MutableLiveData<String>()
 
-    private val _words = MutableLiveData<Pair<Boolean, SpannableStringBuilder>>()
-    val words: LiveData<Pair<Boolean, SpannableStringBuilder>> = _words
+    private val _words = MutableLiveData<Pair<Boolean, DelayedSpannableStringBuilder>>()
+    val words: LiveData<Pair<Boolean, DelayedSpannableStringBuilder>> = _words
 
     private val _score = MutableLiveData(0)
     val formattedScore: LiveData<String> = Transformations.map(_score) { score ->
@@ -208,7 +210,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
         _mistakeFrame.value = isMistaken
     }
 
-    protected fun setWords(animate: Boolean, newWords: SpannableStringBuilder) {
+    protected fun setWords(animate: Boolean, newWords: DelayedSpannableStringBuilder) {
         _words.value = Pair(animate, newWords)
     }
 

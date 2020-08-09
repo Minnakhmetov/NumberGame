@@ -1,10 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#66bb6a</color>
-    <color name="colorPrimaryDark">#338a3e</color>
-    <color name="colorSecondary">@color/colorPrimaryDark</color>
-    <color name="colorOnPrimary">@android:color/white</color>
-    <color name="mistake">@color/colorPrimaryDark</color>
-    <color name="transparent">@color/colorPrimaryDark</color>
-    <color name="divider">@color/colorPrimaryDark</color>
+    <color name="colorPrimaryGreen">#66bb6a</color>
+    <color name="colorSecondaryGreen">#338a3e</color>
+
+    <color name="colorPrimaryPurple">#ce93d8</color>
+    <color name="colorSecondaryPurple">#9c64a6</color>
+
+    <color name="colorPrimaryDarkOrange">#212121</color>
+    <color name="colorSecondaryDarkOrange">#ff833a</color>
+
+    <color name="colorPrimaryRed">#ff5252</color>
+    <color name="colorSecondaryRed">#c50e29</color>
+
+    <color name="colorPrimaryTeal">#00897b</color>
+    <color name="colorSecondaryTeal">#005b4f</color>
+
+
+    <color name="colorPrimaryBlue">#039be5</color>
+    <color name="colorSecondaryBlue">#006db3</color>
+
+    <color name="colorPrimaryDarkGreen">#004d40</color>
+    <color name="colorSecondaryDarkGreen">#449382</color>
+
+    <color name="colorPrimary">@android:color/white</color>
+    <color name="colorSecondary">#2C84B8</color>
+    <color name="colorOnPrimary">#434343</color>
+
+<!--    <color name="colorPrimary">#212121</color>-->
+<!--    <color name="colorSecondary">#9c64a6</color>-->
+
+
 </resources>

@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.numbersgame.databinding.FragmentGameBinding
 import com.example.numbersgame.gamemodes.*
-import kotlin.properties.Delegates
+import com.example.numbersgame.utils.getAttr
 
 class GameFragment : Fragment() {
 
@@ -32,8 +32,8 @@ class GameFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(
             when (chapterId) {
                 TextModeViewModel.CHAPTER_ID -> TextModeViewModel::class.java
-                OneMistakeTextModeViewModel.CHAPTER_ID -> VoiceModeViewModel::class.java
-                VoiceModeViewModel.CHAPTER_ID -> OneMistakeTextModeViewModel::class.java
+                VoiceModeViewModel.CHAPTER_ID -> VoiceModeViewModel::class.java
+                OneMistakeTextModeViewModel.CHAPTER_ID -> OneMistakeTextModeViewModel::class.java
                 OneMistakeVoiceModeViewModel.CHAPTER_ID -> OneMistakeVoiceModeViewModel::class.java
                 else -> throw IllegalArgumentException("unknown chapterId")
             }
@@ -64,7 +64,10 @@ class GameFragment : Fragment() {
 
         mistakeFrameAnimation = AnimationUtils.loadAnimation(requireActivity(), R.anim.fade_out)
 
+        val secondaryColor = requireContext().getAttr(R.attr.colorSecondary)
+
         viewModel.words.observe(viewLifecycleOwner, Observer { (isNew, number) ->
+            number.applyDelayedSpans(secondaryColor)
             if (isNew)
                 binding.words.setText(number)
             else

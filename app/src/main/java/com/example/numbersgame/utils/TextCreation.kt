@@ -1,16 +1,42 @@
 package com.example.numbersgame.utils
 
-import android.content.Context
-import android.graphics.Color
 import android.text.Spannable
-import android.text.SpannableString
 import android.text.SpannableStringBuilder
+import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.text.style.UnderlineSpan
-import androidx.core.content.ContextCompat
 import androidx.core.text.isDigitsOnly
-import com.example.numbersgame.R
 import kotlin.random.Random
+
+class DelayedSpannableStringBuilder : SpannableStringBuilder {
+    constructor() : super()
+    constructor(charSequence: CharSequence) : super(charSequence)
+
+    private val delayedColorSpans = mutableListOf<Pair<Int, Int>>()
+
+    fun append(other: DelayedSpannableStringBuilder) {
+        for (span in other.delayedColorSpans) {
+            delayedColorSpans.add(Pair(span.first + length, span.second + length))
+        }
+        super.append(other)
+    }
+
+    fun addDelayedSpan(start: Int, end: Int) {
+        delayedColorSpans.add(Pair(start, end))
+    }
+
+    fun applyDelayedSpans(color: Int) {
+        for (span in delayedColorSpans) {
+            setSpan(
+                ForegroundColorSpan(color),
+                span.first,
+                span.second,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+        delayedColorSpans.clear()
+    }
+}
 
 fun convertOneDigitNumberToWords(number: String): String {
     if (number.length != 1) {
@@ -111,7 +137,7 @@ fun getPartName(positionFromEnd: Int): String {
     }
 }
 
-fun transparentPrefixAndUnderlineWord(context: Context, position: Int, part: SpannableString) {
+fun transparentPrefixAndUnderlineWord(position: Int, part: DelayedSpannableStringBuilder) {
     var start = 0
     repeat(position) {
         start = part.indexOfAny(charArrayOf(' ', '-'), start)
@@ -128,28 +154,16 @@ fun transparentPrefixAndUnderlineWord(context: Context, position: Int, part: Spa
     if (end == -1)
         end = part.length
     part.setSpan(UnderlineSpan(), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-    part.setSpan(
-        ForegroundColorSpan(ContextCompat.getColor(context, R.color.transparent)),
-        0,
-        start,
-        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-    )
+    part.addDelayedSpan(0, start)
 }
 
-fun stylePart(context: Context, number: String, prefix: String?, part: SpannableString) {
-
+fun stylePart(number: String, prefix: String?, part: DelayedSpannableStringBuilder) {
     if (number == prefix) {
-        part.setSpan(
-            ForegroundColorSpan(ContextCompat.getColor(context, R.color.transparent)),
-            0,
-            part.length,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
+        part.addDelayedSpan(0, part.length)
     } else {
         when (prefix?.commonPrefixWith(number)?.length ?: 0) {
             0 -> {
                 transparentPrefixAndUnderlineWord(
-                    context,
                     0,
                     part
                 )
@@ -157,19 +171,16 @@ fun stylePart(context: Context, number: String, prefix: String?, part: Spannable
             1 -> {
                 if (number[0] == '0') {
                     transparentPrefixAndUnderlineWord(
-                        context,
                         0,
                         part
                     )
                 } else if (number[1] == '0' && number[2] == '0') {
                     transparentPrefixAndUnderlineWord(
-                        context,
                         1,
                         part
                     )
                 } else if (number[1] != '0' || number[2] != '0') {
                     transparentPrefixAndUnderlineWord(
-                        context,
                         2,
                         part
                     )
@@ -193,7 +204,6 @@ fun stylePart(context: Context, number: String, prefix: String?, part: Spannable
                 }
 
                 transparentPrefixAndUnderlineWord(
-                    context,
                     underlinedWordPos,
                     part
                 )
@@ -202,7 +212,7 @@ fun stylePart(context: Context, number: String, prefix: String?, part: Spannable
     }
 }
 
-fun getWords(context: Context, rawNumber: String, rawPrefix: String, styled: Boolean): SpannableStringBuilder {
+fun getWords(rawNumber: String, rawPrefix: String, styled: Boolean): DelayedSpannableStringBuilder {
     if (!rawNumber.isDigitsOnly()) {
         throw IllegalArgumentException("number is not a string representation of integer")
     }
@@ -215,19 +225,16 @@ fun getWords(context: Context, rawNumber: String, rawPrefix: String, styled: Boo
     val number = if (remainder == 0) rawNumber else "0".repeat(3 - remainder) + rawNumber
     val prefix = if (remainder == 0) rawPrefix else "0".repeat(3 - remainder) + rawPrefix
 
-
     val chunkedPrefix = prefix.chunked(3)
     val chunkedNumber = number.chunked(3)
 
     var firstMistake = true
 
-    val builder = SpannableStringBuilder()
+    val builder = DelayedSpannableStringBuilder()
 
     for (i in chunkedNumber.indices) {
-        val part = SpannableString(
-            convertThreeDigitNumberToWords(
-                chunkedNumber[i]
-            ).let {
+        val part = DelayedSpannableStringBuilder(
+            convertThreeDigitNumberToWords(chunkedNumber[i]).let {
                 if (it.isNotEmpty())
                     "$it ${getPartName(
                         chunkedNumber.size - i - 1
@@ -239,7 +246,6 @@ fun getWords(context: Context, rawNumber: String, rawPrefix: String, styled: Boo
 
         if (styled && firstMistake) {
             stylePart(
-                context,
                 chunkedNumber[i],
                 chunkedPrefix.getOrNull(i),
                 part

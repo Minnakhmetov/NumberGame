@@ -5,6 +5,7 @@ import android.text.SpannableStringBuilder
 import com.example.numbersgame.GameApplication
 import com.example.numbersgame.utils.NumberReader
 import com.example.numbersgame.R
+import com.example.numbersgame.utils.DelayedSpannableStringBuilder
 import timber.log.Timber
 
 open class VoiceModeViewModel(application: Application) : GameModeViewModel(application) {
@@ -28,7 +29,9 @@ open class VoiceModeViewModel(application: Application) : GameModeViewModel(appl
         isFirstRound = false
         setWords(
             true,
-            SpannableStringBuilder(getApplication<GameApplication>().getString(R.string.tap_to_listen))
+            DelayedSpannableStringBuilder(
+                getApplication<GameApplication>().getString(R.string.tap_to_listen)
+            )
         )
     }
 
@@ -41,7 +44,8 @@ open class VoiceModeViewModel(application: Application) : GameModeViewModel(appl
         super.onGameStarted()
         setWords(
             true,
-            SpannableStringBuilder(getApplication<GameApplication>().getString(R.string.tap_to_listen)))
+            DelayedSpannableStringBuilder(getApplication<GameApplication>().getString(R.string.tap_to_listen))
+        )
     }
 
     override fun onWordsClick() {

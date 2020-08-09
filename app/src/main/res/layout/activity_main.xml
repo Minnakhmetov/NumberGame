@@ -11,31 +11,22 @@
         android:layout_width="@dimen/back_button_side"
         android:layout_height="@dimen/back_button_side"
         android:layout_margin="@dimen/spacing_normal"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:clickable="true"
         android:focusable="true"
+        android:tint="?attr/colorSecondary"
         android:visibility="invisible"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:tint="@color/colorSecondary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_arrow_back" />
 
     <fragment
+        android:id="@+id/nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:defaultNavHost="true"
-        android:id="@+id/nav_host_fragment"
         app:navGraph="@navigation/navigation"
-        tools:layout="@layout/fragment_chapter_choice"/>
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        tools:layout="@layout/fragment_chapter_choice" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
