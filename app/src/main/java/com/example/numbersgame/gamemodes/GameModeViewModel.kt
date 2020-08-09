@@ -135,8 +135,6 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
     }
 
     protected fun finishGame(msg: Int) {
-        RecordsStorage(getApplication())
-            .saveRecord(chapterId, _score.value ?: 0)
         soundPool.play(failureId, 1F, 1F, 0, 0, 1F)
         _answer.value =
             getApplication<GameApplication>().getString(R.string.answer, currentNumber.value)
@@ -196,7 +194,13 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
     protected open fun onUserInputChanged() {
         if (_userInput.value == currentNumber.value) {
             gameTimer.pause()
-            _score.value = (_score.value ?: 0) + 1
+
+            _score.value?.let {
+                _score.value = it + 1
+                RecordsStorage(getApplication())
+                    .saveRecord(chapterId, it + 1)
+            }
+
             soundPool.play(successId, 1F, 1F, 0, 0, 1F)
             startNewRound()
         }
