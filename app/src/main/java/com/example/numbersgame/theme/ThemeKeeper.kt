@@ -2,9 +2,9 @@ package com.example.numbersgame.theme
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.lifecycle.Lifecycle
 import com.example.numbersgame.MainActivity
 import com.example.numbersgame.R
-import timber.log.Timber
 import java.lang.ref.WeakReference
 
 private const val SETTINGS_FILE_KEY = "setting_file_key"
@@ -20,7 +20,10 @@ class ThemeKeeper private constructor() {
                 return
             settingsSharedPreferences.edit().putInt(THEME_ID_KEY, value).apply()
             field = value
-            subscriber?.get()?.recreate()
+            subscriber?.get()?.let {
+                if (it.lifecycle.currentState.isAtLeast(Lifecycle.State.CREATED))
+                    it.recreate()
+            }
         }
         get() {
             if (field == -1) {

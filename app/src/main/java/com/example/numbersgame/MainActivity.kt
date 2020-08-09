@@ -6,11 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.Button
 import android.widget.ImageView
 import androidx.navigation.findNavController
-import com.example.numbersgame.storage.ThemeKeeper
-import kotlin.random.Random
+import com.example.numbersgame.theme.ThemeKeeper
 
 class MainActivity : AppCompatActivity() {
 

@@ -1,19 +1,14 @@
-package com.example.numbersgame
+package com.example.numbersgame.theme
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
 import android.view.ContextThemeWrapper
-import android.view.View
 import android.view.ViewGroup
 import android.widget.GridLayout
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import com.example.numbersgame.theme.ThemeKeeper
+import com.example.numbersgame.R
 import com.example.numbersgame.utils.getAttr
 
 class ThemeColorPreview: AppCompatImageView {
@@ -25,7 +20,9 @@ class ThemeColorPreview: AppCompatImageView {
             field = value
 
             if (ticked) {
-                val tickImage = ContextCompat.getDrawable(context, R.drawable.tick_image)?.apply {
+                val tickImage = ContextCompat.getDrawable(context,
+                    R.drawable.tick_image
+                )?.apply {
                     setTint(contextThemeWrapper.getAttr(R.attr.colorOnPrimary))
                 }
                 setImageDrawable(tickImage)
@@ -38,14 +35,18 @@ class ThemeColorPreview: AppCompatImageView {
             requestLayout()
         }
 
-    private var contextThemeWrapper = ContextThemeWrapper(context, R.style.Green)
+    private var contextThemeWrapper = ContextThemeWrapper(context,
+        R.style.Green
+    )
 
     var themeId = R.style.Green
         set(value) {
             field = value
             contextThemeWrapper = ContextThemeWrapper(context, themeId)
 
-            val newBackground = ContextCompat.getDrawable(context, R.drawable.theme_color_preview) as GradientDrawable
+            val newBackground = ContextCompat.getDrawable(context,
+                R.drawable.theme_color_preview
+            ) as GradientDrawable
             newBackground.setColor(
                 contextThemeWrapper.getAttr(R.attr.colorPrimary)
             )

@@ -13,7 +13,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import com.example.numbersgame.databinding.FragmentAboutBinding
-import com.example.numbersgame.storage.ThemeKeeper
+import com.example.numbersgame.theme.ThemeColorPreview
+import com.example.numbersgame.theme.ThemeKeeper
 import com.example.numbersgame.utils.getAttr
 
 class AboutFragment : Fragment() {
@@ -73,7 +74,10 @@ class AboutFragment : Fragment() {
         val themeKeeper = ThemeKeeper.getInstance(requireContext())
 
         themeList.forEach {
-            binding.themePicker.addView(ThemeColorPreview(requireContext()).apply {
+            binding.themePicker.addView(
+                ThemeColorPreview(
+                    requireContext()
+                ).apply {
                 themeId = it
                 ticked = themeKeeper.themeId == it
             })
