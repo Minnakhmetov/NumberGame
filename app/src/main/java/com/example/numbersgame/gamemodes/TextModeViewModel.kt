@@ -12,7 +12,18 @@ open class TextModeViewModel(application: Application) : GameModeViewModel(appli
 
     override val chapterId: String = CHAPTER_ID
 
-    override fun getTimeForNumberInSec(length: Int) = (length.toLong() + 2) / 2 + 1
+    override fun getTimeForNumberInSec(length: Int) = when (length) {
+        1 -> 2
+        2 -> 3
+        3 -> 4
+        4 -> 5
+        5 -> 5
+        6 -> 6
+        7 -> 7
+        8 -> 7
+        9 -> 8
+        else -> 0
+    }.toLong()
 
     override fun onUserInputChanged() {
         super.onUserInputChanged()

@@ -10,6 +10,19 @@ class OneMistakeTextModeViewModel(application: Application) : TextModeViewModel(
         const val CHAPTER_ID = "one_mistake_text_mode"
     }
 
+    override fun getTimeForNumberInSec(length: Int) = when (length) {
+        1 -> 2
+        2 -> 2
+        3 -> 3
+        4 -> 4
+        5 -> 4
+        6 -> 5
+        7 -> 6
+        8 -> 6
+        9 -> 7
+        else -> 0
+    }.toLong()
+
     override val chapterId: String = CHAPTER_ID
 
     override fun onCurrentNumberChanged() {

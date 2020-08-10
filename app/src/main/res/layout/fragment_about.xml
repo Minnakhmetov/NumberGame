@@ -34,13 +34,15 @@
 
         <TextView
             android:id="@+id/sound_credits"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_small"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="@dimen/spacing_normal"
+            android:fontFamily="@font/roboto"
+            android:linksClickable="true"
             android:lineSpacingMultiplier="1.1"
             android:text="@string/credits_to_sound_creator"
-            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/credits_header" />
 
@@ -86,8 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/spacing_normal"
-                android:text="@string/write_me_button"
-                android:textSize="20sp" />
+                android:text="@string/write_me_button" />
 
         </LinearLayout>
 
@@ -115,8 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/spacing_normal"
-                android:text="@string/rate_button"
-                android:textSize="20sp" />
+                android:text="@string/rate_button" />
 
         </LinearLayout>
 
@@ -125,6 +125,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_normal"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rate_button"

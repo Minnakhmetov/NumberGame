@@ -54,6 +54,7 @@
             android:layout_height="match_parent"
             android:layout_margin="@dimen/margin_from_screen_edge"
             android:visibility="gone"
+            tools:visibility="visible"
             tools:context=".GameFragment">
 
             <TextView
@@ -63,6 +64,7 @@
                 android:text="@{viewModel.gameEndMessage}"
                 android:textAllCaps="true"
                 android:textSize="50sp"
+                android:textStyle="bold"
                 android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/answer"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -70,6 +72,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/userInput"
                 app:layout_constraintVertical_chainStyle="packed"
+                tools:visibility="visible"
                 tools:text="@string/time_is_up" />
 
             <ImageView
@@ -91,19 +94,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{viewModel.answer}"
-                android:textSize="40sp"
+                android:textSize="30sp"
                 android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/play_again_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/game_end_message"
-                tools:text="answer: 123123123" />
+                tools:text="answer: 123123123"
+                tools:visibility="visible" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/gameKeyboard"
                 android:layout_width="0dp"
                 android:layout_height="300dp"
+                tools:visibility="invisible"
                 android:theme="@style/GameKeyboard"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -258,7 +263,7 @@
                 android:gravity="center"
                 android:singleLine="true"
                 android:text="@{viewModel.userInput}"
-                android:textSize="45sp"
+                android:textSize="40sp"
                 app:layout_constraintBottom_toTopOf="@+id/gameKeyboard"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -284,25 +289,29 @@
                 android:layout_height="0dp"
                 android:inAnimation="@anim/fragment_open_enter"
                 android:onClick="@{() -> viewModel.onWordsClick()}"
-                android:padding="@dimen/spacing_normal"
                 app:layout_constraintBottom_toTopOf="@+id/userInput"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:layout_marginEnd="@dimen/spacing_normal"
                 app:layout_constraintStart_toStartOf="parent"
+                tools:visibility="visible"
                 app:layout_constraintTop_toBottomOf="@+id/timer">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
+                    android:layout_gravity="center"
                     android:textSize="30sp"
-                    tools:text="one hundred twenty-three million one hundred twenty-four thousand two hundred thirteen" />
+                    tools:text="seven thousand forty-two" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
+                    android:layout_gravity="center"
                     android:textSize="30sp"
-                    tools:text="one hundred twenty-three million one hundred twenty-four thousand two hundred thirteen" />
+                    tools:text="seven thousand forty-two" />
 
             </TextSwitcher>
 
@@ -315,6 +324,7 @@
                 android:textAllCaps="true"
                 android:textColor="?attr/colorSecondary"
                 android:textSize="25sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/timer"
                 app:layout_constraintEnd_toStartOf="@id/score"
                 app:layout_constraintTop_toTopOf="@+id/timer" />

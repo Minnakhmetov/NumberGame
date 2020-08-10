@@ -148,9 +148,16 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
         onGameFinished()
     }
 
+    private fun getLengthRange(currentScore: Int): Pair<Int, Int> {
+        val shift = currentScore / 3
+        return Pair(min(9, 1 + shift), min(9, 2 + shift))
+    }
+
     private fun startNewRound() {
         if (gameState.value != FINISHED) {
-            val newNumber = getRandomNumber(minNumberLength, maxNumberLength)
+            val (minLength, maxLength) = getLengthRange(_score.value ?: 0)
+            val newNumber = getRandomNumber(minLength, maxLength)
+
             currentNumber.value = newNumber
             gameTimer.length = getTimeForNumberInSec(newNumber.length) * 1000
             gameTimer.start()

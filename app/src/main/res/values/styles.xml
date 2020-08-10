@@ -3,7 +3,7 @@
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorOnPrimary">@android:color/white</item>
-        <item name="android:fontFamily">@font/josefin_sans_bold</item>
+        <item name="android:fontFamily">@font/roboto</item>
         <item name="android:windowBackground">?attr/colorPrimary</item>
         <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>

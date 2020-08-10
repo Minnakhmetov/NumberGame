@@ -276,6 +276,7 @@ fun getRandomNumberOfLength(length: Int): String {
 }
 
 fun getRandomNumber(minLength: Int, maxLength: Int): String =
+//    "70" + getRandomNumberOfLength(2)
     getRandomNumberOfLength(
         Random.nextInt(
             minLength,

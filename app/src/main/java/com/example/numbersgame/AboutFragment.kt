@@ -5,7 +5,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.method.LinkMovementMethod
 import android.text.style.ForegroundColorSpan
+import android.text.util.Linkify
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -44,7 +46,12 @@ class AboutFragment : Fragment() {
             10,
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
+
+
+
         binding.createdByText.text = createdByStyledString
+
+        binding.soundCredits.movementMethod = LinkMovementMethod.getInstance()
 
         binding.emailButton.setOnClickListener {
             val intent = Intent().apply {

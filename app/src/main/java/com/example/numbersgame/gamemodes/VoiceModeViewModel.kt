@@ -20,6 +20,19 @@ open class VoiceModeViewModel(application: Application) : GameModeViewModel(appl
 
     private var isFirstRound = true
 
+    override fun getTimeForNumberInSec(length: Int) = when (length) {
+        1 -> 3
+        2 -> 4
+        3 -> 5
+        4 -> 6
+        5 -> 6
+        6 -> 7
+        7 -> 8
+        8 -> 8
+        9 -> 9
+        else -> 0
+    }.toLong()
+
     override fun onCurrentNumberChanged() {
         super.onCurrentNumberChanged()
         numberReader.load(currentNumber.value ?: "")
