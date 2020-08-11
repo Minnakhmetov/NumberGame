@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/spacing_normal"
-        tools:context="com.example.numbersgame.ChapterChoiceFragment">
+        tools:context="com.blueberrybeegames.numbersgame.ChapterChoiceFragment">
 
         <ImageView
             android:id="@+id/settingsButton"

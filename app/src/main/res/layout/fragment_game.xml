@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.numbersgame.gamemodes.GameModeViewModel" />
+            type="com.blueberrybeegames.numbersgame.gamemodes.GameModeViewModel" />
     </data>
 
     <FrameLayout

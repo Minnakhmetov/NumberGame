@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.numbersgame">
+    package="com.blueberrybeegames.numbersgame">
 
     <application
         android:allowBackup="true"
-        android:name="com.example.numbersgame.GameApplication"
+        android:name="com.blueberrybeegames.numbersgame.GameApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Green">
-        <activity android:name="com.example.numbersgame.MainActivity"
+        <activity android:name="com.blueberrybeegames.numbersgame.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
