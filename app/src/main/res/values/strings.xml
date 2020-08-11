@@ -15,9 +15,11 @@
     <string name="credits_header">Credits</string>
     <string name="feedback_header">Feedback</string>
     <string name="no_email_app">No email app found</string>
-    <string name="credits_to_sound_creator">NoiseForFun.com for the great sounds of
-        <a href="https://www.noiseforfun.com/2012-sound-effects/choice-good">a successful attempt</a> and
-        <a href="https://www.noiseforfun.com/2012-sound-effects/choice-bad">the end of a game</a>.</string>
+    <string name="credits_to_sound_creator">The sound effects
+        <a href="https://www.noiseforfun.com/2012-sound-effects/choice-good">Choice Good</a> and
+        <a href="https://www.noiseforfun.com/2012-sound-effects/choice-bad">Choice Bad</a>
+        by NoiseForFun.com are licensed under
+        <a href="https://creativecommons.org/licenses/by-nd/3.0/">CC-BY-ND 3.0 Attribution license</a>.</string>
     <string name="see_mistake">see last</string>
     <string name="answer">answer: %s</string>
     <string name="time_is_up">time is up</string>
