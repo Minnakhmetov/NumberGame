@@ -6,11 +6,24 @@
 
     </data>
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/spacing_normal"
         tools:context="com.example.numbersgame.ChapterChoiceFragment">
+
+        <ImageView
+            android:id="@+id/settingsButton"
+            android:layout_width="@dimen/back_button_side"
+            android:layout_height="@dimen/back_button_side"
+            android:padding="@dimen/spacing_small"
+            android:tint="?attr/colorSecondary"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_settings" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/chapters_list"
@@ -21,5 +34,5 @@
             tools:itemCount="5"
             tools:listitem="@layout/chapter_item_list" />
 
-    </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

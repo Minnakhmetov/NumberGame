@@ -3,28 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/mainMenuFragment">
+    app:startDestination="@id/chapterChoiceFragment">
 
-    <fragment
-        android:id="@+id/mainMenuFragment"
-        android:name="com.example.numbersgame.MainMenuFragment"
-        android:label="fragment_main_menu"
-        tools:layout="@layout/fragment_main_menu">
-        <action
-            android:id="@+id/action_mainMenuFragment_to_chapterChoiceFragment"
-            app:destination="@id/chapterChoiceFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/silde_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-        <action
-            android:id="@+id/action_mainMenuFragment_to_aboutFragment"
-            app:destination="@id/aboutFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/silde_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-    </fragment>
     <fragment
         android:id="@+id/gameFragment"
         android:name="com.example.numbersgame.GameFragment"
@@ -59,11 +39,8 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/silde_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_chapterChoiceFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment" />
     </fragment>
-    <action
-        android:id="@+id/action_global_mainMenuFragment"
-        app:destination="@id/mainMenuFragment"
-        app:enterAnim="@anim/silde_in_left"
-        app:exitAnim="@anim/slide_out_right"
-        app:popUpTo="@id/mainMenuFragment" />
 </navigation>

@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.mainMenuFragment -> {
+                R.id.chapterChoiceFragment -> {
                     if (backButton.visibility == View.VISIBLE) {
                         backButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_out_left))
                         backButton.visibility = View.INVISIBLE

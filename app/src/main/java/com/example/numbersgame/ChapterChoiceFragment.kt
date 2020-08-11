@@ -15,12 +15,14 @@ import com.example.numbersgame.storage.RecordsStorage
 
 class ChapterChoiceFragment : Fragment() {
 
+    private lateinit var binding: FragmentChapterChoiceBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val binding = FragmentChapterChoiceBinding.inflate(inflater, container, false)
+        binding = FragmentChapterChoiceBinding.inflate(inflater, container, false)
         val adapter = ChapterRecyclerViewAdapter { chapterId ->
             findNavController().navigate(
                 ChapterChoiceFragmentDirections.actionChapterChoiceFragmentToGameFragment(chapterId)
@@ -32,6 +34,13 @@ class ChapterChoiceFragment : Fragment() {
         adapter.submitList(ChapterRepository(requireContext()).getChaptersGroupedByCategory())
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.settingsButton.setOnClickListener {
+            findNavController().navigate(ChapterChoiceFragmentDirections.actionChapterChoiceFragmentToAboutFragment())
+        }
     }
 
 }
