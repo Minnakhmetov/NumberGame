@@ -35,6 +35,7 @@ class GameFragment : Fragment() {
                 VoiceModeViewModel.CHAPTER_ID -> VoiceModeViewModel::class.java
                 OneMistakeTextModeViewModel.CHAPTER_ID -> OneMistakeTextModeViewModel::class.java
                 OneMistakeVoiceModeViewModel.CHAPTER_ID -> OneMistakeVoiceModeViewModel::class.java
+                SandboxModeViewModel.CHAPTED_ID -> SandboxModeViewModel::class.java
                 else -> throw IllegalArgumentException("unknown chapterId")
             }
         )
@@ -53,7 +54,7 @@ class GameFragment : Fragment() {
             findNavController().navigate(GameFragmentDirections.actionGameFragmentSelf(chapterId))
         }
 
-        viewModel.startCountdown()
+        viewModel.initialize()
 
         viewModel.mistake.observe(viewLifecycleOwner, Observer {
             if (it)
@@ -73,6 +74,11 @@ class GameFragment : Fragment() {
             else
                 binding.words.setCurrentText(number)
         })
+
+        if (chapterId == SandboxModeViewModel.CHAPTED_ID) {
+            binding.score.visibility = View.INVISIBLE
+            binding.scoreLabel.visibility = View.INVISIBLE
+        }
 
         viewModel.gameState.observe(viewLifecycleOwner, Observer { state ->
             if (state == GameModeViewModel.STARTED) {

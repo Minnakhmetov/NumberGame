@@ -63,7 +63,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
         score.toString()
     }
 
-    private val _gameState = MutableLiveData<Int>(NOT_STARTED)
+    protected val _gameState = MutableLiveData<Int>(NOT_STARTED)
     val gameState: LiveData<Int> = _gameState
 
     private val _secondsLeft = MutableLiveData<String>()
@@ -93,7 +93,11 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
         .setMaxStreams(4)
         .build()
 
-    fun startCountdown() {
+    open fun initialize() {
+        startCountdown()
+    }
+
+    private fun startCountdown() {
         if (gameState.value != NOT_STARTED)
             return
         countDownTimer.start()

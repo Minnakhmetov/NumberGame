@@ -33,9 +33,13 @@ open class VoiceModeViewModel(application: Application) : GameModeViewModel(appl
         else -> 0
     }.toLong()
 
+    fun loadNewNumberSound() {
+        numberReader.load(currentNumber.value ?: "")
+    }
+
     override fun onCurrentNumberChanged() {
         super.onCurrentNumberChanged()
-        numberReader.load(currentNumber.value ?: "")
+        loadNewNumberSound()
         numberReader.onLoadCompleteListener = {
             numberReader.start(!isFirstRound)
         }

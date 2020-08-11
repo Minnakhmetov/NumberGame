@@ -2,10 +2,7 @@ package com.example.numbersgame.models
 
 import android.content.Context
 import com.example.numbersgame.R
-import com.example.numbersgame.gamemodes.OneMistakeTextModeViewModel
-import com.example.numbersgame.gamemodes.OneMistakeVoiceModeViewModel
-import com.example.numbersgame.gamemodes.TextModeViewModel
-import com.example.numbersgame.gamemodes.VoiceModeViewModel
+import com.example.numbersgame.gamemodes.*
 import com.example.numbersgame.storage.RecordsStorage
 
 class ChapterRepository(private val context: Context) {
@@ -37,6 +34,12 @@ class ChapterRepository(private val context: Context) {
                     getString(R.string.one_mistake_voice_mode_name),
                     getString(R.string.listening_category),
                     recordsStorage
+                ),
+                Chapter(
+                    SandboxModeViewModel.CHAPTED_ID,
+                    "Sandbox",
+                    0,
+                    "Research"
                 )
             )
         }

@@ -233,6 +233,9 @@ fun getWords(rawNumber: String, rawPrefix: String, styled: Boolean): DelayedSpan
     val builder = DelayedSpannableStringBuilder()
 
     for (i in chunkedNumber.indices) {
+        if (chunkedNumber[i] == "000")
+            continue
+
         val part = DelayedSpannableStringBuilder(
             convertThreeDigitNumberToWords(chunkedNumber[i]).let {
                 if (it.isNotEmpty())

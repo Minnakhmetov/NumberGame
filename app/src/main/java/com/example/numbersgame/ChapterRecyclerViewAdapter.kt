@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.numbersgame.gamemodes.SandboxModeViewModel
 import com.example.numbersgame.models.Chapter
 import timber.log.Timber
 import kotlin.IllegalArgumentException
@@ -75,8 +76,12 @@ class ChapterViewHolder private constructor(root: View) : RecyclerView.ViewHolde
 
 
     fun bind(item: ListItem.ChapterItem, onClick: (String) -> Unit) {
+
         name.text = item.chapter.name
-        progress.text = item.chapter.userScore.toString()
+        if (item.chapter.chapterId != SandboxModeViewModel.CHAPTED_ID)
+            progress.text = item.chapter.userScore.toString()
+        else
+            progress.text = ""
         itemView.setOnClickListener { onClick(item.chapter.chapterId) }
     }
 
