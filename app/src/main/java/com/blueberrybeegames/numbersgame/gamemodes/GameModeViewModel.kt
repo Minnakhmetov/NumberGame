@@ -237,7 +237,8 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
                 }
             }
             else -> {
-                _userInput.value = (_userInput.value ?: "") + id.toString()
+                if ((_userInput.value?.length ?: 0) < 8)
+                    _userInput.value = (_userInput.value ?: "") + id.toString()
             }
         }
 

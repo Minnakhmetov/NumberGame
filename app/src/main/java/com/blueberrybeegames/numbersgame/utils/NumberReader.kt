@@ -93,7 +93,6 @@ class NumberReader(private val context: Context, private val soundPool: SoundPoo
     }
 
     private fun postTrack(index: Int, delay: Long) {
-        Timber.i("postTrack called")
         handler.postDelayed({
             streamId = soundPool.play(ids[index], 1F, 1F, 0, 0, 1F)
             if (index + 1 < ids.size) {
@@ -104,7 +103,8 @@ class NumberReader(private val context: Context, private val soundPool: SoundPoo
 
     fun start(afterSuccess: Boolean = false) {
         stop()
-        postTrack(0, if (afterSuccess) AFTER_SUCCESS_DELAY else 0)
+        if (ids.isNotEmpty())
+            postTrack(0, if (afterSuccess) AFTER_SUCCESS_DELAY else 0)
     }
 }
 

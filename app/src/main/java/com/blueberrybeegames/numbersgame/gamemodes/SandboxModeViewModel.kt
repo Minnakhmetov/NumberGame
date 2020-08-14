@@ -11,7 +11,6 @@ class SandboxModeViewModel(application: Application) : VoiceModeViewModel(applic
 
     override fun onGameStarted() {}
     override fun onMistakeStatusChanged(isMistaken: Boolean) {}
-    override fun onGamePaused() {}
     override fun onGameResumed() {}
 
     override fun initialize() {
