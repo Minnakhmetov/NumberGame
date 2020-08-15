@@ -1,6 +1,7 @@
 package com.blueberrybeegames.numbersgame
 
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.text.Spannable
@@ -17,6 +18,7 @@ import com.blueberrybeegames.numbersgame.databinding.FragmentAboutBinding
 import com.blueberrybeegames.numbersgame.theme.ThemeColorPreview
 import com.blueberrybeegames.numbersgame.theme.ThemeKeeper
 import com.blueberrybeegames.numbersgame.utils.getAttr
+import com.google.android.material.snackbar.Snackbar
 
 class AboutFragment : Fragment() {
 
@@ -62,7 +64,15 @@ class AboutFragment : Fragment() {
                 startActivity(intent)
             }
             else {
-                Toast.makeText(context, R.string.no_email_app, Toast.LENGTH_SHORT).show()
+                val whiteText = SpannableString(getString(R.string.no_email_app)).apply {
+                    setSpan(
+                        ForegroundColorSpan(Color.WHITE),
+                        0,
+                        length,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                }
+                Snackbar.make(it, whiteText, Snackbar.LENGTH_SHORT).show()
             }
         }
 
