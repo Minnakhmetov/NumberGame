@@ -45,14 +45,23 @@
         <item name="colorSecondary">@color/colorSecondaryDarkGreen</item>
     </style>
 
-
     <style name="WhiteBlue" parent="AppTheme">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorSecondary">@color/colorSecondary</item>
-        <item name="colorOnPrimary">@color/colorOnPrimary</item>
+        <item name="colorPrimary">@color/colorPrimaryWhiteBlue</item>
+        <item name="colorSecondary">@color/colorSecondaryWhiteBlue</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryWhiteBlue</item>
         <item name="colorPrimaryDark">@android:color/black</item>
         <item name="android:navigationBarColor">@android:color/black</item>
     </style>
+
+    <style name="Brown" parent="AppTheme">
+        <item name="colorPrimary">@color/colorPrimaryBrown</item>
+        <item name="colorSecondary">@color/colorSecondaryBrown</item>
+    </style>
+
+    <style name="New" parent="AppTheme">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+    </style>    
 
 
 <!--        <style name="DarkGreen" parent="AppTheme">-->

@@ -13,7 +13,7 @@
     <color name="colorSecondaryRed">#572525</color>
 
     <color name="colorPrimaryTeal">#00897b</color>
-    <color name="colorSecondaryTeal">#005b4f</color>
+    <color name="colorSecondaryTeal">#004E43</color>
 
 
     <color name="colorPrimaryBlue">#1A6488</color>
@@ -22,9 +22,15 @@
     <color name="colorPrimaryDarkGreen">#004d40</color>
     <color name="colorSecondaryDarkGreen">#449382</color>
 
-    <color name="colorPrimary">@android:color/white</color>
-    <color name="colorSecondary">#2C84B8</color>
-    <color name="colorOnPrimary">#434343</color>
+    <color name="colorPrimaryWhiteBlue">@android:color/white</color>
+    <color name="colorSecondaryWhiteBlue">#2C84B8</color>
+    <color name="colorOnPrimaryWhiteBlue">#434343</color>
+
+    <color name="colorPrimaryBrown">#705952</color>
+    <color name="colorSecondaryBrown">#3E312D</color>
+
+    <color name="colorPrimary">#416343</color>
+    <color name="colorSecondary">#253926</color>
 
 <!--    <color name="colorPrimary">#212121</color>-->
 <!--    <color name="colorSecondary">#9c64a6</color>-->

@@ -74,7 +74,9 @@ class AboutFragment : Fragment() {
             R.style.Red,
             R.style.Teal,
             R.style.Blue,
-            R.style.DarkGreen
+            R.style.DarkGreen,
+            R.style.Brown,
+            R.style.New
         )
 
         val themeKeeper = ThemeKeeper.getInstance(requireContext())

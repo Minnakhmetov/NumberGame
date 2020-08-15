@@ -2,9 +2,9 @@
 <resources>
 
     <style name="WhiteBlue" parent="AppTheme">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorSecondary">@color/colorSecondary</item>
-        <item name="colorOnPrimary">@color/colorOnPrimary</item>
+        <item name="colorPrimary">@color/colorPrimaryWhiteBlue</item>
+        <item name="colorSecondary">@color/colorSecondaryWhiteBlue</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryWhiteBlue</item>
         <item name="android:windowLightNavigationBar">true</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
