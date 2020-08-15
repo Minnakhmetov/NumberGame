@@ -14,7 +14,7 @@ open class VoiceModeViewModel(application: Application) : GameModeViewModel(appl
 
     override val chapterId: String = CHAPTER_ID
 
-    private val numberReader = NumberReader(application, soundPool)
+    protected val numberReader = NumberReader(application, soundPool)
 
     private var isFirstRound = true
 
@@ -37,10 +37,10 @@ open class VoiceModeViewModel(application: Application) : GameModeViewModel(appl
 
     override fun onCurrentNumberChanged() {
         super.onCurrentNumberChanged()
-        loadNewNumberSound()
         numberReader.onLoadCompleteListener = {
             numberReader.start(!isFirstRound)
         }
+        loadNewNumberSound()
         isFirstRound = false
         setWords(
             true,

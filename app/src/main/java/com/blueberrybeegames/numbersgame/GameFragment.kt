@@ -103,6 +103,11 @@ class GameFragment : Fragment() {
                 }
             }
         })
+
+        binding.backspace.setOnLongClickListener {
+            viewModel.handleButtonClick(GameModeViewModel.LONG_BACKSPACE)
+            true
+        }
     }
 
     private fun showGameEndElements() {

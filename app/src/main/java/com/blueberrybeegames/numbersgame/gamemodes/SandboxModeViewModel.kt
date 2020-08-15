@@ -15,11 +15,20 @@ class SandboxModeViewModel(application: Application) : VoiceModeViewModel(applic
 
     override fun initialize() {
         _gameState.value = STARTED
+        numberReader.onLoadCompleteListener = {
+            numberReader.start(false)
+        }
+    }
+
+    override fun onWordsClick() {
+        if (numberReader.loadedNumber != currentNumber.value)
+            loadNewNumberSound()
+        else
+            numberReader.start()
     }
 
     override fun onUserInputChanged() {
         currentNumber.value = userInput.value
-        loadNewNumberSound()
 
         setWords(false,
             getWords(

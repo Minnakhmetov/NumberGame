@@ -22,6 +22,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
         const val TIME_IS_UP = 1
 
         const val BACKSPACE = 10
+        const val LONG_BACKSPACE = 11
 
         private const val COUNTDOWN: Long = 3000
     }
@@ -236,8 +237,11 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
                     }
                 }
             }
+            LONG_BACKSPACE -> {
+                _userInput.value = ""
+            }
             else -> {
-                if ((_userInput.value?.length ?: 0) < 8)
+                if ((_userInput.value?.length ?: 0) < 9)
                     _userInput.value = (_userInput.value ?: "") + id.toString()
             }
         }

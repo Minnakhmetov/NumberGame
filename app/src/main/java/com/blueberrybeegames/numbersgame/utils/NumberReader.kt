@@ -15,6 +15,7 @@ class NumberReader(private val context: Context, private val soundPool: SoundPoo
     private var streamId = -1
     var onLoadCompleteListener: (() -> Unit)? = null
     private var loaded = 0
+    var loadedNumber: String = ""
 
     companion object {
         private const val SHORT_DELAY = 0L
@@ -34,6 +35,8 @@ class NumberReader(private val context: Context, private val soundPool: SoundPoo
     }
 
     fun load(number: String) {
+        loadedNumber = number
+
         unload()
         if (number.length !in 1..9)
             return

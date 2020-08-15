@@ -67,14 +67,14 @@ class AboutFragment : Fragment() {
         }
 
         val themeList = listOf(
+            R.style.DarkOrange,
+            R.style.WhiteBlue,
             R.style.Green,
             R.style.Purple,
-            R.style.DarkOrange,
             R.style.Red,
             R.style.Teal,
             R.style.Blue,
-            R.style.DarkGreen,
-            R.style.WhiteBlue
+            R.style.DarkGreen
         )
 
         val themeKeeper = ThemeKeeper.getInstance(requireContext())

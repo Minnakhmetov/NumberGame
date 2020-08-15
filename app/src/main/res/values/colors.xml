@@ -3,21 +3,21 @@
     <color name="colorPrimaryGreen">#66bb6a</color>
     <color name="colorSecondaryGreen">#338a3e</color>
 
-    <color name="colorPrimaryPurple">#ce93d8</color>
-    <color name="colorSecondaryPurple">#9c64a6</color>
+    <color name="colorPrimaryPurple">#85518E</color>
+    <color name="colorSecondaryPurple">#582B60</color>
 
     <color name="colorPrimaryDarkOrange">#212121</color>
     <color name="colorSecondaryDarkOrange">#ff833a</color>
 
-    <color name="colorPrimaryRed">#ff5252</color>
-    <color name="colorSecondaryRed">#c50e29</color>
+    <color name="colorPrimaryRed">#933D3D</color>
+    <color name="colorSecondaryRed">#572525</color>
 
     <color name="colorPrimaryTeal">#00897b</color>
     <color name="colorSecondaryTeal">#005b4f</color>
 
 
-    <color name="colorPrimaryBlue">#039be5</color>
-    <color name="colorSecondaryBlue">#006db3</color>
+    <color name="colorPrimaryBlue">#1A6488</color>
+    <color name="colorSecondaryBlue">#0F394E</color>
 
     <color name="colorPrimaryDarkGreen">#004d40</color>
     <color name="colorSecondaryDarkGreen">#449382</color>

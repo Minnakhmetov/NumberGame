@@ -27,7 +27,7 @@ class ThemeKeeper private constructor() {
         }
         get() {
             if (field == -1) {
-                field = settingsSharedPreferences.getInt(THEME_ID_KEY, R.style.Green)
+                field = settingsSharedPreferences.getInt(THEME_ID_KEY, R.style.DarkOrange)
             }
             return field
         }

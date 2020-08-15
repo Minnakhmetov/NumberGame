@@ -34,4 +34,6 @@
     <string name="write_me_button">Write me</string>
     <string name="rate_button">Rate</string>
     <string name="theme_header">Theme</string>
+    <string name="sandbox_mode_name">Sandbox</string>
+    <string name="training_category">Training</string>
 </resources>
