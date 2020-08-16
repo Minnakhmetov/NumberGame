@@ -28,7 +28,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
 
         private const val COUNTDOWN: Long = 3000
 
-        fun getPercentage(score: Int) = score * 100 / QUESTIONS_NUMBER
+        fun getPercentage(score: Int) = min(100, score * 100 / QUESTIONS_NUMBER)
     }
 
     abstract val chapterId: String
