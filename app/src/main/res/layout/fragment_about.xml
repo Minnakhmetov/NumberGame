@@ -64,88 +64,97 @@
             app:layout_constraintTop_toBottomOf="@+id/sound_credits" />
 
         <LinearLayout
-            android:id="@+id/email_button"
+            android:id="@+id/actions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_small"
-            android:background="?attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="horizontal"
-            android:padding="@dimen/spacing_small"
+            android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/feedback_header">
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="30sp"
-                android:layout_height="30sp"
-                android:tint="?attr/colorSecondary"
-                app:srcCompat="@drawable/ic_email" />
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/email_button"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/spacing_normal"
-                android:text="@string/write_me_button" />
+                android:layout_marginTop="@dimen/spacing_small"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="horizontal"
+                android:padding="@dimen/spacing_small"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/feedback_header">
 
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="30sp"
+                    android:layout_height="30sp"
+                    android:tint="?attr/colorSecondary"
+                    app:srcCompat="@drawable/ic_email" />
 
-        <LinearLayout
-            android:id="@+id/rate_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="horizontal"
-            android:padding="@dimen/spacing_small"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/email_button">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/spacing_normal"
+                    android:text="@string/write_me_button" />
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="30sp"
-                android:layout_height="30sp"
-                android:tint="?attr/colorSecondary"
-                app:srcCompat="@drawable/ic_rate" />
+            </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/rate_button"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/spacing_normal"
-                android:text="@string/rate_button" />
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="horizontal"
+                android:padding="@dimen/spacing_small"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/email_button">
 
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="30sp"
+                    android:layout_height="30sp"
+                    android:tint="?attr/colorSecondary"
+                    app:srcCompat="@drawable/ic_rate" />
 
-        <LinearLayout
-            android:id="@+id/buy_pro_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="horizontal"
-            android:padding="@dimen/spacing_small"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rate_button">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/spacing_normal"
+                    android:text="@string/rate_button" />
 
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="30sp"
-                android:layout_height="30sp"
-                android:tint="?attr/colorSecondary"
-                app:srcCompat="@drawable/ic_diamond_stone" />
+            </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/buy_pro_button"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/spacing_normal"
-                android:text="@string/buy_premium" />
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="horizontal"
+                android:padding="@dimen/spacing_small"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rate_button">
 
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="30sp"
+                    android:layout_height="30sp"
+                    android:tint="?attr/colorSecondary"
+                    app:srcCompat="@drawable/ic_diamond_stone" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/spacing_normal"
+                    android:text="@string/buy_premium" />
+
+            </LinearLayout>
         </LinearLayout>
 
         <TextView
@@ -155,7 +164,7 @@
             android:layout_marginTop="@dimen/spacing_normal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buy_pro_button"
+            app:layout_constraintTop_toBottomOf="@+id/actions"
             tools:text="@string/created_by" />
 
 
