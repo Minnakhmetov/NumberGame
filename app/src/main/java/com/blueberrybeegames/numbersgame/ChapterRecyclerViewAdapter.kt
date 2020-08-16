@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.blueberrybeegames.numbersgame.gamemodes.GameModeViewModel
 import com.blueberrybeegames.numbersgame.gamemodes.SandboxModeViewModel
 import com.blueberrybeegames.numbersgame.models.Chapter
 import kotlin.IllegalArgumentException
@@ -78,7 +79,7 @@ class ChapterViewHolder private constructor(root: View) : RecyclerView.ViewHolde
 
         name.text = item.chapter.name
         if (item.chapter.chapterId != SandboxModeViewModel.CHAPTED_ID)
-            progress.text = item.chapter.userScore.toString()
+            progress.text = "${GameModeViewModel.getPercentage(item.chapter.userScore)}%"
         else
             progress.text = ""
         itemView.setOnClickListener { onClick(item.chapter.chapterId) }

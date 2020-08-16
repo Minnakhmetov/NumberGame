@@ -24,7 +24,11 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
         const val BACKSPACE = 10
         const val LONG_BACKSPACE = 11
 
+        const val QUESTIONS_NUMBER = 80
+
         private const val COUNTDOWN: Long = 3000
+
+        fun getPercentage(score: Int) = score * 100 / QUESTIONS_NUMBER
     }
 
     abstract val chapterId: String
@@ -61,6 +65,10 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
     val formattedScore: LiveData<String> = Transformations.map(_score) { score ->
         score.toString()
     }
+
+    val progress: LiveData<Int> = Transformations.map(_score) { getPercentage(it) }
+
+    val percentage: LiveData<String> = Transformations.map(progress) { "$it%" }
 
     protected val _gameState = MutableLiveData<Int>(NOT_STARTED)
     val gameState: LiveData<Int> = _gameState
@@ -152,7 +160,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
     }
 
     private fun getLengthRange(currentScore: Int): Pair<Int, Int> {
-        val shift = currentScore / 3
+        val shift = currentScore / 8
         return Pair(min(9, 1 + shift), min(9, 2 + shift))
     }
 

@@ -34,7 +34,7 @@ class ChapterChoiceFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.settingsButton.setOnClickListener {
+        binding.settingsIcon.setOnClickListener {
             findNavController().navigate(ChapterChoiceFragmentDirections.actionChapterChoiceFragmentToAboutFragment())
         }
     }

@@ -120,6 +120,34 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/buy_pro_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:padding="@dimen/spacing_small"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rate_button">
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="30sp"
+                android:layout_height="30sp"
+                android:tint="?attr/colorSecondary"
+                app:srcCompat="@drawable/ic_diamond_stone" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:text="@string/buy_premium" />
+
+        </LinearLayout>
+
         <TextView
             android:id="@+id/created_by_text"
             android:layout_width="wrap_content"
@@ -127,7 +155,7 @@
             android:layout_marginTop="@dimen/spacing_normal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rate_button"
+            app:layout_constraintTop_toBottomOf="@+id/buy_pro_button"
             tools:text="@string/created_by" />
 
 

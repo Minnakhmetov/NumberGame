@@ -76,8 +76,8 @@ class GameFragment : Fragment() {
         })
 
         if (chapterId == SandboxModeViewModel.CHAPTED_ID) {
-            binding.score.visibility = View.INVISIBLE
-            binding.scoreLabel.visibility = View.INVISIBLE
+            binding.progressBar.visibility = View.INVISIBLE
+            binding.percentage.visibility = View.INVISIBLE
         }
 
         viewModel.gameState.observe(viewLifecycleOwner, Observer { state ->
