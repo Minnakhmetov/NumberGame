@@ -48,8 +48,6 @@ class AboutFragment : Fragment() {
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 
-
-
         binding.createdByText.text = createdByStyledString
 
         binding.soundCredits.movementMethod = LinkMovementMethod.getInstance()
