@@ -38,6 +38,7 @@
             android:id="@+id/buy_pro_icon"
             android:layout_width="@dimen/back_button_side"
             android:layout_height="@dimen/back_button_side"
+            android:visibility="gone"
             android:clickable="true"
             android:focusable="true"
             android:background="?attr/selectableItemBackgroundBorderless"

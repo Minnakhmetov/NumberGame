@@ -4,7 +4,7 @@
     <color name="colorSecondaryGreen">#338a3e</color>
 
     <color name="colorPrimaryPurple">#85518E</color>
-    <color name="colorSecondaryPurple">#582B60</color>
+    <color name="colorSecondaryPurple">#47234E</color>
 
     <color name="colorPrimaryDarkOrange">#212121</color>
     <color name="colorSecondaryDarkOrange">#ff833a</color>
@@ -26,8 +26,8 @@
     <color name="colorSecondaryWhiteBlue">#2C84B8</color>
     <color name="colorOnPrimaryWhiteBlue">#434343</color>
 
-    <color name="colorPrimaryBrown">#705952</color>
-    <color name="colorSecondaryBrown">#3E312D</color>
+    <color name="colorPrimaryBrown">#8E4563</color>
+    <color name="colorSecondaryBrown">#591E35</color>
 
     <color name="colorPrimary">#416343</color>
     <color name="colorSecondary">#253926</color>
