@@ -33,6 +33,28 @@ class AboutFragment : Fragment() {
         return binding.root
     }
 
+    private fun getCreateByStyledText(): SpannableString {
+        val createdByStyledString = SpannableString(getString(R.string.created_by))
+
+        var pos = createdByStyledString.length
+
+        repeat(3) {
+            pos--;
+            pos = createdByStyledString.lastIndexOf(' ', pos)
+        }
+
+        if (pos != -1) {
+            createdByStyledString.setSpan(
+                ForegroundColorSpan(requireContext().getAttr(R.attr.colorSecondary)),
+                0,
+                pos,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+
+        return createdByStyledString
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -40,15 +62,9 @@ class AboutFragment : Fragment() {
         binding.feedbackHeader.findViewById<TextView>(R.id.title).text = getString(R.string.feedback_header)
         binding.themeHeader.findViewById<TextView>(R.id.title).text = getString(R.string.theme_header)
 
-        val createdByStyledString = SpannableString(getString(R.string.created_by))
-        createdByStyledString.setSpan(
-            ForegroundColorSpan(requireContext().getAttr(R.attr.colorSecondary)),
-            0,
-            10,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
 
-        binding.createdByText.text = createdByStyledString
+
+        binding.createdByText.text = getCreateByStyledText()
 
         binding.soundCredits.movementMethod = LinkMovementMethod.getInstance()
 

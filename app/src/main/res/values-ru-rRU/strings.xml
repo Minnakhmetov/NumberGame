@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="about_fragment">About fragment</string>
+    <string name="game_fragment">Game fragment</string>
+    <string name="app_name">Числа на английском</string>
+    <string name="tap_to_listen">ВОСПРОИЗВЕСТИ</string>
+    <string name="credits_header">Благодарности</string>
+    <string name="feedback_header">Обратная связь</string>
+    <string name="no_email_app">Не найдено походящего приложения</string>
+    <string name="credits_to_sound_creator">Звуковые эффекты
+        <a href="https://www.noiseforfun.com/2012-sound-effects/choice-good">Choice Good</a> и
+        <a href="https://www.noiseforfun.com/2012-sound-effects/choice-bad">Choice Bad</a>
+        от NoiseForFun.com лицензированы по лицензии
+        <a href="https://creativecommons.org/licenses/by-nd/3.0/">CC-BY-ND 3.0 Attribution license</a>.</string>
+    <string name="answer">Ответ: %s</string>
+    <string name="time_is_up">время вышло</string>
+    <string name="blunder">ошибка</string>
+    <string name="one_mistake_text_mode_name">Сложно</string>
+    <string name="one_mistake_voice_mode_name">Сложно</string>
+    <string name="text_mode_name">Легко</string>
+    <string name="voice_mode_name">Легко</string>
+    <string name="spelling_category">Чтение</string>
+    <string name="listening_category">Аудирование</string>
+    <string name="created_by">Создано Blueberry Bee Games</string>
+    <string name="write_me_button">Написать мне</string>
+    <string name="rate_button">Оценить</string>
+    <string name="theme_header">Оформление</string>
+    <string name="sandbox_mode_name">Песочница</string>
+    <string name="training_category">Тренировка</string>
+    <string name="buy_premium">Buy Premium</string>
+</resources>
