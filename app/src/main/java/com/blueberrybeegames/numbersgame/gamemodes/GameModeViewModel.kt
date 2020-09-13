@@ -24,7 +24,7 @@ abstract class GameModeViewModel(application: Application) : AndroidViewModel(ap
         const val BACKSPACE = 10
         const val LONG_BACKSPACE = 11
 
-        const val QUESTIONS_NUMBER = 80
+        const val QUESTIONS_NUMBER = 100
 
         private const val COUNTDOWN: Long = 3000
 
