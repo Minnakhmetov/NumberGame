@@ -76,10 +76,10 @@ class ThemeColorPreview: AppCompatImageView {
         )
 
         newLayoutParams.setMargins(
-            context.resources.getDimension(R.dimen.spacing_small).toInt(),
-            context.resources.getDimension(R.dimen.spacing_small).toInt(),
-            0,
-            0
+            context.resources.getDimension(R.dimen.spacing_tiny).toInt(),
+            context.resources.getDimension(R.dimen.spacing_tiny).toInt(),
+            context.resources.getDimension(R.dimen.spacing_tiny).toInt(),
+            context.resources.getDimension(R.dimen.spacing_tiny).toInt()
         )
 
         layoutParams = newLayoutParams

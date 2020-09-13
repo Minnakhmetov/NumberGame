@@ -23,12 +23,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <GridLayout
-            android:layout_marginTop="@dimen/spacing_small"
             android:id="@+id/theme_picker"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/theme_header"
-            android:columnCount="5">
+            android:layout_marginTop="@dimen/spacing_small"
+            android:columnCount="5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/theme_header">
 
         </GridLayout>
 
