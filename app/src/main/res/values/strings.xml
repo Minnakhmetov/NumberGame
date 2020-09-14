@@ -30,4 +30,11 @@
     <string name="sandbox_mode_name">Sandbox</string>
     <string name="training_category">Training</string>
     <string name="buy_premium">Buy Premium</string>
+    <string name="email_button_description">Write email to developer button</string>
+    <string name="email_icon_description">email icon</string>
+    <string name="rate_icon_description">rate icon</string>
+    <string name="play_again_button_description">play again button</string>
+    <string name="backspace_button_description">backspace</string>
+    <string name="back_button_description">back button</string>
+    <string name="settings_button_description">settings button</string>
 </resources>

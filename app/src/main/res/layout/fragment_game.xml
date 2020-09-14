@@ -107,6 +107,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:padding="@dimen/spacing_normal"
+                android:contentDescription="@string/play_again_button_description"
                 android:tint="?attr/colorSecondary"
                 android:clickable="true"
                 android:focusable="true"
@@ -271,6 +272,7 @@
                 <ImageView
                     android:id="@+id/backspace"
                     android:layout_width="0dp"
+                    android:contentDescription="@string/backspace_button_description"
                     android:layout_height="0dp"
                     android:onClick="@{() -> viewModel.handleButtonClick(viewModel.BACKSPACE)}"
                     android:padding="@dimen/spacing_normal"
