@@ -8,12 +8,11 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.text.style.ForegroundColorSpan
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.blueberrybeegames.numbersgame.databinding.FragmentAboutBinding
 import com.blueberrybeegames.numbersgame.theme.ThemeColorPreview
 import com.blueberrybeegames.numbersgame.theme.ThemeKeeper
@@ -88,6 +87,12 @@ class AboutFragment : Fragment() {
                 }
                 Snackbar.make(it, whiteText, Snackbar.LENGTH_SHORT).show()
             }
+        }
+
+        binding.rateButton.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse("market://details?id=com.blueberrybeegames.numbersgame")
+            startActivity(intent)
         }
 
         val themeList = listOf(
