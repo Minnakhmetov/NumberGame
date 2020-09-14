@@ -46,10 +46,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val themeKeeperListener = SharedPreferences.OnSharedPreferenceChangeListener { _, _ ->
-            recreate()
-        }
-
         themeKeeper.subscribe(this)
 
         backButton.setOnClickListener {
