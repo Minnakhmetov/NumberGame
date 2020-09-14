@@ -1,6 +1,9 @@
 package com.blueberrybeegames.numbersgame.gamemodes
 
 import android.app.Application
+import com.blueberrybeegames.numbersgame.GameApplication
+import com.blueberrybeegames.numbersgame.R
+import com.blueberrybeegames.numbersgame.utils.DelayedSpannableStringBuilder
 import com.blueberrybeegames.numbersgame.utils.getWords
 
 class SandboxModeViewModel(application: Application) : VoiceModeViewModel(application) {
@@ -18,6 +21,11 @@ class SandboxModeViewModel(application: Application) : VoiceModeViewModel(applic
         numberReader.onLoadCompleteListener = {
             numberReader.start(false)
         }
+        setWords(true,
+            DelayedSpannableStringBuilder(
+                getApplication<GameApplication>().getString(R.string.tap_on_number_to_listen)
+            )
+        )
     }
 
     override fun onWordsClick() {
@@ -30,12 +38,23 @@ class SandboxModeViewModel(application: Application) : VoiceModeViewModel(applic
     override fun onUserInputChanged() {
         currentNumber.value = userInput.value
 
-        setWords(false,
-            getWords(
-                userInput.value ?: "",
-                "",
-                false
+        if (userInput.value.isNullOrEmpty()) {
+            setWords(true,
+                DelayedSpannableStringBuilder(
+                    getApplication<GameApplication>().getString(R.string.tap_on_number_to_listen)
+                )
             )
-        )
+        }
+        else {
+            setWords(true,
+                getWords(
+                    userInput.value ?: "",
+                    "",
+                    false
+                )
+            )
+        }
+
+
     }
 }

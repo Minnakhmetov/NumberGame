@@ -97,9 +97,11 @@ class NumberReader(private val context: Context, private val soundPool: SoundPoo
 
     private fun postTrack(index: Int, delay: Long) {
         handler.postDelayed({
-            streamId = soundPool.play(ids[index], 1F, 1F, 0, 0, 1F)
-            if (index + 1 < ids.size) {
-                postTrack(index + 1, durations[index] + delays[index])
+            if (index < ids.size) {
+                streamId = soundPool.play(ids[index], 1F, 1F, 0, 0, 1F)
+                if (index + 1 < ids.size) {
+                    postTrack(index + 1, durations[index] + delays[index])
+                }
             }
         }, delay)
     }
