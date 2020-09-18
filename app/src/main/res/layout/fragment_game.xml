@@ -135,7 +135,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/gameKeyboard"
                 android:layout_width="0dp"
-                android:layout_height="300dp"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_percent="0.45"
                 tools:visibility="invisible"
                 android:theme="@style/GameKeyboard"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -322,6 +323,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginStart="@dimen/spacing_normal"
                 android:layout_marginEnd="@dimen/spacing_normal"
+                android:layout_marginBottom="@dimen/spacing_normal"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:visibility="visible"
                 app:layout_constraintTop_toBottomOf="@+id/timer">
@@ -331,6 +333,8 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:layout_gravity="center"
+                    app:autoSizeTextType="uniform"
+                    app:autoSizeMaxTextSize="30sp"
                     android:textSize="30sp"
                     tools:text="seven thousand forty-two" />
 
@@ -339,6 +343,8 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:layout_gravity="center"
+                    app:autoSizeTextType="uniform"
+                    app:autoSizeMaxTextSize="30sp"
                     android:textSize="30sp"
                     tools:text="seven thousand forty-two" />
 
