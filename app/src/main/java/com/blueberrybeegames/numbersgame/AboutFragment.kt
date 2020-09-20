@@ -70,7 +70,7 @@ class AboutFragment : Fragment() {
         binding.emailButton.setOnClickListener {
             val intent = Intent().apply {
                 action = Intent.ACTION_SENDTO
-                data = Uri.parse("mailto:whiteplum42@gmail.com?subject=${Uri.encode("Numbers Game support")}")
+                data = Uri.parse("mailto:whiteplum42@gmail.com?subject=${Uri.encode("Numbers in English support")}")
             }
 
             if (intent.resolveActivity(requireActivity().packageManager) != null) {

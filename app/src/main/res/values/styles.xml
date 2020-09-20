@@ -8,6 +8,7 @@
         <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="colorPrimaryDark">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">?attr/colorPrimary</item>
+        <item name="colorControlHighlight">?attr/colorSecondary</item>
     </style>
 
     <style name="Green" parent="AppTheme">
