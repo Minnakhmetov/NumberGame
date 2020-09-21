@@ -80,6 +80,11 @@ class GameFragment : Fragment() {
             binding.percentage.visibility = View.INVISIBLE
         }
 
+        if (chapterId == VoiceModeViewModel.CHAPTER_ID ||
+                chapterId == OneMistakeVoiceModeViewModel.CHAPTER_ID) {
+            binding.pronunciationButton.visibility = View.VISIBLE
+        }
+
         viewModel.gameState.observe(viewLifecycleOwner, Observer { state ->
             if (state == GameModeViewModel.STARTED) {
                 binding.layout.visibility = View.VISIBLE

@@ -42,25 +42,11 @@ open class VoiceModeViewModel(application: Application) : GameModeViewModel(appl
         }
         loadNewNumberSound()
         isFirstRound = false
-        setWords(
-            true,
-            DelayedSpannableStringBuilder(
-                getApplication<GameApplication>().getString(R.string.tap_to_listen)
-            )
-        )
     }
 
     override fun onMistakeStatusChanged(isMistaken: Boolean) {
         super.onMistakeStatusChanged(isMistaken)
         _mistakeFrame.value = isMistaken
-    }
-
-    override fun onGameStarted() {
-        super.onGameStarted()
-        setWords(
-            true,
-            DelayedSpannableStringBuilder(getApplication<GameApplication>().getString(R.string.tap_to_listen))
-        )
     }
 
     override fun onWordsClick() {

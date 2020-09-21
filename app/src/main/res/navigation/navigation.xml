@@ -17,7 +17,7 @@
             android:id="@+id/action_gameFragment_self"
             app:destination="@id/gameFragment"
             app:enterAnim="@anim/fragment_open_enter"
-            app:popEnterAnim="@anim/silde_in_left"
+            app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@id/gameFragment"
             app:popUpToInclusive="true" />
@@ -37,14 +37,14 @@
             app:destination="@id/gameFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/silde_in_left"
+            app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_chapterChoiceFragment_to_aboutFragment"
             app:destination="@id/aboutFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/silde_in_left"
+            app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 </navigation>

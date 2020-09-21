@@ -38,7 +38,7 @@ class ChapterRepository(private val context: Context) {
                 Chapter(
                     SandboxModeViewModel.CHAPTED_ID,
                     getString(R.string.sandbox_mode_name),
-                    0,
+                    -1,
                     getString(R.string.training_category)
                 )
             )

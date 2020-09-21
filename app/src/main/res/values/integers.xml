@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="animation_duration">@android:integer/config_mediumAnimTime</integer>
+    <integer name="transition_duration">@android:integer/config_mediumAnimTime</integer>
+    <integer name="picker_item_change_duration">@android:integer/config_shortAnimTime</integer>
+    <integer name="progress_bar_anim_duration">1000</integer>
 </resources>

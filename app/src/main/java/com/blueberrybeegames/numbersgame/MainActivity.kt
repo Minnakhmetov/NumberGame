@@ -1,6 +1,5 @@
 package com.blueberrybeegames.numbersgame
 
-import android.content.SharedPreferences
 import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -40,7 +39,7 @@ class MainActivity : AppCompatActivity() {
                 else -> {
                     if (backButton.visibility == View.INVISIBLE) {
                         backButton.visibility = View.VISIBLE
-                        backButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.silde_in_left))
+                        backButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in_left))
                     }
                 }
             }

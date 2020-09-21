@@ -12,43 +12,84 @@
         android:padding="@dimen/spacing_normal"
         tools:context="com.blueberrybeegames.numbersgame.ChapterChoiceFragment">
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="16dp"
+            android:indeterminate="false"
+            android:progress="73"
+            android:progressDrawable="@drawable/circular_progress_drawable_thick"
+            app:layout_constraintBottom_toTopOf="@+id/modePicker"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.64"
+            app:layout_constraintWidth_percent="0.5"
+            tools:progress="73" />
+
         <ImageView
             android:id="@+id/settings_icon"
             android:layout_width="@dimen/back_button_side"
             android:layout_height="@dimen/back_button_side"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="@string/settings_button_description"
+            android:focusable="true"
             android:padding="@dimen/spacing_small"
             android:tint="?attr/colorSecondary"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackgroundBorderless"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_settings"
-            android:contentDescription="@string/settings_button_description" />
+            app:srcCompat="@drawable/ic_settings" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/chapters_list"
-            android:layout_marginTop="46dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:itemCount="5"
-            tools:listitem="@layout/chapter_item_list" />
+        <com.blueberrybeegames.numbersgame.Picker
+            android:id="@+id/modePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/chapterPicker"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.59000003"
+            app:layout_constraintVertical_chainStyle="packed" />
 
-        <ImageView
-            android:id="@+id/buy_pro_icon"
-            android:layout_width="@dimen/back_button_side"
-            android:layout_height="@dimen/back_button_side"
-            android:visibility="gone"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:tint="?attr/colorSecondary"
-            android:padding="@dimen/spacing_small"
-            app:layout_constraintBottom_toBottomOf="@+id/settings_icon"
-            app:layout_constraintEnd_toStartOf="@+id/settings_icon"
-            app:layout_constraintTop_toTopOf="@+id/settings_icon"
-            app:srcCompat="@drawable/ic_diamond_stone" />
+        <com.blueberrybeegames.numbersgame.Picker
+            android:id="@+id/chapterPicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/modePicker" />
+
+        <Button
+            android:id="@+id/startButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="start game"
+            android:textColor="?attr/startButtonTextColor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chapterPicker"
+            app:layout_constraintVertical_bias="0.49"
+            app:srcCompat="@drawable/ic_play_circle_outline" />
+
+        <TextView
+            android:id="@+id/percentage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="73%"
+            android:textSize="27sp"
+            app:layout_constraintBottom_toBottomOf="@+id/progressBar"
+            app:layout_constraintEnd_toEndOf="@+id/progressBar"
+            app:layout_constraintStart_toStartOf="@+id/progressBar"
+            app:layout_constraintTop_toTopOf="@+id/progressBar"
+            app:layout_constraintVertical_bias="0.488" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
