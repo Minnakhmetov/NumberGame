@@ -2,4 +2,5 @@
 <resources>
     <attr name="colorOnPrimary" format="reference" />
     <attr name="startButtonTextColor" format="reference" />
+    <attr name="startButtonStyle" format="reference" />
 </resources>

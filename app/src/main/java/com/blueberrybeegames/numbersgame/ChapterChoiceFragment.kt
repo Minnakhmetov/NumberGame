@@ -16,6 +16,7 @@ import com.blueberrybeegames.numbersgame.databinding.FragmentChapterChoiceBindin
 import com.blueberrybeegames.numbersgame.gamemodes.GameModeViewModel
 import com.blueberrybeegames.numbersgame.models.ChapterRepository
 import com.blueberrybeegames.numbersgame.utils.getAttr
+import kotlinx.android.synthetic.main.circle_progress_bar.view.*
 import kotlinx.android.synthetic.main.fragment_chapter_choice.*
 import timber.log.Timber
 
@@ -54,16 +55,14 @@ class ChapterChoiceFragment : Fragment() {
         binding.chapterPicker.onItemChangeListener = { name ->
             chapterList.find { it.category == modePicker.getCurrentItem() && it.name == name }?.let {
                 if (it.userScore == -1) {
-                    binding.progressBar.visibility = View.INVISIBLE
-                    binding.percentage.visibility = View.INVISIBLE
+                    binding.progressBarWithPercentage.visibility = View.INVISIBLE
                 }
                 else {
-                    binding.progressBar.visibility = View.VISIBLE
-                    binding.percentage.visibility = View.VISIBLE
-                    binding.percentage.text = "${it.userScore.toString()}%"
+                    binding.progressBarWithPercentage.visibility = View.VISIBLE
+                    binding.progressBarWithPercentage.percentage.text = "${it.userScore.toString()}%"
 
                     ObjectAnimator.ofInt(
-                        binding.progressBar,
+                        binding.progressBarWithPercentage.progressBar,
                         "progress",
                         GameModeViewModel.getPercentage(it.userScore)
                     ).apply {

@@ -9,4 +9,7 @@
     <dimen name="margin_from_screen_edge">@dimen/spacing_small</dimen>
     <dimen name="theme_preview_color_stroke">4dp</dimen>
     <dimen name="header_text_size">18sp</dimen>
+    <dimen name="max_words_text_size">30sp</dimen>
+    <dimen name="picker_text_size">17sp</dimen>
+    <dimen name="start_game_button_text_size">14sp</dimen>
 </resources>

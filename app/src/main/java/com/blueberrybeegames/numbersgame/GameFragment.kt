@@ -9,10 +9,12 @@ import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.blueberrybeegames.numbersgame.databinding.FragmentGameBinding
 import com.blueberrybeegames.numbersgame.gamemodes.*
 import com.blueberrybeegames.numbersgame.utils.getAttr
+import kotlinx.android.synthetic.main.circle_progress_bar.view.*
 
 class GameFragment : Fragment() {
 
@@ -76,8 +78,15 @@ class GameFragment : Fragment() {
         })
 
         if (chapterId == SandboxModeViewModel.CHAPTED_ID) {
-            binding.progressBar.visibility = View.INVISIBLE
-            binding.percentage.visibility = View.INVISIBLE
+            binding.progressPercentage.visibility = View.INVISIBLE
+        }
+        else {
+            viewModel.percentage.observe(viewLifecycleOwner) {
+                binding.progressPercentage.percentage.text = it
+            }
+            viewModel.progress.observe(viewLifecycleOwner) {
+                binding.progressPercentage.progressBar.progress = it
+            }
         }
 
         if (chapterId == VoiceModeViewModel.CHAPTER_ID ||

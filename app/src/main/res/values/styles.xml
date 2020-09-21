@@ -10,6 +10,11 @@
         <item name="android:navigationBarColor">?attr/colorPrimary</item>
         <item name="colorControlHighlight">?attr/colorSecondary</item>
         <item name="startButtonTextColor">@android:color/white</item>
+        <item name="startButtonStyle">@style/StartButtonStyle</item>
+    </style>
+
+    <style name="StartButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">?attr/startButtonTextColor</item>
     </style>
 
     <style name="Green" parent="AppTheme">
@@ -88,6 +93,8 @@
     <style name="GameKeyboard">
         <item name="android:gravity">center</item>
         <item name="android:textSize">40sp</item>
+        <item name="autoSizeTextType">uniform</item>
+        <item name="autoSizePresetSizes">@array/keyboard_button_text_sizes</item>
     </style>
 
 </resources>

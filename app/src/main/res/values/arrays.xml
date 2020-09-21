@@ -1,2 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <array name="progressbar_main_menu_text_sizes">
+        <item>15sp</item>
+        <item>30sp</item>
+        <item>60sp</item>
+    </array>
+    <array name="keyboard_button_text_sizes">
+        <item>40sp</item>
+        <item>70sp</item>
+    </array>
+    <array name="picker_text_sizes">
+        <item>17sp</item>
+        <item>34sp</item>
+    </array>
+</resources>

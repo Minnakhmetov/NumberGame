@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <dimen name="max_words_text_size">50sp</dimen>
+    <dimen name="picker_text_size">35sp</dimen>
+    <dimen name="start_game_button_text_size">35sp</dimen>
+</resources>
