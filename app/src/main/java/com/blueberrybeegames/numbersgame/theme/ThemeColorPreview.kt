@@ -10,6 +10,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import com.blueberrybeegames.numbersgame.R
 import com.blueberrybeegames.numbersgame.utils.getAttr
+import timber.log.Timber
 
 class ThemeColorPreview: AppCompatImageView {
     constructor(context: Context): super(context)
@@ -68,24 +69,17 @@ class ThemeColorPreview: AppCompatImageView {
             ThemeKeeper.getInstance(context).themeId = themeId
         }
 
-        val newLayoutParams = GridLayout.LayoutParams(
-            ViewGroup.LayoutParams(
-                context.resources.getDimension(R.dimen.theme_color_preview_size).toInt(),
-                context.resources.getDimension(R.dimen.theme_color_preview_size).toInt()
-            )
-        )
-
-        newLayoutParams.setMargins(
-            context.resources.getDimension(R.dimen.spacing_tiny).toInt(),
-            context.resources.getDimension(R.dimen.spacing_tiny).toInt(),
-            context.resources.getDimension(R.dimen.spacing_tiny).toInt(),
-            context.resources.getDimension(R.dimen.spacing_tiny).toInt()
-        )
-
-        layoutParams = newLayoutParams
+//        newLayoutParams.setMargins(
+//            context.resources.getDimension(R.dimen.spacing_tiny).toInt(),
+//            context.resources.getDimension(R.dimen.spacing_tiny).toInt(),
+//            context.resources.getDimension(R.dimen.spacing_tiny).toInt(),
+//            context.resources.getDimension(R.dimen.spacing_tiny).toInt()
+//        )
+//
+//        layoutParams = newLayoutParams
 
         adjustViewBounds = true
 
-        scaleType = (ScaleType.CENTER)
+        scaleType = (ScaleType.FIT_XY)
     }
 }

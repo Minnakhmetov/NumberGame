@@ -11,6 +11,7 @@
         <item name="colorControlHighlight">?attr/colorSecondary</item>
         <item name="startButtonTextColor">@android:color/white</item>
         <item name="startButtonStyle">@style/StartButtonStyle</item>
+        <item name="android:textSize">@dimen/text_size</item>
     </style>
 
     <style name="StartButtonStyle" parent="Widget.MaterialComponents.Button">
@@ -88,6 +89,7 @@
 <!--        <item name="colorPrimary">@color/colorPrimary</item>-->
 <!--        <item name="colorSecondary">@color/colorSecondary</item>-->
 <!--    </style>-->
+
 
 
     <style name="GameKeyboard">

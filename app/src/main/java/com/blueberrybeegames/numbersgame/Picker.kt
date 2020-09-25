@@ -38,7 +38,7 @@ class Picker: ConstraintLayout {
     }
 
     var position = 0
-    private set(value) {
+    set(value) {
         if (value >= 0 && value < itemList.size) {
             field = value
             currentItem.setText(itemList[value])

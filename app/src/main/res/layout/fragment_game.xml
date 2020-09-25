@@ -58,16 +58,16 @@
             tools:visibility="visible">
 
             <include
-                layout="@layout/circle_progress_bar"
                 android:id="@+id/progressPercentage"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent="0.15"
-                app:layout_constraintTop_toTopOf="@+id/timer"
-                app:layout_constraintWidth_percent="0.23"
+                layout="@layout/circle_progress_bar"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginEnd="16dp"
-                android:padding="@dimen/spacing_small" />
+                android:padding="@dimen/spacing_small"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.15"
+                app:layout_constraintTop_toTopOf="@+id/timer"
+                app:layout_constraintWidth_percent="0.23" />
 
             <TextView
                 android:id="@+id/game_end_message"
@@ -100,7 +100,9 @@
                 android:tint="?attr/colorSecondary"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintWidth_percent="0.25"
                 app:srcCompat="@drawable/ic_replay"
                 tools:visibility="visible" />
 
@@ -126,12 +128,12 @@
                 android:theme="@style/GameKeyboard"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent="0.45"
+                app:layout_constraintHeight_percent="0.44"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="1.0"
-                tools:visibility="invisible">
+                tools:visibility="visible">
 
                 <TextView
                     android:id="@+id/textView13"
@@ -277,14 +279,14 @@
                 android:id="@+id/userInput"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintHeight_percent="0.08"
                 android:gravity="center"
                 android:singleLine="true"
                 android:text="@{viewModel.userInput}"
-                app:autoSizeTextType="uniform"
                 app:autoSizePresetSizes="@array/keyboard_button_text_sizes"
+                app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toTopOf="@+id/gameKeyboard"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.11"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:text="13213_" />
 

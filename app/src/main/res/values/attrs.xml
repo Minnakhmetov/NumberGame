@@ -3,4 +3,13 @@
     <attr name="colorOnPrimary" format="reference" />
     <attr name="startButtonTextColor" format="reference" />
     <attr name="startButtonStyle" format="reference" />
+
+    <declare-styleable name="ThemeColorPreview">
+        <attr name="themeId" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="ActionListItem">
+        <attr name="src" format="reference"/>
+        <attr name="title" format="reference|string"/>
+    </declare-styleable>
 </resources>

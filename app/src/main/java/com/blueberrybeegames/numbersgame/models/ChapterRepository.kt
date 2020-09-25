@@ -12,18 +12,6 @@ class ChapterRepository(private val context: Context) {
         return context.run {
             listOf(
                 Chapter(
-                    TextModeViewModel.CHAPTER_ID,
-                    getString(R.string.text_mode_name),
-                    getString(R.string.spelling_category),
-                    recordsStorage
-                ),
-                Chapter(
-                    OneMistakeTextModeViewModel.CHAPTER_ID,
-                    getString(R.string.one_mistake_text_mode_name),
-                    getString(R.string.spelling_category),
-                    recordsStorage
-                ),
-                Chapter(
                     VoiceModeViewModel.CHAPTER_ID,
                     getString(R.string.voice_mode_name),
                     getString(R.string.listening_category),
@@ -33,6 +21,18 @@ class ChapterRepository(private val context: Context) {
                     OneMistakeVoiceModeViewModel.CHAPTER_ID,
                     getString(R.string.one_mistake_voice_mode_name),
                     getString(R.string.listening_category),
+                    recordsStorage
+                ),
+                Chapter(
+                    TextModeViewModel.CHAPTER_ID,
+                    getString(R.string.text_mode_name),
+                    getString(R.string.spelling_category),
+                    recordsStorage
+                ),
+                Chapter(
+                    OneMistakeTextModeViewModel.CHAPTER_ID,
+                    getString(R.string.one_mistake_text_mode_name),
+                    getString(R.string.spelling_category),
                     recordsStorage
                 ),
                 Chapter(

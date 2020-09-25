@@ -2,12 +2,14 @@
 <resources>
     <array name="progressbar_main_menu_text_sizes">
         <item>15sp</item>
+        <item>22sp</item>
         <item>30sp</item>
+        <item>50sp</item>
         <item>60sp</item>
     </array>
     <array name="keyboard_button_text_sizes">
         <item>40sp</item>
-        <item>70sp</item>
+        <item>60sp</item>
     </array>
     <array name="picker_text_sizes">
         <item>17sp</item>

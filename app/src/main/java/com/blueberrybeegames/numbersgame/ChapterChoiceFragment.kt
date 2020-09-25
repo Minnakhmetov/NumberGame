@@ -1,21 +1,16 @@
 package com.blueberrybeegames.numbersgame
 
 import android.animation.ObjectAnimator
-import android.animation.TimeInterpolator
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.BounceInterpolator
 import android.view.animation.DecelerateInterpolator
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.navigation.fragment.findNavController
 import com.blueberrybeegames.numbersgame.databinding.FragmentChapterChoiceBinding
 import com.blueberrybeegames.numbersgame.gamemodes.GameModeViewModel
 import com.blueberrybeegames.numbersgame.models.ChapterRepository
-import com.blueberrybeegames.numbersgame.utils.getAttr
 import kotlinx.android.synthetic.main.circle_progress_bar.view.*
 import kotlinx.android.synthetic.main.fragment_chapter_choice.*
 import timber.log.Timber
@@ -23,6 +18,8 @@ import timber.log.Timber
 class ChapterChoiceFragment : Fragment() {
 
     private lateinit var binding: FragmentChapterChoiceBinding
+    private var modePickerSavedPos = 0
+    private var chapterPickerSavedPos = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,6 +56,7 @@ class ChapterChoiceFragment : Fragment() {
                 }
                 else {
                     binding.progressBarWithPercentage.visibility = View.VISIBLE
+
                     binding.progressBarWithPercentage.percentage.text = "${it.userScore.toString()}%"
 
                     ObjectAnimator.ofInt(
@@ -87,6 +85,19 @@ class ChapterChoiceFragment : Fragment() {
                 )
             }
         }
+    }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        modePickerSavedPos = binding.modePicker.position
+        chapterPickerSavedPos = binding.chapterPicker.position
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        binding.modePicker.position = modePickerSavedPos
+        binding.chapterPicker.position = chapterPickerSavedPos
     }
 
 }

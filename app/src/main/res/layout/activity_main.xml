@@ -8,9 +8,11 @@
 
     <ImageView
         android:id="@+id/back_button"
-        android:layout_width="@dimen/back_button_side"
-        android:layout_height="@dimen/back_button_side"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_margin="@dimen/spacing_normal"
+        app:layout_constraintHeight_percent="0.08"
+        app:layout_constraintDimensionRatio="1"
         android:padding="4dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:clickable="true"
@@ -20,6 +22,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_arrow_back"
+        tools:visibility="visible"
         android:contentDescription="@string/back_button_description" />
 
     <fragment

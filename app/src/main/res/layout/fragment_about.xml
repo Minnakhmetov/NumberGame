@@ -8,10 +8,11 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rootConstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/back_button_side"
-        android:padding="@dimen/spacing_normal"
+        android:paddingStart="@dimen/spacing_small"
+        android:paddingEnd="@dimen/spacing_small"
         tools:context=".AboutFragment">
 
         <include
@@ -20,32 +21,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <GridLayout
-            android:id="@+id/theme_picker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_small"
-            android:columnCount="5"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/theme_header">
-
-        </GridLayout>
+            app:layout_constraintTop_toTopOf="@+id/guideline7" />
 
         <TextView
             android:id="@+id/sound_credits"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_small"
-            android:layout_marginEnd="@dimen/spacing_small"
             android:layout_marginTop="@dimen/spacing_normal"
             android:fontFamily="@font/roboto"
             android:linksClickable="true"
             android:text="@string/credits_to_sound_creator"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline10"
+            app:layout_constraintStart_toStartOf="@+id/guideline9"
             app:layout_constraintTop_toBottomOf="@+id/credits_header" />
 
         <include
@@ -54,113 +41,51 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/theme_picker" />
+            app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
         <include
             android:id="@+id/feedback_header"
             layout="@layout/list_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sound_credits" />
 
         <LinearLayout
             android:id="@+id/actions"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="4dp"
             android:orientation="vertical"
+            app:layout_constraintHeight_percent="0.17"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/feedback_header">
 
-            <LinearLayout
+
+            <com.blueberrybeegames.numbersgame.views.ActionListItem
                 android:id="@+id/email_button"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_small"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
-                android:orientation="horizontal"
-                android:contentDescription="@string/email_button_description"
-                android:padding="@dimen/spacing_small"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/feedback_header">
+                app:src="@drawable/ic_email"
+                app:title="@string/write_me_button" />
 
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:contentDescription="@string/email_icon_description"
-                    android:layout_width="30sp"
-                    android:layout_height="30sp"
-                    android:tint="?attr/colorSecondary"
-                    app:srcCompat="@drawable/ic_email" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="@dimen/spacing_normal"
-                    android:text="@string/write_me_button" />
-
-            </LinearLayout>
-
-            <LinearLayout
+            <com.blueberrybeegames.numbersgame.views.ActionListItem
                 android:id="@+id/rate_button"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
-                android:orientation="horizontal"
-                android:padding="@dimen/spacing_small"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/email_button">
+                app:src="@drawable/ic_rate"
+                app:title="@string/rate_button" />
 
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="30sp"
-                    android:layout_height="30sp"
-                    android:tint="?attr/colorSecondary"
-                    app:srcCompat="@drawable/ic_rate"
-                    android:contentDescription="@string/rate_icon_description" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="@dimen/spacing_normal"
-                    android:text="@string/rate_button" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/buy_pro_button"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:orientation="horizontal"
-                android:padding="@dimen/spacing_small"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rate_button">
-
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="30sp"
-                    android:layout_height="30sp"
-                    android:tint="?attr/colorSecondary"
-                    app:srcCompat="@drawable/ic_diamond_stone" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="@dimen/spacing_normal"
-                    android:text="@string/buy_premium" />
-
-            </LinearLayout>
         </LinearLayout>
 
         <TextView
@@ -172,6 +97,35 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/actions"
             tools:text="@string/created_by" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.42" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.09" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.04" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.96" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

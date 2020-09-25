@@ -11,13 +11,17 @@ import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import com.blueberrybeegames.numbersgame.databinding.FragmentAboutBinding
 import com.blueberrybeegames.numbersgame.theme.ThemeColorPreview
 import com.blueberrybeegames.numbersgame.theme.ThemeKeeper
 import com.blueberrybeegames.numbersgame.utils.getAttr
 import com.google.android.material.snackbar.Snackbar
+import timber.log.Timber
 
 class AboutFragment : Fragment() {
 
@@ -95,7 +99,9 @@ class AboutFragment : Fragment() {
             startActivity(intent)
         }
 
-        val themeList = listOf(
+        val themeKeeper = ThemeKeeper.getInstance(requireContext())
+
+        val themeColorPreviewList: List<ThemeColorPreview> = listOf(
             R.style.DarkOrange,
             R.style.WhiteBlue,
             R.style.Green,
@@ -106,18 +112,110 @@ class AboutFragment : Fragment() {
             R.style.DarkGreen,
             R.style.Brown,
             R.style.New
+        ).map {
+            val constraintLayoutParams = ConstraintLayout.LayoutParams(
+                0,
+                0
+            ).apply {
+                dimensionRatio = "1:1"
+                matchConstraintPercentWidth = 0.15f
+            }
+
+            ThemeColorPreview(requireContext()).apply {
+                themeId = it
+                layoutParams = constraintLayoutParams
+                id = View.generateViewId()
+
+                if (themeKeeper.themeId == themeId)
+                    ticked = true
+            }
+        }
+
+        val themeTableRows = themeColorPreviewList.chunked(5)
+
+        themeColorPreviewList.forEach { binding.rootConstraintLayout.addView(it) }
+
+        val constraintSet = ConstraintSet()
+        constraintSet.clone(binding.rootConstraintLayout)
+
+        constraintSet.createHorizontalChainRtl(
+            ConstraintSet.PARENT_ID,
+            ConstraintSet.START,
+            ConstraintSet.PARENT_ID,
+            ConstraintSet.END,
+            themeTableRows[0].map { it.id }.toIntArray(),
+            null,
+            ConstraintSet.CHAIN_PACKED
         )
 
-        val themeKeeper = ThemeKeeper.getInstance(requireContext())
+        constraintSet.createVerticalChain(
+            R.id.theme_header,
+            ConstraintSet.BOTTOM,
+            R.id.guideline2,
+            ConstraintSet.TOP,
+            themeTableRows.map { it[0].id }.toIntArray(),
+            null,
+            ConstraintSet.CHAIN_PACKED
+        )
 
-        themeList.forEach {
-            binding.themePicker.addView(
-                ThemeColorPreview(
-                    requireContext()
-                ).apply {
-                themeId = it
-                ticked = themeKeeper.themeId == it
-            })
+        for (i in 1 until themeTableRows.size) {
+            for (j in themeTableRows[i].indices) {
+                constraintSet.connect(
+                    themeTableRows[i][j].id,
+                    ConstraintSet.START,
+                    themeTableRows[0][j].id,
+                    ConstraintSet.START
+                )
+                constraintSet.connect(
+                    themeTableRows[i][j].id,
+                    ConstraintSet.END,
+                    themeTableRows[0][j].id,
+                    ConstraintSet.END
+                )
+            }
+        }
+
+        themeTableRows.forEach { row ->
+            for (j in 1 until row.size) {
+                constraintSet.connect(
+                    row[j].id,
+                    ConstraintSet.TOP,
+                    row[0].id,
+                    ConstraintSet.TOP
+                )
+                constraintSet.connect(
+                    row[j].id,
+                    ConstraintSet.BOTTOM,
+                    row[0].id,
+                    ConstraintSet.BOTTOM
+                )
+            }
+        }
+
+        constraintSet.applyTo(binding.rootConstraintLayout)
+
+        themeTableRows[0].forEach {
+            val preview = binding.root.findViewById<ThemeColorPreview>(it.id)
+            val params = preview.layoutParams as ConstraintLayout.LayoutParams
+
+            requireContext().let { context ->
+                params.marginStart = context.resources.getDimension(R.dimen.spacing_tiny).toInt()
+                params.marginEnd = context.resources.getDimension(R.dimen.spacing_tiny).toInt()
+            }
+
+            preview.layoutParams = params
+        }
+
+        themeTableRows.forEach {
+            val preview = binding.root.findViewById<ThemeColorPreview>(it[0].id)
+            val params = preview.layoutParams as ConstraintLayout.LayoutParams
+
+            requireContext().let { context ->
+                params.topMargin = context.resources.getDimension(R.dimen.spacing_tiny).toInt()
+                params.bottomMargin = context.resources.getDimension(R.dimen.spacing_tiny).toInt()
+            }
+
+            preview.layoutParams = params
         }
     }
 }
