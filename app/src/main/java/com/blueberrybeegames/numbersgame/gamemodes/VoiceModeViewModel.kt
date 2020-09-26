@@ -24,10 +24,10 @@ open class VoiceModeViewModel(application: Application) : GameModeViewModel(appl
         3 -> 6
         4 -> 8
         5 -> 8
-        6 -> 9
-        7 -> 10
-        8 -> 10
-        9 -> 11
+        6 -> 10
+        7 -> 11
+        8 -> 12
+        9 -> 12
         else -> 0
     }.toLong()
 

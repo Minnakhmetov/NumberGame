@@ -5,7 +5,7 @@
     <solid/>
 
     <stroke
-        android:width="3dp"
+        android:width="@dimen/theme_preview_color_stroke"
         android:color="?attr/colorSecondary" />
 
 </shape>

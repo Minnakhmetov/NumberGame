@@ -2,4 +2,5 @@
 <resources>
     <dimen name="picker_text_size">24sp</dimen>
     <dimen name="text_size">19sp</dimen>
+    <dimen name="theme_preview_color_stroke">8dp</dimen>
 </resources>
