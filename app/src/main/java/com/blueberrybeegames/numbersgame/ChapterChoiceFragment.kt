@@ -57,7 +57,7 @@ class ChapterChoiceFragment : Fragment() {
                 else {
                     binding.progressBarWithPercentage.visibility = View.VISIBLE
 
-                    binding.progressBarWithPercentage.percentage.text = "${it.userScore.toString()}%"
+                    binding.progressBarWithPercentage.percentage.setText("${it.userScore.toString()}%")
 
                     ObjectAnimator.ofInt(
                         binding.progressBarWithPercentage.progressBar,

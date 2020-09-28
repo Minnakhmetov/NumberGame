@@ -82,7 +82,7 @@ class GameFragment : Fragment() {
         }
         else {
             viewModel.percentage.observe(viewLifecycleOwner) {
-                binding.progressPercentage.percentage.text = it
+                binding.progressPercentage.percentage.setCurrentText(it)
             }
             viewModel.progress.observe(viewLifecycleOwner) {
                 binding.progressPercentage.progressBar.progress = it

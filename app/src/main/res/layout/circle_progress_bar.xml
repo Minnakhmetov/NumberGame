@@ -20,19 +20,35 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:progress="73" />
 
-    <TextView
+    <TextSwitcher
         android:id="@+id/percentage"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:lines="1"
-        android:gravity="center"
-        android:text="73%"
-        android:textSize="30sp"
-        app:autoSizeTextType="uniform"
+        android:inAnimation="@anim/slide_in_down"
+        android:outAnimation="@anim/slide_out_down"
         app:layout_constraintBottom_toTopOf="@+id/guideline6"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toTopOf="@+id/guideline5" />
+        app:layout_constraintTop_toTopOf="@+id/guideline5">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:lines="1"
+            android:gravity="center"
+            tools:text="73%"
+            app:autoSizeTextType="uniform" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:lines="1"
+            android:gravity="center"
+            tools:text="73%"
+            app:autoSizeTextType="uniform" />
+
+    </TextSwitcher>
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
