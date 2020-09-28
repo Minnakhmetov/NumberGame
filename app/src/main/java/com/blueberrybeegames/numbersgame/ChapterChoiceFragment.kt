@@ -52,21 +52,13 @@ class ChapterChoiceFragment : Fragment() {
         binding.chapterPicker.onItemChangeListener = { name ->
             chapterList.find { it.category == modePicker.getCurrentItem() && it.name == name }?.let {
                 if (it.userScore == -1) {
-                    binding.progressBarWithPercentage.visibility = View.INVISIBLE
+                    binding.progressBarWithPercentage.percentage.setText("")
+                    changeProgressBarProgress(0)
                 }
                 else {
                     binding.progressBarWithPercentage.visibility = View.VISIBLE
-
                     binding.progressBarWithPercentage.percentage.setText("${it.userScore.toString()}%")
-
-                    ObjectAnimator.ofInt(
-                        binding.progressBarWithPercentage.progressBar,
-                        "progress",
-                        GameModeViewModel.getPercentage(it.userScore)
-                    ).apply {
-                        interpolator = DecelerateInterpolator()
-                        duration = (context?.resources?.getInteger(R.integer.progress_bar_anim_duration) ?: 200).toLong()
-                    }.start()
+                    changeProgressBarProgress(it.userScore)
                 }
             }
         }
@@ -85,6 +77,17 @@ class ChapterChoiceFragment : Fragment() {
                 )
             }
         }
+    }
+
+    private fun changeProgressBarProgress(newProgress: Int) {
+        ObjectAnimator.ofInt(
+            binding.progressBarWithPercentage.progressBar,
+            "progress",
+            GameModeViewModel.getPercentage(newProgress)
+        ).apply {
+            interpolator = DecelerateInterpolator()
+            duration = (context?.resources?.getInteger(R.integer.progress_bar_anim_duration) ?: 200).toLong()
+        }.start()
     }
 
 
