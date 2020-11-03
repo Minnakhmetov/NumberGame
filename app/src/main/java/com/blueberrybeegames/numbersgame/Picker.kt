@@ -54,7 +54,11 @@ class Picker: ConstraintLayout {
         currentItem.inAnimation = null
         currentItem.outAnimation = null
         field = value
-        position = 0
+    }
+
+    fun setItemList(newList: List<String>, pos: Int) {
+        itemList = newList
+        position = pos
     }
 
     fun getCurrentItem(): String = itemList.getOrElse(position) { "" }

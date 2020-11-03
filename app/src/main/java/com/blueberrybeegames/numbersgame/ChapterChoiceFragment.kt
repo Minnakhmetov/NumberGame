@@ -18,8 +18,8 @@ import timber.log.Timber
 class ChapterChoiceFragment : Fragment() {
 
     private lateinit var binding: FragmentChapterChoiceBinding
+    private var chapterPickerPosition = mutableMapOf<String, Int>()
     private var modePickerSavedPos = 0
-    private var chapterPickerSavedPos = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,10 +46,18 @@ class ChapterChoiceFragment : Fragment() {
             else {
                 binding.chapterPicker.visibility = View.VISIBLE
             }
-            binding.chapterPicker.itemList = chapterList.filter { it.category == mode }.map { it.name }
+
+            binding.chapterPicker.apply {
+                setItemList(
+                    chapterList.filter { it.category == mode }.map { it.name },
+                    chapterPickerPosition[mode] ?: 0
+                )
+            }
         }
 
         binding.chapterPicker.onItemChangeListener = { name ->
+            chapterPickerPosition[modePicker.getCurrentItem()] = binding.chapterPicker.position
+            Timber.i("+${modePicker.getCurrentItem()} ${chapterPickerPosition[modePicker.getCurrentItem()]}")
             chapterList.find { it.category == modePicker.getCurrentItem() && it.name == name }?.let {
                 if (it.userScore == -1) {
                     binding.progressBarWithPercentage.percentage.setText("")
@@ -63,13 +71,11 @@ class ChapterChoiceFragment : Fragment() {
             }
         }
 
-        binding.modePicker.itemList = chapterList.map { it.category }.distinct()
+        binding.modePicker.setItemList(chapterList.map { it.category }.distinct(), 0)
 
         startButton.setOnClickListener {
             val category = binding.modePicker.getCurrentItem()
             val name = binding.chapterPicker.getCurrentItem()
-
-            Timber.i("$category $name")
 
             chapterList.find { it.category == category && it.name == name}?.let {
                 findNavController().navigate(
@@ -94,13 +100,12 @@ class ChapterChoiceFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         modePickerSavedPos = binding.modePicker.position
-        chapterPickerSavedPos = binding.chapterPicker.position
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
         binding.modePicker.position = modePickerSavedPos
-        binding.chapterPicker.position = chapterPickerSavedPos
+        binding.chapterPicker.position = chapterPickerPosition[modePicker.getCurrentItem()] ?: 0
     }
 
 }
