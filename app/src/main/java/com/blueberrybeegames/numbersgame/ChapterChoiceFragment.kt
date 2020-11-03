@@ -57,7 +57,6 @@ class ChapterChoiceFragment : Fragment() {
 
         binding.chapterPicker.onItemChangeListener = { name ->
             chapterPickerPosition[modePicker.getCurrentItem()] = binding.chapterPicker.position
-            Timber.i("+${modePicker.getCurrentItem()} ${chapterPickerPosition[modePicker.getCurrentItem()]}")
             chapterList.find { it.category == modePicker.getCurrentItem() && it.name == name }?.let {
                 if (it.userScore == -1) {
                     binding.progressBarWithPercentage.percentage.setText("")
