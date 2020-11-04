@@ -95,7 +95,7 @@ class AboutFragment : Fragment() {
 
         binding.rateButton.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse("market://details?id=com.blueberrybeegames.numbersgame")
+            intent.data = Uri.parse("market://details?id=com.blueberrybeegames.numbergame")
             startActivity(intent)
         }
 
